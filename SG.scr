@@ -1,0 +1,135 @@
+//########################################   П Е Р Е В І Р К А  І О  С І   ################################################
+
+//"Сфера дiяльностi" ІО СІ______________________________________________________"Сфера дiяльностi" ІО СІ
+  var S0006_mn1 = "010150,110170,110180,110185,110190,110195,110200,"+
+                  "110205,110210,120100,120115,120120,120130";                    var _S0006_14_ = "14"
+
+  var S0006_140446 = "140446";
+
+//"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО СІ
+  var S0113_mn1 = "701,703,802";
+
+  var space = " "
+  var IZ = "ІД."
+  var SZ = "СІ."
+  var dis = "не відповідає"
+  var emp = "відповідає пустому значенню"
+  var more = "більша за"
+  var unDep = "Не співпадають ПІДРОЗДІЛИ"
+  var mes_Date = "поточну дату"
+  var mes_20 = "ДАТА ОДЕРЖАННЯ СИГНАЛУ"
+  var mes_3D = "ДАТА РЕЄСТРАЦІЇ СИГНАЛУ"
+  var mes_3D2 = "ДАТУ РЕЄСТРАЦІЇ СИГНАЛУ"
+  var mes_3L = "ФАКТИЧНА ДАТА ЗАКІНЧЕННЯ ПЕРЕВІРКИ"
+  var mes_3L2 = "ФАКТИЧНУ ДАТУ ЗАКІНЧЕННЯ ПЕРЕВІРКИ"
+  var mes_3K2 = "ВСТАНОВЛЕНУ ДАТУ ЗАКІНЧЕННЯ ПЕРЕВІРКИ"
+  var mes_3N = "ОСТАТОЧНІ РЕЗУЛЬТАТИ ПЕРЕВІРКИ"
+  var mes_05 = "СФЕРА ДІЯЛЬНОСТІ:"
+  var mes_05_2 = "СФЕРІ ДІЯЛЬНОСТІ:"
+  var mes_05_3 = "відповідає СФЕРІ ДІЯЛЬНОСТІ:"
+
+// Для всіх ІО СІ у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "SZ")
+    {
+       // Отримати зміст ІО СІ
+       var ioSZ = SC.ReadIO("SZ", MessageIOs.SN(io), -1, "20;3D;05;3K;3L;3N;");
+         var dt = new Date();
+         var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
+//СІЖ20СІЖ2001 Порівняння "Дата одержання сигналу" з поточною датою
+         var _20 = ioSZ.GetPropByPath("20").Value1(0);
+         if (_20 != "" && _20 > DateNow) Errors.Add(SZ+ioSZ.SNRV+space+mes_20+space+more+space+mes_Date);
+//СІЖ3DСІЖ3D01 Порівняння "Дата реєстрації сигналу" з поточною датою
+         var _3D = ioSZ.GetPropByPath("3D").Value1(0);
+         if (_3D != "" && _3D > DateNow) Errors.Add(SZ+ioSZ.SNRV+space+mes_3D+space+more+space+mes_Date);
+//СІЖ20СІЖ3D01 Порівняння "Дата одержання сигналу" з "Дата реєстрації сигналу"
+         if (_20 != "" && _3D != "" && _20 > _3D) Errors.Add(SZ+ioSZ.SNRV+space+mes_20+space+more+space+mes_3D2);
+//СІЖ3LСІЖ3L01 Порівняння "Фактична дата закінчення перевірки" з поточною датою
+         var _3L = ioSZ.GetPropByPath("3L").Value1(0);
+         if (_20 != "" && _3L > DateNow) Errors.Add(SZ+ioSZ.SNRV+space+mes_3L+space+more+space+mes_Date);
+//СІЖ20СІЖ3L01 Порівняння "Дата одержання сигналу" з "Фактична дата закінчення перевірки"
+         if (_20 != "" && _3L != "" && _20 > _3L) Errors.Add(SZ+ioSZ.SNRV+space+mes_20+space+more+space+mes_3L2);
+//СІЖ20СІЖ3K01 Порівняння "Дата одержання сигналу" з "Встановлена дата закінчення перевірки"
+         var _3K = ioSZ.GetPropByPath("3K").Value1(0);
+         if (_20 != "" && _3K != "" && _20 >= _3K) Errors.Add(SZ+ioSZ.SNRV+space+mes_20+space+more+space+mes_3K2);
+//СІЖ3LСІЖ3N01 СІЖ3NСІЖ3L01 Одночасне заповнення "Фактична дата закінчення перевірки" та "Остаточнi результати перевiрки"
+         var _3N = ioSZ.GetPropByPath("3N").Value1(0);
+         if ((_3L != "" && _3N == "") || (_3N != "" && _3L == "")) Errors.Add(SZ+ioSZ.SNRV+space+mes_3L+"/"+mes_3N+space+emp+space+mes_3L+"/"+mes_3N);
+         _20 = null;
+         _3D = null;
+         _3L = null;
+         _3K = null;
+         _3N = null;
+         DateNow = null;
+         dt = null;
+//       Відповідність "Сфера дiяльностi" ІО СІ_________"Сфера дiяльностi" ІО СІ
+         if (ioSZ.GetPropByPath("05").ContainsAny("", S0006_mn1, false) &&      //SGЖ05SGЖ0501
+             !ioSZ.GetPropByPath("05").StartWithAny("", _S0006_14_, false))
+               Warnings.Add(SZ+ioSZ.SNRV+space+mes_05+space+S0006_mn1+space+dis+space+mes_05_2+space+_S0006_14_);
+         if (ioSZ.GetPropByPath("05").ContainsAny("", S0006_mn1, false) &&
+             ioSZ.GetPropByPath("05").ContainsAny("", S0006_140446, false))
+               Warnings.Add(SZ+ioSZ.SNRV+space+mes_05+space+S0006_mn1+space+mes_05_3+space+S0006_140446);
+       ioSZ.Clear();
+       ioSZ = null;
+    }
+
+    if (MessageIOs.IO(io) == "IZ")
+    {
+       // Отримати зміст ІО ІД
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DI;SF.I98;OD.O83;30.D83;");
+         var n = 0;
+         var I98 = haveRef(ioIZ, "SF", "I98", "SZ", n);
+         while (I98 >= 0)
+         {
+            var ioSZ = SC.ReadIO("SZ", I98, -1, "3L;S11;");
+//IDЖDDSGS1101 Перевірка відповідності "Підрозділ" ІО ІД й ІО СІ
+             if (ioIZ.GetPropByPath("DD").Value1(0).substr(0,5) != ioSZ.GetPropByPath("S11").Value1(0).substr(0,5))
+                 Warnings.Add(unDep+space+IZ+ioIZ.SNRV+space+SZ+ioSZ.SNRV);
+//СІЖ3LІДЖOD01 В ІО СІ не задано "Фактична дата закінчення перевірки", а в ІО ІД відсутнє посилання на ІО ОД
+             if ((ioSZ.GetPropByPath("3L").Value1(0) == "") && (haveRef(ioIZ, "OD", "O83", "XZ", 0) < 0))
+                  Errors.Add("В "+SZ+ioSZ.SNRV+" не задано ФАКТИЧНОЇ ДАТИ ЗАКІНЧЕННЯ ПЕРЕВІРКИ, а в "+IZ+ioIZ.SNRV+" відсутнє посилання на ОД");
+            n++;
+            I98 = haveRef(ioIZ, "SF", "I98", "SZ", n);
+         }
+//ІДЖDIІДЖSF03 "Вид документа" передбачає наявність ІО СІ, а ІО СІ відсутній
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "SZ", 0) < 0))
+             Warnings.Add(IZ+ioIZ.SNRV+space+"ВИД ДОКУМЕНТА передбачає наявність СІ, а СІ відсутній");
+//IDЖSFIDЖ3001 В ІО ІД є ІО СІ, але немає ІО ПД
+         if ((haveRef(ioIZ, "SF", "I98", "SZ", 0) >= 0) && (haveRef(ioIZ, "30", "D83", "PZ", 0) < 0))
+              Warnings.Add(IZ+ioIZ.SNRV+space+"містить СІ, але немає ПД");
+       ioIZ.Clear();
+       ioIZ = null;
+    }
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }
+

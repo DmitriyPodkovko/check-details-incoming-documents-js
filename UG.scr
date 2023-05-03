@@ -1,0 +1,109 @@
+//########################################   П Е Р Е В І Р К А  І О  К С   ################################################
+
+//"Стаття і кодекс" ІО КС_______________________________________________________"Стаття і кодекс" ІО КС
+  var S0105_2_ = "2";
+  var S0105_mn1_ = "201001,202,203,204";                                          var _S0105_mn1 = "20100300"
+                                                                                  var _S0105_mn1_ = "201002"
+
+//"Стаття і кодекс" ІО КС_______________________________________________________"Проходять за справою" ІО КС
+  var S0105_30000001 = "30000001";
+
+//"Стаття і кодекс" ІО КС_______________________________________________________"Предмет кримінальної справи" ІО КС
+  var S0105_mn2_ = "4207201,4213305";
+
+//"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО КС
+  var S0113_mn1 = "450,451,452,453,454,455,459,460,464,"+
+                  "465,466,467,503,604,605,608,609";
+  var S0113_mn2 = "456,458,607,801";
+
+  var space = " "
+  var comma = ","
+  var IZ = "ІД."
+  var UZ = "КС."
+  var dis = "не відповідає"
+  var emp = "відповідає пустому значенню"
+  var more = "більша за"
+  var mes_DI = "ВИД ДОКУМЕНТА:"
+  var mes_Date = "поточну дату"
+  var mes_DPS = "ДАТА ПОРУШЕННЯ СПРАВИ"
+  var mes_2I = "СТАТТЯ І КОДЕКС:"
+  var mes_2I2 = "містить менше 2 реалізацій"
+  var mes_PU = "ПРЕДМЕТУ КРИМІНАЛЬНОЇ СПРАВИ"
+
+// Для всіх ІО КС у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "UZ")
+    {
+       // Отримати зміст ІО КС
+       var ioUZ = SC.ReadIO("UZ", MessageIOs.SN(io), -1, "2I;DPS;LC.LC3;PU.PU1;");
+         var dt = new Date();
+         var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
+//КСDPSКСDPS01 Порівняння "Дата порушення справи" з поточною датою
+         var DPS = ioUZ.GetPropByPath("DPS").Value1(0);
+         if (DPS != "" && DPS > DateNow) Errors.Add(UZ+ioUZ.SNRV+space+mes_DPS+space+more+space+mes_Date);
+         DPS = null;
+         DateNow = null;
+         dt = null;
+//       Відповідність "Стаття і кодекс" ІО КС__________________________________"Стаття і кодекс" ІО КС
+         if (ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false) && ioUZ.GetPropByPath("2I").Count < 2)
+             Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_2_+space+mes_2I2);//КСЖ2IКСЖ2I01
+         if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false) &&    //КСЖ2IКСЖ2I02
+             !(ioUZ.GetPropByPath("2I").Contains("", _S0105_mn1, false) || ioUZ.GetPropByPath("2I").StartWith("", _S0105_mn1_, false)))
+               Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn1_+space+dis+space+_S0105_mn1+comma+_S0105_mn1_);
+//КСЖ2IКСU1801 КСЖ2IКСU1802 "Стаття і кодекс" ІО КС передбачає наявність тільки ІО ОС
+           if ((ioUZ.GetPropByPath("2I").Contains("", S0105_30000001, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
+               ((haveRef(ioUZ, "LC", "LC3", "LZ", 0) < 0) || (haveRef(ioUZ, "LC", "LC3", "RZ", 0) > 0)))
+                 Errors.Add(UZ+ioUZ.SNRV+space+"СТАТТЯ І КОДЕКС передбачає наявність тільки ОС");
+//       Відповідність "Стаття і кодекс" ІО КС__________________________________"Предмет кримінальної справи" ІО КС
+         if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn2_, false) && !ioUZ.GetPropByPath("PU").Count > 0)
+             Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn2_+space+emp+space+mes_PU);//КСЖ2IКСЖPU01
+       ioUZ.Clear();
+       ioUZ = null;
+    }
+
+    if (MessageIOs.IO(io) == "IZ")
+    {
+       // Отримати зміст ІО ІД
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DI;SF.I98;");
+//ІДЖDIІДЖSF01 "Вид документа" передбачає наявність ІО КС, а ІО КС відсутня
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "UZ", 0) < 0))
+             Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn1+space+"передбачає наявність КС, а КС відсутній");
+//IDЖDIIDЖSF01 "Вид документа" передбачає наявність ІО КС, а ІО КС відсутня
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn2, false) && (haveRef(ioIZ, "SF", "I98", "UZ", 0) < 0))
+             Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn2+space+"передбачає наявність КС, а КС відсутній");
+       ioIZ.Clear();
+       ioIZ = null;
+    }
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }
+

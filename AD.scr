@@ -1,0 +1,56 @@
+//########################################   П Е Р Е В І Р К А  І О  А Д   ################################################
+
+  var space = " "
+  var AZ = "АД."
+  var emp = "відповідає пустому значенню"
+  var mes_EF = "НАЗВА ВУЛИЦІ"
+  var mes_EG = "НОМЕР БУДИНКУ"
+
+// Для всіх ІО АД у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "AZ")
+    {
+       // Отримати зміст ІО АД
+       var ioAZ = SC.ReadIO("AZ", MessageIOs.SN(io), -1, "EF;EG;EH;EK;");
+//АДЖEKАДЖEF01 АДЖEHАДЖEF01 "Назва вулиці" відповідає пустому значенню "Номер квартири" "Номер корпусу"
+         if ((ioAZ.GetPropByPath("EK").Value1(0) != "" || ioAZ.GetPropByPath("EH").Value1(0) != "") && ioAZ.GetPropByPath("EF").Value1(0) == "")
+              Errors.Add(AZ+ioAZ.SNRV+space+mes_EF+space+emp);
+//АДЖEKАДЖEG01 АДЖEHАДЖEG01 "Номер будинку" відповідає пустому значенню "Номер квартири" "Номер корпусу"
+         if ((ioAZ.GetPropByPath("EK").Value1(0) != "" || ioAZ.GetPropByPath("EH").Value1(0) != "")&& ioAZ.GetPropByPath("EG").Value1(0) == "")
+              Errors.Add(AZ+ioAZ.SNRV+space+mes_EG+space+emp);
+       ioAZ.Clear();
+       ioAZ = null;
+    }
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }
+

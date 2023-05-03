@@ -1,0 +1,55 @@
+//########################################   П Е Р Е В І Р К А  І О  О Д   ################################################
+
+// ІО ОД________________________________________________________________________"Підстава обмеження" ІО ОД
+                                                                                  var _S0908_mn1 = "01,02,26,27";
+
+  var space = " "
+  var XZ = "ОД."
+  var dis = "не відповідає"
+  var mes_XF = "ПІДСТАВІ ОБМЕЖЕННЯ:"
+
+// Для всіх ІО ОД у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "XZ")
+    {
+       // Отримати зміст ІО ОД
+       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XF;");
+//       Відповідність ІО ОД__________________________"Підстава обмеження" ІО ОД
+         if (!ioXZ.GetPropByPath("XF").ContainsAny("", _S0908_mn1, false))      //ОДЖXFОДЖXF01
+              Errors.Add(XZ+ioXZ.SNRV+space+dis+space+mes_XF+space+_S0908_mn1);
+       ioXZ.Clear();
+       ioXZ = null;
+    }
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }
+

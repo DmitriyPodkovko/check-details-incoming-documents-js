@@ -2,7 +2,7 @@
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Об'єкти заходу" ІО ЗА
   var S0018_mn1 = "511,512,513";
-  var S0018_mn2 = "501,502,503,504,505";
+  var S0018_mn2 = "501,502,503,504";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Підстава проведення заходу" ІО ЗА
   var S0018_mn3 = "511,512,513";
@@ -57,7 +57,6 @@
   var mes_Date = "поточну дату"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_MA = "ВИД ЗАХОДУ:"
-  var mes_MB = "підрозділ (орган), ЩО ПРОВІВ"
   var mes_M18 = "підрозділ, ЗА МАТЕРІАЛАМИ ЯКОГО"
   var mes_M7 = "КАТЕГОРІЯ ДЕРЖАВНОГО ОРГАНУ, УСТАНОВИ"
   var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
@@ -170,16 +169,14 @@
          var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
          while (I98 >= 0)
          {
-            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;MB;MD;M18;");
+            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;MD;M18;");
 //ЗАЖMDІДЖIV01 Порівняння "Дата проведення заходу" з "Дата реєстрації документа"
             var MD = ioMZ.GetPropByPath("MD").Value1(0);
             var IV = ioIZ.GetPropByPath("IV").Value1(0);
             if (MD != "" && IV != "" && MD > IV) Errors.Add(MZ+ioMZ.SNRV+space+mes_MD+space+more+space+IZ+ioIZ.SNRV+space+mes_IV);
             MD = null;
             IV = null;
-//IDЖDDMRЖMB01 IDЖDDMRM1801 Перевірка відповідності "Підрозділ" ІО ІД й ІО ЗА
-            if (ioIZ.GetPropByPath("DD").Value1(0).substr(0,5) != ioMZ.GetPropByPath("MB").Value1(0).substr(0,5))
-                 Warnings.Add(unDep+space+IZ+ioIZ.SNRV+space+MZ+ioMZ.SNRV+space+mes_MB);
+//IDЖDDMRM1801 Перевірка відповідності "Підрозділ" ІО ІД й ІО ЗА
             if (ioIZ.GetPropByPath("DD").Value1(0).substr(0,5) != ioMZ.GetPropByPath("M18").Value1(0).substr(0,5))
                  Warnings.Add(unDep+space+IZ+ioIZ.SNRV+space+MZ+ioMZ.SNRV+space+mes_M18);
 //          Відповідність "Вид документа" ІО ІД_________________________________"Вид заходу" ІО ЗА

@@ -3,6 +3,9 @@
 // ІО ОД________________________________________________________________________"Підстава обмеження" ІО ОД
                                                                                   var _S0908_mn1 = "02,26,27";
 
+// ІО ОД________________________________________________________________________"Вид обмеження" ІО ОД
+                                                                                  var _S0004_Z = "З";
+
 //"Підстава обмеження" ІО ОД____________________________________________________"Термін дії обмеження" ІО ОД
   var S0908_26 = "26";
   var S0908_02 = "02";
@@ -11,11 +14,13 @@
   var space = " "
   var XZ = "ОД."
   var DZ = "СП."
+  var com = "відповідає"
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
   var noemp = "не передбачає заповнення"
-  var mes_XD = "ТЕРМІН ДІІ ОБМЕЖЕННЯ"
+  var mes_XA = "ВИД ОБМЕЖЕННЯ"
   var mes_XF = "ПІДСТАВА ОБМЕЖЕННЯ"
+  var mes_XD = "ТЕРМІН ДІІ ОБМЕЖЕННЯ"
   var mes_CD = "РЕЄСТРАЦІЙНИЙ НОМЕР СІ/СП/ІД"
   var mes_1H = "РЕЄСТРАЦІЙНИЙ НОМЕР СПРАВИ"
 
@@ -26,10 +31,13 @@
     if (MessageIOs.IO(io) == "XZ")
     {
        // Отримати зміст ІО ОД
-       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XD;XF;CD;");
+       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XA;XD;XF;CD;");
 //       Відповідність ІО ОД____________________________________________________"Підстава обмеження" ІО ОД
          if (!ioXZ.GetPropByPath("XF").ContainsAny("", _S0908_mn1, false))      //ОДЖXFОДЖXF01
               Errors.Add(XZ+ioXZ.SNRV+space+dis+space+mes_XF+space+_S0908_mn1);
+//       Відповідність ІО ОД____________________________________________________"Вид обмеження" ІО ОД
+         if (!ioXZ.GetPropByPath("XA").Contains("", _S0004_Z, false))           //ОДЖXАОДЖXА01
+              Errors.Add(XZ+ioXZ.SNRV+space+dis+space+mes_XA+space+_S0004_Z);
 //       Відповідність "Підстава обмеження" ІО ОД_______________________________"Термін дії обмеження" ІО ОД
          if (ioXZ.GetPropByPath("XF").Contains("", S0908_26, false) && ioXZ.GetPropByPath("XD").Value1(0) == "")
              Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_26+space+emp+space+mes_XD);//ОДЖXFОДЖXD01
@@ -38,6 +46,7 @@
 //ОДЖСDСПЖ1H01
          var isTrue = false;
          var isDZ = false;
+         var isDZZakr = false;
          for (var io2 = 0; io2 < MessageIOs.Count; io2++)
          {
            if (MessageIOs.IO(io2) == "DZ")
@@ -45,17 +54,21 @@
               isDZ = true;
               // Отримати зміст ІО СП
               var ioDZ = SC.ReadIO("DZ", MessageIOs.SN(io2), -1, "1H;1K;");
-              if ((ioXZ.GetPropByPath("XF").Contains("", S0908_02, false) && ioDZ.GetPropByPath("1K").Value1(0) == "") &&
-                  (ioXZ.GetPropByPath("CD").Value1(0) == ioDZ.GetPropByPath("1H").Value1(0)))
+              var K1 = ioDZ.GetPropByPath("1K").Value1(0);
+              if (K1 == "")
               {
-                   isTrue = true;
-                   break;
-              }
+                 if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false) && (ioXZ.GetPropByPath("CD").Value1(0) == ioDZ.GetPropByPath("1H").Value1(0)))
+                 {
+                      isTrue = true;
+                      break;
+                 }
+              } else if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false)) isDZZakr = true;
               ioDZ.Clear();
               ioDZ = null;
            }
          }
-         if (isDZ && (!isTrue)) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+" при незакритій СП "+dis+space+mes_CD+"="+mes_1H);
+         if (isDZ && (!isTrue) && (K1 == "")) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+" при незакритій СП "+dis+space+mes_CD+"="+mes_1H);
+         if (isDZZakr) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+com+space+S0908_02+" при закритій СП");
 //
        ioXZ.Clear();
        ioXZ = null;

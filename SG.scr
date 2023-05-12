@@ -98,18 +98,15 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DI;SF.I98;OD.O83;30.D83;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DI;SF.I98;30.D83;");
          var n = 0;
          var I98 = haveRef(ioIZ, "SF", "I98", "SZ", n);
          while (I98 >= 0)
          {
-            var ioSZ = SC.ReadIO("SZ", I98, -1, "3L;S11;");
+            var ioSZ = SC.ReadIO("SZ", I98, -1, "S11;");
 //IDЖDDSGS1101 Перевірка відповідності "Підрозділ" ІО ІД й ІО СІ
              if (ioIZ.GetPropByPath("DD").Value1(0).substr(0,5) != ioSZ.GetPropByPath("S11").Value1(0).substr(0,5))
                  Warnings.Add(unDep+space+IZ+ioIZ.SNRV+space+SZ+ioSZ.SNRV);
-//СІЖ3LІДЖOD01 В ІО СІ не задано "Фактична дата закінчення перевірки", а в ІО ІД відсутнє посилання на ІО ОД
-             if ((ioSZ.GetPropByPath("3L").Value1(0) == "") && (haveRef(ioIZ, "OD", "O83", "XZ", 0) < 0))
-                  Errors.Add("В "+SZ+ioSZ.SNRV+" не задано ФАКТИЧНА ДАТА ЗАКІНЧЕННЯ ПЕРЕВІРКИ, а в "+IZ+ioIZ.SNRV+" відсутнє посилання на ОД");
             n++;
             I98 = haveRef(ioIZ, "SF", "I98", "SZ", n);
          }

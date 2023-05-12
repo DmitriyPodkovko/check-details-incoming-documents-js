@@ -105,17 +105,6 @@
             n++;
             snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
          }
-//ПДЖSGПДЖOD01 В ІО СІ не задано "Фактична дата закінчення перевірки", а в ІО ПД відсутнє посилання на ІО ОД
-         var n = 0;
-         var snSZ = haveRef(ioPZ, "SG", "S73", "SZ", n)
-         while (snSZ >= 0)
-         {
-            var ioSZ = SC.ReadIO("SZ", snSZ, -1, "3L;");
-            if ((ioSZ.GetPropByPath("3L").Value1(0) == "") && (haveRef(ioPZ, "OD", "O83", "XZ", 0) < 0))
-                 Errors.Add("В "+SZ+ioSZ.SNRV+" не задано ФАКТИЧНА ДАТА ЗАКІНЧЕННЯ ПЕРЕВІРКИ, а в "+PZ+ioPZ.SNRV+" відсутнє посилання на ОД");
-            n++;
-            snSZ = haveRef(ioPZ, "SG", "S73", "SZ", n);
-         }
 
        ioPZ.Clear();
        ioPZ = null;
@@ -130,7 +119,7 @@
          while (D83 >= 0)
          {
             var ioPZ = SC.ReadIO("PZ", D83, -1, "CP;PO;DZ;");
-            if (ioPZ.GetPropByPath("CP").Contains("", "?", false))
+            if (ioPZ.GetPropByPath("CP").Contains("", "?", false)  || ioPZ.GetPropByPath("CP").Value1(0) == "")
             {
 //           Відповідність "Оперативна кваліфікація" ІО ПД______________________"Тематичний перелік інформації" ІО ІД
              if (ioPZ.GetPropByPath("PO").StartWithAny("", S0001_0110_, false) &&//PDЖPOIDЖDJ01

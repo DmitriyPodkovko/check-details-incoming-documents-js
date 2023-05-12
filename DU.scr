@@ -154,7 +154,7 @@
                Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn7+space+" не передбачає наявність РГ");//СПЖ1EСПD1801
          if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn8, false) && ioDZ.GetPropByPath("1K").Value1(0) != "" &&
              haveRef(ioDZ, "D18", "D97", "RZ", 0) < 0 && haveRef(ioDZ, "D18", "D97", "LZ", 0) < 0)
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn8+space+" при закритій СП передбачає наявність ОС або РГ");//СПЖ1EСПD1802
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn8+space+" при закритій СП передбачає наявність ОС або РГ");//DUЖ1EDUD1801
 //       Відповідність "Пріоритетні завдання" ІО СП_____________________________"Лінія роботи" ІО СП
          if (getbyThirdValue(ioDZ, "PZ", S1000_1_) &&                           //СПЖPZСПD0801
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_1, false))

@@ -32,19 +32,20 @@
   var S0113_mn1 = "106,107";                                                      var _S0009_mn1 = "08"
   var S0113_mn2 = "109,110,118,120,124,202,206,207,208,301,302,303,"+
                   "403,405,406,407,409,410,411,425,426,427,429,430,"+
-                  "432,481,482,501,502,701,702,703,705,802,803,816,820";          var _S0009_mn2 = "10,11"
+                  "432,481,482,501,502,701,702,703,802,803,820";                  var _S0009_mn2 = "10,11"
   var S0113_mn3 = "305,504";                                                      var _S0009_mn3 = "10,11,24,25"
   var S0113_mn4 = "450,451,452,453,454,455,456,461,464,465,466";                  var _S0009_mn4 = "10,11,13,19,20,21,24"
   var S0113_mn5 = "458,459,460,462,463,801,809,810";                              var _S0009_mn5 = "19"
   var S0113_mn6 = "601,602,603,604,605,606,608,609,813";                          var _S0009_mn6 = "10,11,23,24"
   var S0113_mn7 = "401,412,414,421,422,431,704,802";                              var _S0009_mn7 = "10,11,20,21"
+  var S0113_mn8 = "705,816";                                                      var _S0009_mn8 = "10,11,23"
 
 //"Âèä äîêóìåíòà" ²Î ²Ä_________________________________________________________"Ãðèô ñåêðåòíîñò³" ²Î ²Ä
-  var S0113_mn8 = "001,004,101,102,103,104,105,106,107,108,109,110,"+
+  var S0113_mn9 = "001,004,101,102,103,104,105,106,107,108,109,110,"+
                   "111,112,113,114,115,116,117,118,119,120,124,"+
                   "201,203,207,208,301,302,303,481,482,501,502,504,"+
-                  "701,702,703,704,705,802";                                      var _S0103_mn8 = "1,2,3"
-  var S0113_mn9_ = "40,41,42,43";                                                 var _S0103_mn9 = "1,2"
+                  "701,702,703,704,705,802";                                      var _S0103_mn9 = "1,2,3"
+  var S0113_mn10_ = "40,41,42,43";                                                var _S0103_mn10 = "1,2"
 
                                                                                   var _S0103_805 = "3,4"
 
@@ -266,16 +267,19 @@
              if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn7, false) &&  //²ÄÆDIÄ²HIA35
                  !ioIIZ.GetPropByPath("HIA").ContainsAny("", _S0009_mn7, false))
                    Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn7+space+dis+space+IIZ+ioIIZ.SNRV+space+mes_HIA+space+_S0009_mn7);
+             if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn8, false) &&  //²ÄÆDIÄ²HIA36
+                 !ioIIZ.GetPropByPath("HIA").ContainsAny("", _S0009_mn8, false))
+                   Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn8+space+dis+space+IIZ+ioIIZ.SNRV+space+mes_HIA+space+_S0009_mn8);
             n++;
             I97 = haveRef(ioIZ, "IIO", _I97, "IIZ", n);
          }
 //       Â³äïîâ³äí³ñòü "Âèä äîêóìåíòà" ²Î ²Ä____________________________________"Ãðèô ñåêðåòíîñò³" ²Î ²Ä
-         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn8, false) &&      //²ÄÆDI²ÄÆDO01
-             !ioIZ.GetPropByPath("DO").ContainsAny("", _S0103_mn8, false))
-               Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn8+space+dis+space+mes_DO+space+_S0103_mn8);
-         if (ioIZ.GetPropByPath("DI").StartWithAny("", S0113_mn9_, false) &&    //²ÄÆDI²ÄÆDO02
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn9, false) &&      //²ÄÆDI²ÄÆDO01
              !ioIZ.GetPropByPath("DO").ContainsAny("", _S0103_mn9, false))
-               Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn9_+space+dis+space+mes_DO+space+_S0103_mn9);
+               Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn9+space+dis+space+mes_DO+space+_S0103_mn9);
+         if (ioIZ.GetPropByPath("DI").StartWithAny("", S0113_mn10_, false) &&   //²ÄÆDI²ÄÆDO02
+             !ioIZ.GetPropByPath("DO").ContainsAny("", _S0103_mn10, false))
+               Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn10_+space+dis+space+mes_DO+space+_S0103_mn10);
          if (ioIZ.GetPropByPath("DI").Contains("", S0113_805, false) &&         //²ÄÆDI²ÄÆDO03
              !ioIZ.GetPropByPath("DO").ContainsAny("", _S0103_805, false))
                Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_805+space+dis+space+mes_DO+space+_S0103_805);

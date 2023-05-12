@@ -73,7 +73,7 @@
   var S0027_UKR = "8010000000"
   var S0027_LC = "8100000100,9000000001"
   var S0027_RG = "8100000100,9000000002"
-  var listLE = "ІГОРЬ,ИГОР,КОНСТЯНТИН,ЗЕНОВ,ЗИНОВІЙ,ВЕЧЕС,АНАЛОЛИЙ,ГЕНА,АДНРІЙ,АЛЕКСІЙ"
+  var listLE = "ІГОРЬ,КОНСТЯНТИН,ЗЕНОВ,ЗИНОВІЙ,ВЕЧЕС,АНАЛОЛИЙ,ГЕНА,АДНРІЙ,АЛЕКСІЙ"
   var listLF = "ГЕНАД,ВАСИЛЬЙОВИЧ,АНРЕЕВИЧ,ВІТАЛИЙОВИЧ,НИКОЛАЄВНА,ГЕРГІЙОВИЧ,НИКОЛАЙОВИЧ,ЕВГЕЕВНА,ЕВГЕНИЕВИЧ,СЕРГЕЕВА,МИКОЛАЕВИЧ,НИКОЛЕЕВИЧ,ВОЛОДИМИРЫВНА,АНАТОЛИЕВИЧ"
   var lesLI = 19200000
   var nochar = " ,-,/,_,(,)"
@@ -122,7 +122,7 @@
   var mes_JA = "Невірне значення ВИД ДОКУМЕНТА"
   var mes_JB = "СЕРІЯ, НОМЕР ДОКУМЕНТА містить зайві символи: "
   var mes_BA = "Невірне значення ВИД ПРЕДМЕТУ"
-  var mes_BС = "НАЙМЕНУВАННЯ, НОМЕР містить зайві символи: "
+  var mes_BC = "НАЙМЕНУВАННЯ, НОМЕР містить зайві символи: "
 
 // Для всіх ІО у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -133,7 +133,7 @@
        var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ENP;EEP.DPP;EEP.DKP;EET.ENT;EET.DPT;EET.DKT;");
         var CL = ioLZ.GetPropByPath("CL");
         if (CL == null) CL = ioLZ.GetPropByPath("NN");
-        if (CL.Contains("", "?", false))
+        if (CL.Contains("", "?", false) || CL.Value1(0) == "")
         {
            var dt = new Date();
            var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -267,7 +267,7 @@
            for (var j = 0; j < JJ.Count; j++)
            {
              if (!JJ.GetPropByPath("JA", j).StartWith("", "7", false)) Errors.Add(LZ+ioLZ.SNRV+space+mes_JA);
-             if (JJ.GetPropByPath("JB", j).ContainsAny("", nochar, false)) Errors.Add(LZ+ioLZ.SNRV+space+mes_JB+nochar);
+             if (JJ.GetPropByPath("JB", j).ContainsAny("", nochar, false)) Warnings.Add(LZ+ioLZ.SNRV+space+mes_JB+nochar);
            }
            JJ = null;
 //LCЖBALCЖBA01 Перевірка "Вид предмету" ІО ОС (НЕ 7*)
@@ -277,7 +277,7 @@
            {
              if (BB.GetPropByPath("BA", j).StartWith("", "7", false)) Warnings.Add(LZ+ioLZ.SNRV+space+mes_BA);
              if (BB.GetPropByPath("BA", j).ContainsAny("", S0007_mn1, false) && BB.GetPropByPath("BC", j).ContainsAny("", nochar, false))
-                 Errors.Add(LZ+ioLZ.SNRV+space+mes_BС+nochar);
+                 Warnings.Add(LZ+ioLZ.SNRV+space+mes_BC+nochar);
            }
            BB = null;
 //LCЖLRLCЖLR01 Перевірка "Оперативна категорія" ІО ОС (НЕ *00)
@@ -295,7 +295,7 @@
        var ioRZ = SC.ReadIO("RZ", MessageIOs.SN(io), -1, "CG;NN;GC;YA;BB.BA;BB.BC;GD;GK;EEP.ADP;EEP.ENP;EET.EAR;");
         var CG = ioRZ.GetPropByPath("CG");
         if (CG == null) CG = ioRZ.GetPropByPath("NN");
-        if (CG.Contains("", "?", false))
+        if (CG.Contains("", "?", false) || CG.Value1(0) == "")
         {
 //RGЖGCRGЖGC01 Перевірка "Назва організації" ІО РГ
            var GC = ioRZ.GetPropByPath("GC");
@@ -306,7 +306,7 @@
            var BB = ioRZ.GetPropByPath("BB");
            for (var j = 0; j < BB.Count; j++)
             if (BB.GetPropByPath("BA", j).ContainsAny("", S0007_mn1, false) && BB.GetPropByPath("BC", j).ContainsAny("", nochar, false))
-                Errors.Add(RZ+ioRZ.SNRV+space+mes_BС+nochar);
+                Warnings.Add(RZ+ioRZ.SNRV+space+mes_BC+nochar);
            BB = null;
 //RGЖGDRGЖGD01 "Держналежність" ІО РГ відповідає пустому значенню
            var GD = ioRZ.GetPropByPath("GD");

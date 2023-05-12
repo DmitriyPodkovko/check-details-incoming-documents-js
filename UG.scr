@@ -5,7 +5,7 @@
   var S0105_mn1_ = "201001,202,203,204";                                          var _S0105_mn1_ = "20104"
 
 //"Стаття і кодекс" ІО КС_______________________________________________________"Проходять за справою" ІО КС
-  var S0105_31000001 = "31000001";
+  var S0105_70021202 = "70021202";
 
 //"Стаття і кодекс" ІО КС_______________________________________________________"Предмет кримінальної справи" ІО КС
   var S0105_mn2_ = "4207201,4213305";
@@ -66,13 +66,13 @@
              Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_2_+space+mes_2I2);//КСЖ2IКСЖ2I01
          if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false) && !ioUZ.GetPropByPath("2I").StartWith("", _S0105_mn1_, false))
              Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn1_+space+dis+space+_S0105_mn1_);//КСЖ2IКСЖ2I02
-         if ((ioUZ.GetPropByPath("2I").Contains("", S0105_31000001, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
+         if ((ioUZ.GetPropByPath("2I").Contains("", S0105_70021202, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
              (ioUZ.GetPropByPath("2I").StartWith("", _S0105_2_, false)))
-              Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_31000001+comma+S0105_2_+space+com+space+_S0105_2_);//КСЖ2IКСЖ2I03
+              Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_70021202+comma+S0105_2_+space+com+space+_S0105_2_);//КСЖ2IКСЖ2I03
 //КСЖ2IКСU1801 "Стаття і кодекс" ІО КС передбачає наявність тільки ІО ОС
-           if ((ioUZ.GetPropByPath("2I").Contains("", S0105_31000001, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
+           if ((ioUZ.GetPropByPath("2I").Contains("", S0105_70021202, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
                (haveRef(ioUZ, "U18", "U97", "LZ", 0) < 0))
-                Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_31000001+comma+S0105_2_+space+"передбачає наявність ОС");
+                Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_70021202+comma+S0105_2_+space+"передбачає наявність ОС");
 //       Відповідність "Стаття і кодекс" ІО КС__________________________________"Предмет кримінальної справи" ІО КС
          if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn2_, false) && !ioUZ.GetPropByPath("PU").Count > 0)
              Warnings.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn2_+space+emp+space+mes_PU);//КСЖ2IКСЖPU01

@@ -15,7 +15,7 @@
     {
        // Отримати зміст ІО ОД
        var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XF;");
-//       Відповідність ІО ОД__________________________"Підстава обмеження" ІО ОД
+//       Відповідність ІО ОД____________________________________________________"Підстава обмеження" ІО ОД
          if (!ioXZ.GetPropByPath("XF").ContainsAny("", _S0908_mn1, false))      //ОДЖXFОДЖXF01
               Errors.Add(XZ+ioXZ.SNRV+space+dis+space+mes_XF+space+_S0908_mn1);
        ioXZ.Clear();

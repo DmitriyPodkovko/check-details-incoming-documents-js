@@ -6,6 +6,12 @@
 
   var S0006_140446 = "140446";
 
+//"Пріоритетні завдання" ІО СІ__________________________________________________"Лінія роботи" ІО СІ
+  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
+  var S1000_2_ = "2";                                                             var _S0012_2 = "40"
+  var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
+  var S1000_4_ = "4";                                                             var _S0012_4 = "20"
+
 //"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО СІ
   var S0113_mn1 = "701,703,802";
 
@@ -24,9 +30,11 @@
   var mes_3L2 = "ФАКТИЧНУ ДАТУ ЗАКІНЧЕННЯ ПЕРЕВІРКИ"
   var mes_3K2 = "ВСТАНОВЛЕНУ ДАТУ ЗАКІНЧЕННЯ ПЕРЕВІРКИ"
   var mes_3N = "ОСТАТОЧНІ РЕЗУЛЬТАТИ ПЕРЕВІРКИ"
+  var mes_04 = "ЛІНІЇ РОБОТИ"
   var mes_05 = "СФЕРА ДІЯЛЬНОСТІ:"
   var mes_05_2 = "СФЕРІ ДІЯЛЬНОСТІ:"
   var mes_05_3 = "відповідає СФЕРІ ДІЯЛЬНОСТІ:"
+  var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
 
 // Для всіх ІО СІ у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -34,7 +42,7 @@
     if (MessageIOs.IO(io) == "SZ")
     {
        // Отримати зміст ІО СІ
-       var ioSZ = SC.ReadIO("SZ", MessageIOs.SN(io), -1, "20;3D;05;3K;3L;3N;");
+       var ioSZ = SC.ReadIO("SZ", MessageIOs.SN(io), -1, "20;3D;04;05;3K;3L;3N;PZ;");
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
 //СІЖ20СІЖ2001 Порівняння "Дата одержання сигналу" з поточною датою
@@ -63,13 +71,26 @@
          _3N = null;
          DateNow = null;
          dt = null;
-//       Відповідність "Сфера дiяльностi" ІО СІ_________"Сфера дiяльностi" ІО СІ
+//       Відповідність "Сфера дiяльностi" ІО СІ_________________________________"Сфера дiяльностi" ІО СІ
          if (ioSZ.GetPropByPath("05").ContainsAny("", S0006_mn1, false) &&      //SGЖ05SGЖ0501
              !ioSZ.GetPropByPath("05").StartWithAny("", _S0006_14_, false))
                Warnings.Add(SZ+ioSZ.SNRV+space+mes_05+space+S0006_mn1+space+dis+space+mes_05_2+space+_S0006_14_);
          if (ioSZ.GetPropByPath("05").ContainsAny("", S0006_mn1, false) &&
              ioSZ.GetPropByPath("05").ContainsAny("", S0006_140446, false))
                Warnings.Add(SZ+ioSZ.SNRV+space+mes_05+space+S0006_mn1+space+mes_05_3+space+S0006_140446);
+//       Відповідність "Пріоритетні завдання" ІО СІ_____________________________"Лінія роботи" ІО СІ
+         if (getbyThirdValue(ioSZ, "PZ", S1000_1_) &&                           //СІЖPZСІЖ0401
+             !ioSZ.GetPropByPath("04").ContainsAny("", _S0012_1, false))
+               Errors.Add(SZ+ioSZ.SNRV+space+mes_PZ+space+dis+space+mes_04+space+_S0012_1);
+         if (getbyThirdValue(ioSZ, "PZ", S1000_2_) &&                           //СІЖPZСІЖ0402
+             !ioSZ.GetPropByPath("04").ContainsAny("", _S0012_2, false))
+               Errors.Add(SZ+ioSZ.SNRV+space+mes_PZ+space+dis+space+mes_04+space+_S0012_2);
+         if (getbyThirdValue(ioSZ, "PZ", S1000_3_) &&                           //СІЖPZСІЖ0403
+             !ioSZ.GetPropByPath("04").ContainsAny("", _S0012_3, false))
+               Errors.Add(SZ+ioSZ.SNRV+space+mes_PZ+space+dis+space+mes_04+space+_S0012_3);
+         if (getbyThirdValue(ioSZ, "PZ", S1000_4_) &&                           //СІЖPZСІЖ0404
+             !ioSZ.GetPropByPath("04").ContainsAny("", _S0012_4, false))
+               Errors.Add(SZ+ioSZ.SNRV+space+mes_PZ+space+dis+space+mes_04+space+_S0012_4);
        ioSZ.Clear();
        ioSZ = null;
     }
@@ -101,6 +122,23 @@
        ioIZ.Clear();
        ioIZ = null;
     }
+  }
+
+// служ. функція перевірки третього значення в коді реквізиту
+  function getbyThirdValue(io, recvizit, thirdvalue)
+  {
+     var ThirdValueFound = false;
+     var rv = io.GetPropByPath(recvizit);
+     if (rv != null)
+       for (var j = 0; j < rv.Count; j++)
+       {
+           if ((rv.Value1(j) > 2) && (rv.Value1(j).substr(2, 1) == thirdvalue))
+           {
+              ThirdValueFound = true;
+              break;
+           }
+       }
+       return ThirdValueFound;
   }
 
 // служ. функція перевірка існування посилання в ІО

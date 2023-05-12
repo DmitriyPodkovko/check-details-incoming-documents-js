@@ -18,10 +18,11 @@
   var S0036_980306 = "980306";
 
 //"Пріоритетні завдання" ІО КС__________________________________________________"Лінія роботи" ІО КС
-  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31,50"
+  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
   var S1000_2_ = "2";                                                             var _S0012_2 = "40"
   var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
   var S1000_4_ = "4";                                                             var _S0012_4 = "20"
+  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
 
 //"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО КС
   var S0113_mn1 = "450,451,452,453,454,455,459,460,464,"+
@@ -91,6 +92,9 @@
          if (getbyThirdValue(ioUZ, "PZ", S1000_4_) &&                           //КСЖPZКСЖU804
              !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_4, false))
                Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_4);
+         if (getbyThirdValue(ioUZ, "PZ", S1000_5_) &&                           //КСЖPZКСЖU805
+             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_5, false))
+               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_5);
        ioUZ.Clear();
        ioUZ = null;
     }
@@ -99,9 +103,9 @@
     {
        // Отримати зміст ІО ІД
        var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DI;SF.I98;");
-//ІДЖDIІДЖSF01 "Вид документа" передбачає наявність ІО КС, а ІО КС відсутня
+//IDЖDIIDЖSF01 "Вид документа" передбачає наявність ІО КС, а ІО КС відсутня
          if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "UZ", 0) < 0))
-             Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn1+space+"передбачає наявність КС, а КС відсутній");
+             Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn1+space+"передбачає наявність КС, а КС відсутній");
        ioIZ.Clear();
        ioIZ = null;
     }

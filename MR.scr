@@ -14,10 +14,11 @@
   var S0018_mn4 = "511,512,513";                                                  var _S0002_8018 = "8018"
 
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
-  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31,50"
+  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
   var S1000_2_ = "2";                                                             var _S0012_2 = "40"
   var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
   var S1000_4_ = "4";                                                             var _S0012_4 = "20"
+  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
 
 //"Вид предмету" ІО ЗА__________________________________________________________"Найменування валюти" ІО ЗА
   var S0007_mn1 = "801,802,803,804";
@@ -68,6 +69,7 @@
   var mes_QA = "ОДИНИЦІ ВИМІРЮВАННЯ"
   var mes_QB = "КІЛЬКІСТЬ"
   var mes_MD = "ДАТА ПРОВЕДЕННЯ ЗАХОДУ"
+  var mes_IV = "ДАТА РЕЄСТРАЦІЇ ДОКУМЕНТА"
   var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
 
 // Для всіх ІО ІД у повідомленні
@@ -131,6 +133,9 @@
          if (getbyThirdValue(ioMZ, "PZ", S1000_4_) &&                           //ЗАЖPZЗАЖM804
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_4, false))
                Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_4);
+         if (getbyThirdValue(ioMZ, "PZ", S1000_5_) &&                           //ЗАЖPZЗАЖM805
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_5, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_5);
 
          var PD = ioMZ.GetPropByPath("PD");
            for (var j = 0; j < PD.Count; j++)
@@ -157,15 +162,21 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DI;SF.I98;");
-//ІДЖDIІДЖSF04 "Вид документа" передбачає наявність ІО ЗА, а ІО ЗА відсутній
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;IV;DI;SF.I98;");
+//ІДЖDIІДЖSF03 "Вид документа" передбачає наявність ІО ЗА, а ІО ЗА відсутній
          if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "MZ", 0) < 0))
              Errors.Add(IZ+ioIZ.SNRV+space+"ВИД ДОКУМЕНТА передбачає наявність ЗА, а ЗА відсутній");
          var n = 0;
          var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
          while (I98 >= 0)
          {
-            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;MB;M18;");
+            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;MB;MD;M18;");
+//ЗАЖMDІДЖIV01 Порівняння "Дата проведення заходу" з "Дата реєстрації документа"
+            var MD = ioMZ.GetPropByPath("MD").Value1(0);
+            var IV = ioIZ.GetPropByPath("IV").Value1(0);
+            if (MD != "" && IV != "" && MD > IV) Errors.Add(MZ+ioMZ.SNRV+space+mes_MD+space+more+space+IZ+ioIZ.SNRV+space+mes_IV);
+            MD = null;
+            IV = null;
 //IDЖDDMRЖMB01 IDЖDDMRM1801 Перевірка відповідності "Підрозділ" ІО ІД й ІО ЗА
             if (ioIZ.GetPropByPath("DD").Value1(0).substr(0,5) != ioMZ.GetPropByPath("MB").Value1(0).substr(0,5))
                  Warnings.Add(unDep+space+IZ+ioIZ.SNRV+space+MZ+ioMZ.SNRV+space+mes_MB);

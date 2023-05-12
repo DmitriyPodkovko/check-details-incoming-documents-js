@@ -79,10 +79,11 @@
   var S0999_06_ = "06";                                                           var _S0012_06 = "20"
 
 //"Пріоритетні завдання" ІО ІД__________________________________________________"Лінія роботи" ІО ІД
-  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31,50"
+  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
   var S1000_2_ = "2";                                                             var _S0012_2 = "40"
   var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
   var S1000_4_ = "4";                                                             var _S0012_4 = "20"
+  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
 
   var space = " "
   var comma = ","
@@ -369,6 +370,9 @@
          if (getbyThirdValue(ioIZ, "PZ", S1000_4_) &&                           //ІДЖPZІДЖD604
              !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_4, false))
                Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_4);
+         if (getbyThirdValue(ioIZ, "PZ", S1000_5_) &&                           //ІДЖPZІДЖD605
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_5, false))
+               Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_5);
 
        ioIZ.Clear();
        ioIZ = null;

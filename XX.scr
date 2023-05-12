@@ -10,11 +10,15 @@
 
   var space = " "
   var XZ = "ОД."
+  var DZ = "СП."
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
   var noemp = "не передбачає заповнення"
   var mes_XD = "ТЕРМІН ДІІ ОБМЕЖЕННЯ"
   var mes_XF = "ПІДСТАВА ОБМЕЖЕННЯ"
+  var mes_CD = "РЕЄСТРАЦІЙНИЙ НОМЕР СІ/СП/ІД"
+  var mes_1H = "РЕЄСТРАЦІЙНИЙ НОМЕР СПРАВИ"
+
 
 // Для всіх ІО ОД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -22,7 +26,7 @@
     if (MessageIOs.IO(io) == "XZ")
     {
        // Отримати зміст ІО ОД
-       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XD;XF;");
+       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XD;XF;CD;");
 //       Відповідність ІО ОД____________________________________________________"Підстава обмеження" ІО ОД
          if (!ioXZ.GetPropByPath("XF").ContainsAny("", _S0908_mn1, false))      //ОДЖXFОДЖXF01
               Errors.Add(XZ+ioXZ.SNRV+space+dis+space+mes_XF+space+_S0908_mn1);
@@ -31,6 +35,28 @@
              Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_26+space+emp+space+mes_XD);//ОДЖXFОДЖXD01
          if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false) && ioXZ.GetPropByPath("XD").Value1(0) !== "")
              Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+space+noemp+space+mes_XD);//ОДЖXFОДЖXD02
+//ОДЖСDСПЖ1H01
+         var isTrue = false;
+         var isDZ = false;
+         for (var io2 = 0; io2 < MessageIOs.Count; io2++)
+         {
+           if (MessageIOs.IO(io2) == "DZ")
+           {
+              isDZ = true;
+              // Отримати зміст ІО СП
+              var ioDZ = SC.ReadIO("DZ", MessageIOs.SN(io2), -1, "1H;1K;");
+              if ((ioXZ.GetPropByPath("XF").Contains("", S0908_02, false) && ioDZ.GetPropByPath("1K").Value1(0) == "") &&
+                  (ioXZ.GetPropByPath("CD").Value1(0) == ioDZ.GetPropByPath("1H").Value1(0)))
+              {
+                   isTrue = true;
+                   break;
+              }
+              ioDZ.Clear();
+              ioDZ = null;
+           }
+         }
+         if (isDZ && (!isTrue)) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+" при незакритій СП "+dis+space+mes_CD+"="+mes_1H);
+//
        ioXZ.Clear();
        ioXZ = null;
     }

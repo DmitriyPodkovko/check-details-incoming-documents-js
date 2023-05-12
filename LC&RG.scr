@@ -137,10 +137,12 @@
         {
            var dt = new Date();
            var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
-//ОСЖLIОСЖLI01 Перевірка "Дата народження" (від 1920р до поточна дата-8р)
+//LCЖLILCЖLI01 Перевірка "Дата народження" (кількість реалізацій реквізиту не повинна бути > 1)
+//LCЖLILCЖLI02 Перевірка "Дата народження" (від 1920р до поточна дата-8р)
            var LI = ioLZ.GetPropByPath("LI");
+           if (LI.Count > 1) Warnings.Add(LZ+ioLZ.SNRV+space+mes_LI+space+"містить більше 1 реалізації");
            for (var j = 0; j < LI.Count; j++)
-            if (LI.Value1(j) > DateNow - 80000 || LI.Value1(j) < lesLI) Warnings.Add(LZ+ioLZ.SNRV+space+"Некоректна "+mes_LI+space+"("+LI.Value2(j)+")");
+            if (LI.Value1(j) > DateNow - 80000 || LI.Value1(j) < lesLI) Warnings.Add(LZ+ioLZ.SNRV+space+"Некоректна"+space+mes_LI+space+"("+LI.Value2(j)+")");
 //LCЖSSLCЖSS01 "Трудова діяльність" відповідає пустому значенню "Соціальний стан"
 //ОСЖTCОСЖTC01 Порівняння "Початкова дата" з "Кінцева дата" "Трудова діяльність"
            var TT = ioLZ.GetPropByPath("TT");
@@ -231,7 +233,7 @@
 //LCЖLJLCЖLJ02 Перевірка "Громадянство"
             for (var j = 0; j < LJ.Count; j++)
              if ((S0027_LC.indexOf(LJ.Value1(j)) < 0) && (LJ.Value1(j).substr(3, 7) != S0027_0))
-                  Warnings.Add(LZ+ioLZ.SNRV+space+"Некоректне "+mes_LJ+space+"("+LJ.Value2(j)+")")
+                  Warnings.Add(LZ+ioLZ.SNRV+space+"Некоректне"+space+mes_LJ+space+"("+LJ.Value2(j)+")")
 //LCЖLJLCЖLF01 "Громадянство" відповідає пустому значенню "По батькові/Друге ім`я"
 //LCЖLFLCЖLF01 LCЖLELCЖLE01 Коректність заповнення "Ім`я", "По батькові/Друге ім`я"
 //LCЖLFLCЖLH01 LCЖLFLCЖLH02 Відповідність значень реквізитів "По батькові/Друге ім`я", "Стать"
@@ -262,7 +264,7 @@
            LC = null;
            LJ = null;
 //ОСЖJAОСЖJA01 Перевірка "Вид документа" ІО ОС (7*)
-//ОСЖJBОСЖJB01 Перевірка "Серія, номер документа" ІО ОС
+//LCЖJBLCЖJB01 Перевірка "Серія, номер документа" ІО ОС
            var JJ = ioLZ.GetPropByPath("JJ");
            for (var j = 0; j < JJ.Count; j++)
            {
@@ -271,7 +273,7 @@
            }
            JJ = null;
 //LCЖBALCЖBA01 Перевірка "Вид предмету" ІО ОС (НЕ 7*)
-//ОСЖBAОСЖBC01 Відповідність "Вид предмету" ІО ОС_______________________________"Найменування, номер" ІО ОС
+//LCЖBALCЖBC01 Відповідність "Вид предмету" ІО ОС_______________________________"Найменування, номер" ІО ОС
            var BB = ioLZ.GetPropByPath("BB");
            for (var j = 0; j < BB.Count; j++)
            {
@@ -302,7 +304,7 @@
            for (var j = 0; j < GC.Count; j++)
             if (haveEng(GC.Value1(j)) && haveRus(GC.Value1(j))) Warnings.Add(RZ+ioRZ.SNRV+space+mes_GC);
            GC = null;
-//РГЖBAРГЖBC01 Відповідність "Вид предмету" ІО РГ_______________________________"Найменування, номер" ІО РГ
+//RGЖBARGЖBC01 Відповідність "Вид предмету" ІО РГ_______________________________"Найменування, номер" ІО РГ
            var BB = ioRZ.GetPropByPath("BB");
            for (var j = 0; j < BB.Count; j++)
             if (BB.GetPropByPath("BA", j).ContainsAny("", S0007_mn1, false) && BB.GetPropByPath("BC", j).ContainsAny("", nochar, false))

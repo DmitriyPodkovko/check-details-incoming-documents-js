@@ -33,7 +33,7 @@
          if (ioIIZ.GetPropByPath("HIA").ContainsAny("", S0009_mn1, false) && H07 == "")
              Errors.Add(IIZ+ioIIZ.SNRV+space+mes_HIA+space+S0009_mn1+space+emp+space+mes_H07);//ДІHIAДІH0701
 //ДІH08ІДЖIV01 Порівняння "Дата зняття з обліку в ОДП" ІО ДІ з "Дата реєстрації документа" ІО ІД
-         if (H08 != "" && IV != "" && H08 < IV) Errors.Add(IIZ+ioIIZ.SNRV+space+mes_H08+space+less+space+IZ+ioIZ.SNRV+space+mes_IV);
+         if (H08 != "" && IV != "" && H08 < IV) Warnings.Add(IIZ+ioIIZ.SNRV+space+mes_H08+space+less+space+IZ+ioIZ.SNRV+space+mes_IV);
 //ДІH08ДІH0701 Порівняння "Дата зняття з обліку в ОДП" з "Дата постановки на облік в ОДП" ІО ДІ
          if (H08 != "" && H07 != "" && H08 <= H07) Errors.Add(IIZ+ioIIZ.SNRV+space+mes_H08+space+less+space+mes_H07);
          H08 = null;

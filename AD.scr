@@ -2,7 +2,9 @@
 
   var space = " "
   var AZ = "АД."
+  var S0027_27 = "8012700000,8012701000"
   var emp = "відповідає пустому значенню"
+  var mes_EA = "КРАЇНА, АТО"
   var mes_EF = "НАЗВА ВУЛИЦІ"
   var mes_EG = "НОМЕР БУДИНКУ"
 
@@ -12,7 +14,10 @@
     if (MessageIOs.IO(io) == "AZ")
     {
        // Отримати зміст ІО АД
-       var ioAZ = SC.ReadIO("AZ", MessageIOs.SN(io), -1, "EF;EG;EH;EK;");
+       var ioAZ = SC.ReadIO("AZ", MessageIOs.SN(io), -1, "EA;EF;EG;EH;EK;");
+//ADЖEAADЖEA01 Перевірка "Країна, АТО"
+         if (((S0027_27.indexOf(ioAZ.GetPropByPath("EA").Value1(0)) < 0) && (ioAZ.GetPropByPath("EA").StartWith("", "801", false) && ioAZ.GetPropByPath("EA").EndWith("", "000", false))))
+               Warnings.Add(AZ+ioAZ.SNRV+space+"Некоректна"+space+mes_EA+space+"("+ioAZ.GetPropByPath("EA").Value2(0)+")");
 //АДЖEKАДЖEF01 АДЖEHАДЖEF01 "Назва вулиці" відповідає пустому значенню "Номер квартири" "Номер корпусу"
          if ((ioAZ.GetPropByPath("EK").Value1(0) != "" || ioAZ.GetPropByPath("EH").Value1(0) != "") && ioAZ.GetPropByPath("EF").Value1(0) == "")
               Errors.Add(AZ+ioAZ.SNRV+space+mes_EF+space+emp);

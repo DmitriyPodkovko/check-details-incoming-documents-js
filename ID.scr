@@ -89,6 +89,9 @@
   var com = "â³äïîâ³äàº"
   var dis = "íå â³äïîâ³äàº"
   var more = "á³ëüøà çà"
+  var listDG = "ï.ð.,ÏÎÒÎ×ÍÎÃÎ ÐÎÊÓ,ïîòî÷íîãî ðîêó,ÒÅÊÓÙÅÃÎ ÃÎÄÀ,òåêóùåãî ãîäà,ÖÜÎÃÎ ÐÎÊÓ,öüîãî ðîêó,ÝÒÎÃÎ ÃÎÄÀ,ýòîãî ãîäà,ÌÈÍÓËÎÃÎ ÐÎÊÓ,ìèíóëîãî ðîêó,ÏÐÎØËÎÃÎ ÃÎÄÀ,ïðîøëîãî ãîäà,ÄÀÍÈÉ ×ÀÑ,äàíèé ÷àñ,ÄÀÍÍÎÅ ÂÐÅÌß,äàííîå âðåìÿ,ÒÅÏÅÐ²ØÍ²É ×ÀÑ,òåïåð³øí³é ÷àñ,ÍÀÑÒÎßÙÅÅ ÂÐÅÌß,íàñòîÿùåå âðåìÿ"
+  var listDG2 = "ï.ð.,ÏÎÒÎ×ÍÎÃÎ ÐÎÊÓ,ÒÅÊÓÙÅÃÎ ÃÎÄÀ,ÖÜÎÃÎ ÐÎÊÓ,ÝÒÎÃÎ ÃÎÄÀ,ÌÈÍÓËÎÃÎ ÐÎÊÓ,ÏÐÎØËÎÃÎ ÃÎÄÀ,ÄÀÍÈÉ ×ÀÑ,ÄÀÍÍÎÅ ÂÐÅÌß,ÒÅÏÅÐ²ØÍ²É ×ÀÑ,ÍÀÑÒÎßÙÅÅ ÂÐÅÌß"
+  var mes_DG = "ÇÌ²ÑÒ ÄÎÊÓÌÅÍÒÀ"
   var mes_Date = "ïîòî÷íó äàòó"
   var mes_DI = "ÂÈÄ ÄÎÊÓÌÅÍÒÀ:"
   var mes_DJ = "ÒÅÌÀÒÈ×ÍÈÉ ÏÅÐÅË²Ê ²ÍÔÎÐÌÀÖ²¯:"
@@ -111,16 +114,18 @@
     {
        // Îòðèìàòè çì³ñò ²Î ²Ä
        var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DE;DG;DJ;DI;DO;IV;DZ;SA;D6;IIO.I97;IIO.II3;PZ;");
-//IDÆDGIDÆDG01 Ïåðåâ³ðêà íà çàïîâíåííÿ "Çì³ñò äîêóìåíòà (ðåôåðàò)"
+//IDÆDGIDÆDG01 IDÆDGIDÆDG02 Ïåðåâ³ðêà "Çì³ñò äîêóìåíòà"
          var DG = ioIZ.GetPropByPath("DG");
+         if (DG.ContainsAny("", listDG, false)) Warnings.Add(IZ+ioIZ.SNRV+space+mes_DG+space+"ì³ñòèòü:"+space+listDG2);
          if (DG.Count > 0)
          {
            for (var j = 0; j < DG.Count; j++)
            {
              var len = DG.Value1(j).length;
-             if (len < 25) Warnings.Add(IZ+ioIZ.SNRV+space+"Êîðîòêèé ÇÌ²ÑÒ ÄÎÊÓÌÅÍÒÀ (ÐÅÔÅÐÀÒ) (" + len + " ñèìâîëè)");
+             if (len < 25) Warnings.Add(IZ+ioIZ.SNRV+space+"Êîðîòêèé"+space+mes_DG+space+"(" + len + " ñèìâîëè)");
+
            }
-         } else Errors.Add(IZ+ioIZ.SNRV+space+"Â³äñóòí³é ÇÌ²ÑÒ ÄÎÊÓÌÅÍÒÀ (ÐÅÔÅÐÀÒ)");
+         } else Errors.Add(IZ+ioIZ.SNRV+space+"Â³äñóòí³é"+space+mes_DG);
          DG = null;
 //IDÆPZIDÆPZ01 Ïåðåâ³ðêà "Ïð³îðèòåòí³ çàâäàííÿ" (ÍÅ 9*)
          if (ioIZ.GetPropByPath("PZ").StartWith("", "9", false)) Warnings.Add(IZ+ioIZ.SNRV+space+"Íåâ³ðíå çíà÷åííÿ"+space+mes_PZ);

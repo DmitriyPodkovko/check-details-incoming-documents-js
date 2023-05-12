@@ -66,7 +66,12 @@
   var space = " "
   var IZ = "²Ä."
   var PZ = "ÏÄ."
+  var DZ = "ÑÏ."
+  var SZ = "Ñ²."
   var dis = "íå â³äïîâ³äàº"
+  var listPR = "ï.ð.,ÏÎÒÎ×ÍÎÃÎ ÐÎÊÓ,ïîòî÷íîãî ðîêó,ÒÅÊÓÙÅÃÎ ÃÎÄÀ,òåêóùåãî ãîäà,ÖÜÎÃÎ ÐÎÊÓ,öüîãî ðîêó,ÝÒÎÃÎ ÃÎÄÀ,ýòîãî ãîäà,ÌÈÍÓËÎÃÎ ÐÎÊÓ,ìèíóëîãî ðîêó,ÏÐÎØËÎÃÎ ÃÎÄÀ,ïðîøëîãî ãîäà,ÄÀÍÈÉ ×ÀÑ,äàíèé ÷àñ,ÄÀÍÍÎÅ ÂÐÅÌß,äàííîå âðåìÿ,ÒÅÏÅÐ²ØÍ²É ×ÀÑ,òåïåð³øí³é ÷àñ,ÍÀÑÒÎßÙÅÅ ÂÐÅÌß,íàñòîÿùåå âðåìÿ"
+  var listPR2 = "ï.ð.,ÏÎÒÎ×ÍÎÃÎ ÐÎÊÓ,ÒÅÊÓÙÅÃÎ ÃÎÄÀ,ÖÜÎÃÎ ÐÎÊÓ,ÝÒÎÃÎ ÃÎÄÀ,ÌÈÍÓËÎÃÎ ÐÎÊÓ,ÏÐÎØËÎÃÎ ÃÎÄÀ,ÄÀÍÈÉ ×ÀÑ,ÄÀÍÍÎÅ ÂÐÅÌß,ÒÅÏÅÐ²ØÍ²É ×ÀÑ,ÍÀÑÒÎßÙÅÅ ÂÐÅÌß"
+  var mes_PR = "ÇÌ²ÑÒ ÏÐÎÒÈÏÐÀÂÍÎ¯ Ä²¯"
   var mes_DZ = "ÏÐÎÁËÅÌÀÒÈÊÀ Â²ÄÎÌÎÑÒÅÉ:"
   var mes_DZ2 = "ÏÐÎÁËÅÌÀÒÈÖ² Â²ÄÎÌÎÑÒÅÉ:"
   var mes_DZ3 = "â³äïîâ³äàº ÏÐÎÁËÅÌÀÒÈÖ² Â²ÄÎÌÎÑÒÅÉ:"
@@ -78,8 +83,10 @@
   {
     if (MessageIOs.IO(io) == "PZ")
     {
-       // Îòðèìàòè çì³ñò ²Î ÀÄ
-       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "DZ;");
+       // Îòðèìàòè çì³ñò ²Î ÏÄ
+       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;DZ;DU.D83;SG.S73;OD.O83;");
+//PDÆPRPDÆPR01 Ïåðåâ³ðêà íà çàïîâíåííÿ "Çì³ñò ïðîòèïðàâíî¿ ä³¿"
+         if (ioPZ.GetPropByPath("PR").ContainsAny("", listPR, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"ì³ñòèòü:"+space+listPR2);
 //       Â³äïîâ³äí³ñòü "Ïðîáëåìàòèêà â³äîìîñòåé" ²Î ÏÄ__________________________"Ïðîáëåìàòèêà â³äîìîñòåé" ²Î ÏÄ
          if (ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_mn1, false) &&      //PDÆDZPDÆDZ01
              !ioPZ.GetPropByPath("DZ").StartWithAny("", _S0006_14_, false))
@@ -87,6 +94,28 @@
          if (ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_mn1, false) &&
              ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_140446, false))
               Warnings.Add(PZ+ioPZ.SNRV+space+mes_DZ+space+S0006_mn1+space+mes_DZ3+space+S0006_140446);
+//ÏÄÆDUÏÄÆOD01 Â ²Î Ñ² íå çàäàíî "Ôàêòè÷íà äàòà çàê³í÷åííÿ ïåðåâ³ðêè", à â ²Î ÏÄ â³äñóòíº ïîñèëàííÿ íà ²Î ÎÄ
+         var n = 0;
+         var snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n)
+         while (snDZ >= 0)
+         {
+            var ioDZ = SC.ReadIO("DZ", snDZ, -1, "1K;");
+            if ((ioDZ.GetPropByPath("1K").Value1(0) == "") && (haveRef(ioPZ, "OD", "O83", "XZ", 0) < 0))
+                 Errors.Add("Â "+DZ+ioDZ.SNRV+" íå çàäàíî ÄÀÒÀ ÇÀÊÐÈÒÒß ÑÏÐÀÂÈ, à â "+PZ+ioPZ.SNRV+" â³äñóòíº ïîñèëàííÿ íà ÎÄ");
+            n++;
+            snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
+         }
+//ÏÄÆSGÏÄÆOD01 Â ²Î Ñ² íå çàäàíî "Ôàêòè÷íà äàòà çàê³í÷åííÿ ïåðåâ³ðêè", à â ²Î ÏÄ â³äñóòíº ïîñèëàííÿ íà ²Î ÎÄ
+         var n = 0;
+         var snSZ = haveRef(ioPZ, "SG", "S73", "SZ", n)
+         while (snSZ >= 0)
+         {
+            var ioSZ = SC.ReadIO("SZ", snSZ, -1, "3L;");
+            if ((ioSZ.GetPropByPath("3L").Value1(0) == "") && (haveRef(ioPZ, "OD", "O83", "XZ", 0) < 0))
+                 Errors.Add("Â "+SZ+ioSZ.SNRV+" íå çàäàíî ÔÀÊÒÈ×ÍÀ ÄÀÒÀ ÇÀÊ²Í×ÅÍÍß ÏÅÐÅÂ²ÐÊÈ, à â "+PZ+ioPZ.SNRV+" â³äñóòíº ïîñèëàííÿ íà ÎÄ");
+            n++;
+            snSZ = haveRef(ioPZ, "SG", "S73", "SZ", n);
+         }
 
        ioPZ.Clear();
        ioPZ = null;

@@ -9,14 +9,14 @@
   var S0113_104 = "104";                                                          var _S0009_104 = "04"
   var S0113_105 = "105";                                                          var _S0009_105 = "06"
   var S0113_108 = "108";                                                          var _S0009_108 = "12"
-  var S0113_111 = "111";                                                          var _S0009_111 = "10,11,20,21,25"
-  var S0113_112 = "112";                                                          var _S0009_112 = "10,11,25"
+  var S0113_111 = "111";                                                          var _S0009_111 = "10,11,20,21,23,25"
+  var S0113_112 = "112";                                                          var _S0009_112 = "10,11,23,25"
   var S0113_113 = "113";                                                          var _S0009_113 = "04,08"
   var S0113_115 = "115";                                                          var _S0009_115 = "17"
   var S0113_116 = "116";                                                          var _S0009_116 = "25"
   var S0113_119 = "119";                                                          var _S0009_119 = "01,03,04,09,10,11,12,27"
   var S0113_122 = "122";                                                          var _S0009_122 = "28"
-  var S0113_123 = "123";                                                          var _S0009_123 = "10,11,19"
+  var S0113_123 = "123";                                                          var _S0009_123 = "10,11,19,23"
   var S0113_304 = "304";                                                          var _S0009_304 = "24"
   var S0113_457 = "457";                                                          var _S0009_457 = "10,11,19,24"
   var S0113_503 = "503";                                                          var _S0009_503 = "13,24"
@@ -24,7 +24,7 @@
   var S0113_805 = "805";                                                          var _S0009_805 = "14,19,29"
   var S0113_806 = "806";                                                          var _S0009_806 = "10,11,20,21,24,25"
   var S0113_808 = "808";                                                          var _S0009_808 = "18"
-  var S0113_811 = "811";                                                          var _S0009_811 = "10,11,13,19,20,21,24,25"
+  var S0113_811 = "811";                                                          var _S0009_811 = "10,11,13,19,20,21,23,24,25"
   var S0113_812 = "812";                                                          var _S0009_812 = "10,11,19,20,21,24,25"
   var S0113_818 = "818";                                                          var _S0009_818 = "20,21"
   var S0113_819 = "819";                                                          var _S0009_819 = "10,11,25"
@@ -35,7 +35,7 @@
   var S0113_mn3 = "305,504";                                                      var _S0009_mn3 = "10,11,24,25"
   var S0113_mn4 = "450,451,452,453,454,455,456,461,464,465,466";                  var _S0009_mn4 = "10,11,13,19,20,21,24"
   var S0113_mn5 = "458,459,460,462,463,801,809,810";                              var _S0009_mn5 = "19"
-  var S0113_mn6 = "601,602,603,604,605,606,607,608,609,813";                      var _S0009_mn6 = "10,11,24"
+  var S0113_mn6 = "601,602,603,604,605,606,607,608,609,813";                      var _S0009_mn6 = "10,11,23,24"
   var S0113_mn7 = "401,412,414,421,422,431,704,802";                              var _S0009_mn7 = "10,11,20,21"
 
 //"Âèä äîêóìåíòà" ²Î ²Ä_________________________________________________________"Ãðèô ñåêðåòíîñò³" ²Î ²Ä
@@ -258,7 +258,7 @@
                    Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn5+space+dis+space+IIZ+ioIIZ.SNRV+space+mes_HIA+space+_S0009_mn5);
              if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn6, false) &&  //²ÄÆDIÄ²HIA33
                  !ioIIZ.GetPropByPath("HIA").ContainsAny("", _S0009_mn6, false))
-                   Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn6+space+dis+space+IIZ+ioIIZ.SNRV+space+mes_HIA2+space+_S0009_mn6);
+                   Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn6+space+dis+space+IIZ+ioIIZ.SNRV+space+mes_HIA+space+_S0009_mn6);
              if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn7, false) &&  //²ÄÆDIÄ²HIA34
                  !ioIIZ.GetPropByPath("HIA").ContainsAny("", _S0009_mn7, false))
                    Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn7+space+dis+space+IIZ+ioIIZ.SNRV+space+mes_HIA+space+_S0009_mn7);

@@ -69,7 +69,7 @@
              !(ioUZ.GetPropByPath("2I").Contains("", _S0105_mn1, false) || ioUZ.GetPropByPath("2I").StartWith("", _S0105_mn1_, false)))
                Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn1_+space+dis+space+_S0105_mn1+comma+_S0105_mn1_);
          if ((ioUZ.GetPropByPath("2I").Contains("", S0105_31000001, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
-             (ioUZ.GetPropByPath("2I").Contains("", _S0105_2_, false)))
+             (ioUZ.GetPropByPath("2I").StartWith("", _S0105_2_, false)))
               Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_31000001+comma+S0105_2_+space+com+space+_S0105_2_);//КСЖ2IКСЖ2I03
 //КСЖ2IКСU1801 "Стаття і кодекс" ІО КС передбачає наявність тільки ІО ОС
            if ((ioUZ.GetPropByPath("2I").Contains("", S0105_31000001, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&

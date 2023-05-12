@@ -3,10 +3,18 @@
 // ІО ОД________________________________________________________________________"Підстава обмеження" ІО ОД
                                                                                   var _S0908_mn1 = "01,02,26,27";
 
+//"Підстава обмеження" ІО ОД____________________________________________________"Термін дії обмеження" ІО ОД
+  var S0908_26 = "26";
+  var S0908_02 = "02";
+
+
   var space = " "
   var XZ = "ОД."
   var dis = "не відповідає"
-  var mes_XF = "ПІДСТАВІ ОБМЕЖЕННЯ:"
+  var emp = "відповідає пустому значенню"
+  var noemp = "не передбачає заповнення"
+  var mes_XD = "ТЕРМІН ДІІ ОБМЕЖЕННЯ"
+  var mes_XF = "ПІДСТАВА ОБМЕЖЕННЯ"
 
 // Для всіх ІО ОД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -14,10 +22,15 @@
     if (MessageIOs.IO(io) == "XZ")
     {
        // Отримати зміст ІО ОД
-       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XF;");
+       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XD;XF;");
 //       Відповідність ІО ОД____________________________________________________"Підстава обмеження" ІО ОД
          if (!ioXZ.GetPropByPath("XF").ContainsAny("", _S0908_mn1, false))      //ОДЖXFОДЖXF01
               Errors.Add(XZ+ioXZ.SNRV+space+dis+space+mes_XF+space+_S0908_mn1);
+//       Відповідність "Підстава обмеження" ІО ОД_______________________________"Термін дії обмеження" ІО ОД
+         if (ioXZ.GetPropByPath("XF").Contains("", S0908_26, false) && ioXZ.GetPropByPath("XD").Value1(0) == "")
+             Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_26+space+emp+space+mes_XD);//ОДЖXFОДЖXD01
+         if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false) && ioXZ.GetPropByPath("XD").Value1(0) !== "")
+             Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+space+noemp+space+mes_XD);//ОДЖXFОДЖXD02
        ioXZ.Clear();
        ioXZ = null;
     }

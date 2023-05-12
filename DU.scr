@@ -3,19 +3,26 @@
 // ІО СП________________________________________________________________________"Категорія джерела" ІО ДІ
                                                                                   var _S0009_mn1 = "01,03,04,06,08,09,10,11,12,13,14,15,16,18,19,20,21,27,28,29";
 
-//"Вид справи" ІО СП____________________________________________________________"Класифікація справи" ІО СП
-  var S0019_1_ = "1";                                                             var _S0020_000 = "000";
-                                                                                  var _S0020_599 = "599";
-
-  var S0019_2_ = "2";                                                             var _S0020_600 = "600";
-                                                                                  var _S0020_612 = "612";
-                                                                                  
-//"Вид справи" ІО СП____________________________________________________________"Причина закриття справи" ІО СП
-                                                                                  var _S0055_0_ = "0";
-                                                                                  var _S0055_5_ = "5";
-
 //"Вид справи" ІО СП____________________________________________________________"Об'єкт справи" ІО СП
-  var S0019_mn8 = "23,24"
+  var S0019_mn1 = "12,13,20,21"
+  var S0019_mn2= "22,23"
+  var S0019_mn3 = "23,24"
+  var S0019_mn4 = "10,11,12,13,20,21"
+
+//Відповідність "Вид справи" ІО СП______________________________________________"Оперативна категорія особи" ІО ОС
+  var S0019_mn5 = "10,11,12,13";                                                  var _S0002_SP50 = "СП50";
+                                                                                  var _S0002_SP56 = "СП56";
+  var S0019_mn6 = "20,21";                                                        var _S0002_SP00 = "СП00";
+                                                                                  var _S0002_SP40 = "СП40";
+  
+//Відповідність "Вид справи" ІО СП______________________________________________"Оперативна категорія організації" ІО РГ
+                                                                                  var _S0003_SP00 = "СП00";
+                                                                                  var _S0003_SP32 = "СП32";
+
+//"Вид справи" ІО СП____________________________________________________________"Причина закриття справи" ІО СП
+  var S0019_1_ = "1";                                                             var _S0055_0_ = "0";
+                                                                                  var _S0055_25 = "25";
+  var S0019_2_ = "2";                                                             var _S0055_5_ = "5";
 
 //"Сфера дiяльностi" ІО СП______________________________________________________"Сфера дiяльностi" ІО СП
   var S0006_mn1 = "010150,110170,110180,110185,110190,110195,110200,"+
@@ -33,10 +40,15 @@
                    "411,412,413,414,462,463,481,501";                             var _S0019_mn13 = "10,11,12,13,62,63,64,65,66,67,68,69,70,71,72,73"
   var S0113_mn14 = "110,302,421,422,425,426,427,429,430,431,432,482,502";         var _S0019_mn14 = "20,21,22,23,24,25,74,75,76,77,78,79,80"
 
+//"Вид документа", "Дата реєстрації документа" ІО ІД____________________________"Дата закриття справи" ІО СП
+  var S0113_406 = "406";
+
   var space = " "
   var comma = ","
   var IZ = "ІД."
   var DZ = "СП."
+  var LZ = "ОС."
+  var RZ = "РГ."
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
   var more = "більша за"
@@ -44,11 +56,13 @@
   var unDep = "Не співпадають ПІДРОЗДІЛИ"
   var mes_Date = "поточну дату"
   var mes_DI = "ВИД ДОКУМЕНТА:"
+  var mes_IV = "ДАТА РЕЄСТРАЦІЇ ДОКУМЕНТА"
   var mes_D08 = "ЛІНІЇ РОБОТИ"
   var mes_D09 = "СФЕРА ДІЯЛЬНОСТІ:"
   var mes_D09_2 = "СФЕРІ ДІЯЛЬНОСТІ:"
   var mes_D09_3 = "відповідає СФЕРІ ДІЯЛЬНОСТІ:"
   var mes_HIA = "КАТЕГОРІЇ ДЖЕРЕЛА:"
+  var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
   var mes_1E = "ВИД СПРАВИ:"
   var mes_1D = "КЛАСИФІКАЦІЇ СПРАВИ:"
   var mes_1L = "ПРИЧИНА ЗАКРИТТЯ СПРАВИ"
@@ -66,7 +80,7 @@
     if (MessageIOs.IO(io) == "DZ")
     {
        // Отримати зміст ІО СП
-       var ioDZ = SC.ReadIO("DZ", MessageIOs.SN(io), -1, "1D;1E;1L;1K;1M;D3;DP;D08;D09;D10;D18.D97;IIO.58;IIO.II3;PZ;");
+       var ioDZ = SC.ReadIO("DZ", MessageIOs.SN(io), -1, "C1;NN;1D;1E;1L;1K;1M;D3;DP;D08;D09;D10;D18.D97;IIO.58;IIO.II3;PZ;");
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
 //СПЖD3СПЖD301 Порівняння "Дата заведення справи" з поточною датою
@@ -86,7 +100,7 @@
 //СПЖ1KСПЖDP01 Порівняння "Дата закриття справи" з "Дата тимчасового припинення ведення справи"
          if (_1K != "" && DP != "" && _1K < DP) Errors.Add(DZ+ioDZ.SNRV+space+mes_1K+space+less+space+mes_DP);
 //СПЖ1KСПЖ1M01 Порівняння "Дата закриття справи" з "Дата поновлення ведення справи"
-         if (_1K != "" && DP != "" && _1K < _1M) Errors.Add(DZ+ioDZ.SNRV+space+mes_1K+space+less+space+mes_1M);
+         if (_1K != "" && _1M != "" && _1K < _1M) Errors.Add(DZ+ioDZ.SNRV+space+mes_1K+space+less+space+mes_1M);
 //СПЖ1KСПЖ1L01 СПЖ1LСПЖ1K01 Одночасне заповнення "Дата закриття справи" та "Причина закриття справи"
          var _1L = ioDZ.GetPropByPath("1L").Value1(0);
          if ((_1K != "" && _1L == "") || (_1L != "" && _1K == "")) Errors.Add(DZ+ioDZ.SNRV+space+mes_1K+"/"+mes_1L+space+emp+space+mes_1K+"/"+mes_1L);
@@ -116,32 +130,105 @@
             I58 = haveRef(ioDZ, "IIO", "58", "IIZ", n);
          }
          ioIIZ = null;
-
-//       Відповідність "Вид справи" ІО СП_______________________________________"Класифікація справи" ІО СП
-         if (ioDZ.GetPropByPath("1E").StartWithAny("", S0019_1_, false) &&      //СПЖ1EСПЖ1D01
-            !(ioDZ.GetPropByPath("1D").Value1(0) >= _S0020_000 && ioDZ.GetPropByPath("1D").Value1(0) <= _S0020_599))
-             Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_1_+space+dis+space+mes_1D+space+_S0020_000+"-"+_S0020_599);
-         if (ioDZ.GetPropByPath("1E").StartWithAny("", S0019_2_, false) &&    //СПЖ1EСПЖ1D02
-            !(ioDZ.GetPropByPath("1D").Value1(0) >= _S0020_600 && ioDZ.GetPropByPath("1D").Value1(0) <= _S0020_612))
-             Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_2_+space+dis+space+mes_1D+space+_S0020_600+"-"+_S0020_612);
+         
+//       Відповідність "Вид справи" ІО СП_______________________________________"Об'єкт справи" ІО СП
+         var C1 = ioDZ.GetPropByPath("C1");
+         if (C1 == null) C1 = ioDZ.GetPropByPath("NN");
+         if (C1.Contains("", "?", false) || C1.Value1(0) == "")
+         {
+          if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn1, false) && haveRef(ioDZ, "D18", "D97", "LZ", 0) < 0)
+              Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn1+space+"передбачає наявність ОС");//DUЖ1EDUD1801
+         }
+         C1 = null;
+         if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn2, false) && haveRef(ioDZ, "D18", "D97", "LZ", 0) > 0)
+             Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn2+space+"не передбачає наявність ОС");//DUЖ1EDUD1802
+         if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn3, false) && ioDZ.GetPropByPath("1K").Value1(0) != "" &&
+             haveRef(ioDZ, "D18", "D97", "RZ", 0) < 0 && haveRef(ioDZ, "D18", "D97", "LZ", 0) < 0)
+              Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn3+space+"при закритій СП передбачає наявність ОС або РГ");//DUЖ1EDUD1803
+         if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn4, false) && haveRef(ioDZ, "D18", "D97", "RZ", 0) > 0)
+             Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn4+space+"не передбачає наявність РГ");//DUЖ1EDUD1804
+//       Відповідність "Вид справи" ІО СП_______________________________________"Оперативна категорія особи" ІО ОС
+         var n = 0;
+         var snLZ = haveRef(ioDZ, "D18", "D97", "LZ", n)
+         while (snLZ >= 0)
+         {
+           var warnsstr = "";
+           var ioLZ = SC.ReadIO("LZ", snLZ, -1, "LR;");
+           var LR = ioLZ.GetPropByPath("LR");
+           //DUЖ1ELCЖLR01
+           if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn5, false))
+           {
+             var LRinSP = false;
+             for (var i = 0; i < LR.Count; i++)
+             {
+                if ((LR.Value1(i) >= _S0002_SP50) && (LR.Value1(i) <= _S0002_SP56))
+                {
+                   LRinSP = true;
+                   break;
+                }
+             }
+             if (!LRinSP) warnsstr += DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn5+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_SP50+"-"+_S0002_SP56 + "\x0D";
+           }
+           //DUЖ1ELCЖLR02
+           if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn6, false))
+           {
+             var LRinSP = false;
+             for (var i = 0; i < LR.Count; i++)
+             {
+                if ((LR.Value1(i) >= _S0002_SP00) && (LR.Value1(i) <= _S0002_SP40))
+                {
+                   LRinSP = true;
+                   break;
+                }
+             }
+             if (!LRinSP) warnsstr += DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn6+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_SP00+"-"+_S0002_SP40 + "\x0D";
+           }
+           var tmpwarns = warnsstr.split("\x0D");
+           for (var j = 0; j < tmpwarns.length; j++) if (tmpwarns[j] != "") Warnings.Add(tmpwarns[j]);
+           n++;
+           snLZ = haveRef(ioDZ, "D18", "D97", "LZ", n);
+         }
+//       Відповідність "Вид справи" ІО СП_______________________________________"Оперативна категорія організації" ІО РГ
+         var n = 0;
+         var snRZ = haveRef(ioDZ, "D18", "D97", "RZ", n)
+         while (snRZ >= 0)
+         {
+           var warnsstr = "";
+           var ioRZ = SC.ReadIO("RZ", snRZ, -1, "GK;");
+           var GK = ioRZ.GetPropByPath("GK");
+           //ЗАЖMAОСЖLR01
+           if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn2, false))
+           {
+             var GKinSP = false;
+             for (var i = 0; i < GK.Count; i++)
+             {
+                if ((GK.Value1(i) >= _S0003_SP00) && (GK.Value1(i) <= _S0003_SP32))
+                {
+                   GKinSP = true;
+                   break;
+                }
+             }
+             if (!GKinSP) warnsstr += DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn2+space+dis+space+RZ+ioRZ.SNRV+space+mes_LR+space+_S0003_SP00+"-"+_S0003_SP32 + "\x0D";
+           }
+           var tmpwarns = warnsstr.split("\x0D");
+           for (var j = 0; j < tmpwarns.length; j++) if (tmpwarns[j] != "") Warnings.Add(tmpwarns[j]);
+           n++;
+           snRZ = haveRef(ioDZ, "D18", "D97", "RZ", n);
+         }
 //       Відповідність "Вид справи" ІО СП_______________________________________"Причина закриття справи" ІО СП
-         if (ioDZ.GetPropByPath("1E").StartWithAny("", S0019_1_, false) &&      //СПЖ1EСПЖ1L01
-             !ioDZ.GetPropByPath("1L").StartWithAny("", _S0055_0_, false) && ioDZ.GetPropByPath("1K").Value1(0) != "")
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_1_+space+dis+space+mes_1L2+space+_S0055_0_);
-         if (ioDZ.GetPropByPath("1E").StartWithAny("", S0019_2_, false) &&      //СПЖ1EСПЖ1L02
-             !ioDZ.GetPropByPath("1L").StartWithAny("", _S0055_5_, false) && ioDZ.GetPropByPath("1K").Value1(0) != "")
+         if (ioDZ.GetPropByPath("1E").StartWith("", S0019_1_, false) &&         //СПЖ1EСПЖ1L01
+             !(ioDZ.GetPropByPath("1L").StartWith("", _S0055_0_, false) || ioDZ.GetPropByPath("1L").Contains("", _S0055_25, false)) && ioDZ.GetPropByPath("1K").Value1(0) != "")
+               Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_1_+space+dis+space+mes_1L2+space+_S0055_0_+comma+space+_S0055_25);
+         if (ioDZ.GetPropByPath("1E").StartWith("", S0019_2_, false) &&         //СПЖ1EСПЖ1L02
+             !ioDZ.GetPropByPath("1L").StartWith("", _S0055_5_, false) && ioDZ.GetPropByPath("1K").Value1(0) != "")
                Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_2_+space+dis+space+mes_1L2+space+_S0055_5_);
 //       Відповідність "Сфера дiяльностi" ІО СП_________________________________"Сфера дiяльностi" ІО СП
          if (ioDZ.GetPropByPath("D09").ContainsAny("", S0006_mn1, false) &&     //DUD09DUD0901
-             !ioDZ.GetPropByPath("D09").StartWithAny("", _S0006_mn1_, false))
+             !ioDZ.GetPropByPath("D09").StartWith("", _S0006_mn1_, false))
                Warnings.Add(DZ+ioDZ.SNRV+space+mes_D09+space+S0006_mn1+space+dis+space+mes_D09_2+space+_S0006_mn1_);
          if (ioDZ.GetPropByPath("D09").ContainsAny("", S0006_mn1, false) &&
-             ioDZ.GetPropByPath("D09").ContainsAny("", S0006_140446, false))
+             ioDZ.GetPropByPath("D09").Contains("", S0006_140446, false))
                Warnings.Add(DZ+ioDZ.SNRV+space+mes_D09+space+S0006_mn1+space+mes_D09_3+space+S0006_140446);
-//       Відповідність "Вид справи" ІО СП_______________________________________"Об'єкт справи" ІО СП
-         if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn8, false) && ioDZ.GetPropByPath("1K").Value1(0) != "" &&
-             haveRef(ioDZ, "D18", "D97", "RZ", 0) < 0 && haveRef(ioDZ, "D18", "D97", "LZ", 0) < 0)
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn8+space+" при закритій СП передбачає наявність ОС або РГ");//DUЖ1EDUD1801
 //       Відповідність "Пріоритетні завдання" ІО СП_____________________________"Лінія роботи" ІО СП
          if (getbyThirdValue(ioDZ, "PZ", S1000_1_) &&                           //СПЖPZСПD0801
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_1, false))
@@ -155,7 +242,6 @@
          if (getbyThirdValue(ioDZ, "PZ", S1000_4_) &&                           //СПЖPZСПD0804
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_4, false))
                Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_4);
-
        ioDZ.Clear();
        ioDZ = null;
     }
@@ -163,7 +249,7 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DI;SF.I98;OD.O83;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;IV;DI;SF.I98;OD.O83;");
          var n = 0;
          var I98 = haveRef(ioIZ, "SF", "I98", "DZ", n);
 //ІДЖDIІДЖSF02 "Вид документа" передбачає наявність ІО СП, а ІО СП відсутня
@@ -185,6 +271,17 @@
              if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn14, false) && //ІДЖDIСПЖ1E02
                  !ioDZ.GetPropByPath("1E").ContainsAny("", _S0019_mn14, false))
                    Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn14+space+dis+space+DZ+ioDZ.SNRV+space+mes_1E+space+_S0019_mn14);
+//           Порівняння "Вид документа", "Дата реєстрації документа" ІО ІД______"Дата закриття справи" ІО СП
+             var IV = ioIZ.GetPropByPath("IV").Value1(0);
+             var _1K = ioDZ.GetPropByPath("1K").Value1(0);
+             if (!ioIZ.GetPropByPath("DI").Contains("", S0113_406, false) &&    //IDЖIVDUЖ1K01
+                  IV != "" && _1K != "" && IV > _1K)
+                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+' не '+S0113_406+comma+' а '+mes_IV+space+more+space+DZ+ioDZ.SNRV+space+mes_1K2);
+             if (ioIZ.GetPropByPath("DI").Contains("", S0113_406, false) &&     //IDЖIVDUЖ1K02
+                  IV != "" && _1K != "" && IV < _1K)
+                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_406+comma+' а '+mes_IV+space+less+space+DZ+ioDZ.SNRV+space+mes_1K2);
+             IV = null;
+             _1K = null;
             n++;
             I98 = haveRef(ioIZ, "SF", "I98", "DZ", n);
          }

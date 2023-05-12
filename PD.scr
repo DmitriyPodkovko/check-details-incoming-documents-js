@@ -6,7 +6,13 @@
 
   var S0006_140446 = "140446";
 
-//"Оперативна кваліфікація" ІО ПД_______________________________________________"Тематичний перелік інформації" ІО ІД
+//"Вид справи" ІО СП____________________________________________________________"Оперативна кваліфікація відомостей" ІО ПД
+  var S0019_2_ = "2";                                                             var _S0001_SP00 = "СП00";
+
+//"Вид документа" ІО ІД_________________________________________________________"Оперативна кваліфікація відомостей" ІО ПД
+  var S0113_704 = "704";                                                          var _S0001_mn1 = "0116115,0116120,0116125"
+
+//"Оперативна кваліфікація відомостей" ІО ПД____________________________________"Тематичний перелік інформації" ІО ІД
   var S0001_0110_ = "0110";                                                       var _S0999_0110 = "01100"
   var S0001_0111_ = "0111";                                                       var _S0999_0111 = "01110"
   var S0001_0112_ = "0112";                                                       var _S0999_0112 = "01120"
@@ -75,7 +81,10 @@
   var mes_DZ = "ПРОБЛЕМАТИКА ВІДОМОСТЕЙ:"
   var mes_DZ2 = "ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
   var mes_DZ3 = "відповідає ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
-  var mes_PO = "ОПЕРАТИВНА КВАЛІФІКАЦІЯ ІО ПД:"
+  var mes_1E = "ВИД СПРАВИ:"
+  var mes_DI = "ВИД ДОКУМЕНТА:"
+  var mes_PO = "ОПЕРАТИВНА КВАЛІФІКАЦІЯ ВІДОМОСТЕЙ:"
+  var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
   var mes_DJ2 = "ТЕМАТИЧНОМУ ПЕРЕЛІКУ ІНФОРМАЦІЇ:"
 
 // Для всіх ІО ПД у повідомленні
@@ -84,7 +93,7 @@
     if (MessageIOs.IO(io) == "PZ")
     {
        // Отримати зміст ІО ПД
-       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;DZ;DU.D83;SG.S73;OD.O83;");
+       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;PO;DZ;DU.D83;SG.S73;OD.O83;");
 //PDЖPRPDЖPR01 Перевірка на заповнення "Зміст протиправної дії"
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listPR, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listPR2);
 //       Відповідність "Проблематика відомостей" ІО ПД__________________________"Проблематика відомостей" ІО ПД
@@ -99,13 +108,15 @@
          var snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n)
          while (snDZ >= 0)
          {
-            var ioDZ = SC.ReadIO("DZ", snDZ, -1, "1K;");
+            var ioDZ = SC.ReadIO("DZ", snDZ, -1, "1E;1K;");
             if ((ioDZ.GetPropByPath("1K").Value1(0) == "") && (haveRef(ioPZ, "OD", "O83", "XZ", 0) < 0))
                  Errors.Add("В "+DZ+ioDZ.SNRV+" не задано ДАТА ЗАКРИТТЯ СПРАВИ, а в "+PZ+ioPZ.SNRV+" відсутнє посилання на ОД");
+//          Відповідність "Вид справи" ІО СП____________________________________"Оперативна кваліфікація відомостей" ІО ПД
+            if (ioDZ.GetPropByPath("1E").StartWithAny("", S0019_2_, false) && !ioPZ.GetPropByPath("PO").Contains("", _S0001_SP00, false))//PDЖDUЖPO01
+                Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_2_+space+dis+space+PZ+ioPZ.SNRV+space+mes_PO2+space+_S0001_SP00);
             n++;
             snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
          }
-
        ioPZ.Clear();
        ioPZ = null;
     }
@@ -113,12 +124,16 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DJ;30.D83;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DJ;DI;30.D83;");
          var n = 0;
          var D83 = haveRef(ioIZ, "30", "D83", "PZ", n);
          while (D83 >= 0)
          {
             var ioPZ = SC.ReadIO("PZ", D83, -1, "CP;PO;DZ;");
+//          Відповідність "Вид документа" ІО ІД_________________________________"Оперативна кваліфікація відомостей" ІО ПД
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_704, false) &&      //IDЖDIPDЖPO01
+                !ioPZ.GetPropByPath("PO").ContainsAny("", _S0001_mn1, false))
+                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_704+space+dis+space+PZ+ioPZ.SNRV+space+mes_PO2+space+_S0001_mn1);
             if (ioPZ.GetPropByPath("CP").Contains("", "?", false)  || ioPZ.GetPropByPath("CP").Value1(0) == "")
             {
 //           Відповідність "Оперативна кваліфікація" ІО ПД______________________"Тематичний перелік інформації" ІО ІД

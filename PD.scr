@@ -94,7 +94,7 @@
          if (ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_mn1, false) &&
              ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_140446, false))
               Warnings.Add(PZ+ioPZ.SNRV+space+mes_DZ+space+S0006_mn1+space+mes_DZ3+space+S0006_140446);
-//ПДЖDUПДЖOD01 В ІО СІ не задано "Фактична дата закінчення перевірки", а в ІО ПД відсутнє посилання на ІО ОД
+//ПДЖDUПДЖOD01 В ІО СП не задано "Дата закриття справи", а в ІО ПД відсутнє посилання на ІО ОД
          var n = 0;
          var snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n)
          while (snDZ >= 0)

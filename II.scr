@@ -1,0 +1,75 @@
+//########################################   П Е Р Е В І Р К А  І О  Д І   ################################################
+
+//"Категорія джерела" ІО ДІ_____________________________________________________"Дата постановки на облік в ОДП" ІО ДІ
+  var S0009_mn1 = "01,04,06,12"
+
+  var space = " "
+  var IZ = "ІД."
+  var IIZ = "ДІ."
+  var emp = "відповідає пустому значенню"
+  var less = "менша за"
+  var mes_HIA = "КАТЕГОРІЯ ДЖЕРЕЛА:"
+  var mes_IV = "ДАТА РЕЄСТРАЦІЇ ДОКУМЕНТА"
+  var mes_H07 = "ДАТА ПОСТАНОВКИ НА ОБЛІК В ОДП"
+  var mes_H08 = "ДАТА ЗНЯТТЯ З ОБЛІКУ В ОДП"
+
+// Для всіх ІО ДІ у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "IZ")
+    {
+       // Отримати зміст ІО ІД
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "IV;");
+         var IV = ioIZ.GetPropByPath("IV").Value1(0);
+    }
+         
+    if (MessageIOs.IO(io) == "IIZ")
+    {
+       // Отримати зміст ІО ДІ
+       var ioIIZ = SC.ReadIO("IIZ", MessageIOs.SN(io), -1, "HIA;H07;H08;");
+         var H07 = ioIIZ.GetPropByPath("H07").Value1(0);
+         var H08 = ioIIZ.GetPropByPath("H08").Value1(0);
+//       Відповідність "Категорія джерела" ІО ДІ________________________________"Дата постановки на облік в ОДП" ІО ДІ
+         if (ioIIZ.GetPropByPath("HIA").ContainsAny("", S0009_mn1, false) && H07 == "")
+             Errors.Add(IIZ+ioIIZ.SNRV+space+mes_HIA+space+S0009_mn1+space+emp+space+mes_H07);//ДІHIAДІH0701
+//ДІH08ІДЖIV01 Порівняння "Дата зняття з обліку в ОДП" ІО ДІ з "Дата реєстрації документа" ІО ІД
+         if (H08 != "" && IV != "" && H08 < IV) Errors.Add(IIZ+ioIIZ.SNRV+space+mes_H08+space+less+space+IZ+ioIZ.SNRV+space+mes_IV);
+//ДІH08ДІH0701 Порівняння "Дата зняття з обліку в ОДП" з "Дата постановки на облік в ОДП" ІО ДІ
+         if (H08 != "" && H07 != "" && H08 <= H07) Errors.Add(IIZ+ioIIZ.SNRV+space+mes_H08+space+less+space+mes_H07);
+         H08 = null;
+         H07 = null;
+       ioIIZ.Clear();
+       ioIIZ = null;
+    }
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }
+

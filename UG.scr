@@ -2,8 +2,7 @@
 
 //"Стаття і кодекс" ІО КС_______________________________________________________"Стаття і кодекс" ІО КС
   var S0105_2_ = "2";                                                             var _S0105_2_ = "4"
-  var S0105_mn1_ = "201001,202,203,204";                                          var _S0105_mn1 = "20100300"
-                                                                                  var _S0105_mn1_ = "201002"
+  var S0105_mn1_ = "201001,202,203,204";                                          var _S0105_mn1_ = "20104"
 
 //"Стаття і кодекс" ІО КС_______________________________________________________"Проходять за справою" ІО КС
   var S0105_31000001 = "31000001";
@@ -65,9 +64,8 @@
 //       Відповідність "Стаття і кодекс" ІО КС__________________________________"Стаття і кодекс" ІО КС
          if (ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false) && ioUZ.GetPropByPath("2I").Count < 2)
              Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_2_+space+mes_2I2);//КСЖ2IКСЖ2I01
-         if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false) &&    //КСЖ2IКСЖ2I02
-             !(ioUZ.GetPropByPath("2I").Contains("", _S0105_mn1, false) || ioUZ.GetPropByPath("2I").StartWith("", _S0105_mn1_, false)))
-               Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn1_+space+dis+space+_S0105_mn1+comma+_S0105_mn1_);
+         if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false) && !ioUZ.GetPropByPath("2I").StartWith("", _S0105_mn1_, false))
+             Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn1_+space+dis+space+_S0105_mn1_);//КСЖ2IКСЖ2I02
          if ((ioUZ.GetPropByPath("2I").Contains("", S0105_31000001, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
              (ioUZ.GetPropByPath("2I").StartWith("", _S0105_2_, false)))
               Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_31000001+comma+S0105_2_+space+com+space+_S0105_2_);//КСЖ2IКСЖ2I03

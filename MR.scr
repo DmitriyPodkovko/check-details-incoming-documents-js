@@ -3,26 +3,40 @@
 //"Вид заходу" ІО ЗА____________________________________________________________"Об'єкти заходу" ІО ЗА
   var S0018_mn1 = "531,532,533,534,535,536,537,538,539,540,"+
                   "541,542,543,544,545,546,547,548,549";
+  var S0018_mn2 = "501,502,503,504,505,515,517,518,519";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Підстава проведення заходу" ІО ЗА
-  var S0018_mn2 = "533,534,546,547,548,549";
+  var S0018_mn3 = "533,534,546,547,548,549";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Стаття і кодекс" ІО ЗА
-  var S0018_mn3 = "202,203,204,205,206,207,208,209,210,211,212,"+
+  var S0018_mn4 = "202,203,204,205,206,207,208,209,210,211,212,"+
                   "214,215,217,218,220,533,534,546,547,548,549";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Предмет процесуальної дії" ІО ЗА
-  var S0018_mn4 = "196,281,283,285,320,339,340,341,401,402,403,404,405,"+
+  var S0018_mn5 = "196,281,283,285,320,339,340,341,401,402,403,404,405,"+
                   "406,407,408,409,410,411,413,414,415,416,419,420";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Категорія державного органу, установи" ІО ЗА
   var S0018_612 = "612";
+
+//"Вид заходу" ІО ЗА____________________________________________________________"Оперативна категорія особи" ІО ОС
+  var S0018_mn6 = "532,533,534";                                                  var _S0002_8018 = "8018"
 
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
   var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
   var S1000_2_ = "2";                                                             var _S0012_2 = "40"
   var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
   var S1000_4_ = "4";                                                             var _S0012_4 = "20"
+
+//"Вид предмету" ІО ЗА__________________________________________________________"Найменування валюти" ІО ЗА
+  var S0007_mn1 = "801,802,803,804";
+
+//"Вид предмету" ІО ЗА__________________________________________________________"Загальна вартість" ІО ЗА
+  var S0007_804 = "804";
+
+//"Найменування валюти" ІО ЗА___________________________________________________"Загальна вартість" ІО ЗА
+  var S0101_70 = "70";
+  var S0101_86 = "86";
 
 //"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО ЗА
   var S0113_mn1 = "119,120,208,603,811,819";
@@ -33,23 +47,31 @@
   var S0113_463 = "463";                                                          var _S0018_463 = "231"
   var S0113_603 = "603";                                                          var _S0018_603 = "534"
   var S0113_606 = "606";                                                          var _S0018_606 = "301,330,336,337"
-  var S0113_mn2 = "119,120,208";                                                  var _S0018_mn2 = "503,504,505,516,517,518,519,533,534,546,547,548,549"
+  var S0113_mn2 = "119,120,208";                                                  var _S0018_mn3 = "503,504,505,516,517,518,519,533,534,546,547,548,549"
 
   var space = " "
   var IZ = "ІД."
   var MZ = "ЗА."
+  var LZ = "ОС."
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
+  var noemp = "не передбачає заповнення"
   var more = "більша за"
   var unDep = "Не співпадають ПІДРОЗДІЛИ"
   var mes_Date = "поточну дату"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_MA = "ВИД ЗАХОДУ:"
   var mes_M7 = "КАТЕГОРІЯ ДЕРЖАВНОГО ОРГАНУ, УСТАНОВИ"
+  var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
   var mes_M8 = "ЛІНІЇ РОБОТИ:"
   var mes_F1 = "ПІДСТАВА ПРОВЕДЕННЯ ЗАХОДУ"
   var mes_SK = "СТАТТЯ І КОДЕКС"
   var mes_PD = "ПРЕДМЕТ ПРОЦЕСУАЛЬНОЇ ДІЇ"
+  var mes_M1 = "ВИД ПРЕДМЕТУ"
+  var mes_M3 = "НАЙМЕНУВАННЯ ВАЛЮТИ"
+  var mes_M10 = "ЗАГАЛЬНА ВАРТІСТЬ"
+  var mes_QA = "ОДИНИЦІ ВИМІРЮВАННЯ"
+  var mes_QB = "КІЛЬКІСТЬ"
   var mes_MD = "ДАТА ПРОВЕДЕННЯ ЗАХОДУ"
   var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
 
@@ -59,7 +81,7 @@
     if (MessageIOs.IO(io) == "MZ")
     {
        // Отримати зміст ІО ЗА
-       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MD;M7;M8;PD.M1;F1;LR.LR3;SK;PZ;");
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -78,20 +100,35 @@
            if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn1, false) &&
                ((haveRef(ioMZ, "LR", "LR3", "LZ", 0) < 0) || (haveRef(ioMZ, "LR", "LR3", "RZ", 0) > 0)))
                  Errors.Add(MZ+ioMZ.SNRV+space+"ВИД ЗАХОДУ передбачає наявність тільки ОС");
+//ЗАЖMAЗАЖLR03 "Вид заходу" ІО ЗА не передбачає наявність ІО ОС
+           if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn2, false) && haveRef(ioMZ, "LR", "LR3", "LZ", 0) > 0)
+                 Errors.Add(MZ+ioMZ.SNRV+space+"ВИД ЗАХОДУ не передбачає наявність ОС");
          }
          CM = null;
 //       Відповідність "Вид заходу" ІО ЗА_______________________________________"Підстава проведення заходу" ІО ЗА
-         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn2, false) && !ioMZ.GetPropByPath("F1").Count > 0)
-             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn2+space+emp+space+mes_F1);//ЗАЖMAЗАЖF101
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn3, false) && !ioMZ.GetPropByPath("F1").Count > 0)
+             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn3+space+emp+space+mes_F1);//ЗАЖMAЗАЖF101
 //       Відповідність "Вид заходу" ІО ЗА_______________________________________"Стаття і кодекс" ІО ЗА
-         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn3, false) && !ioMZ.GetPropByPath("SK").Count > 0)
-             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn3+space+emp+space+mes_SK);//ЗАЖMAЗАЖSK01
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn4, false) && !ioMZ.GetPropByPath("SK").Count > 0)
+             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn4+space+emp+space+mes_SK);//ЗАЖMAЗАЖSK01
 //       Відповідність "Вид заходу" ІО ЗА_______________________________________"Предмет процесуальної дії" ІО ЗА
-         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn4, false) && !ioMZ.GetPropByPath("PD").Count > 0)
-             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn4+space+emp+space+mes_PD);//ЗАЖMAЗАЖPD01
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn5, false) && !ioMZ.GetPropByPath("PD").Count > 0)
+             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn5+space+emp+space+mes_PD);//ЗАЖMAЗАЖPD01
 //       Відповідність "Вид заходу" ІО ЗА_______________________________________"Категорія державного органу, установи" ІО ЗА
          if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_612, false) && ioMZ.GetPropByPath("M7").Value1(0) == "")
              Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_612+space+emp+space+mes_M7);//ЗАЖMAЗАЖM701
+
+         var n = 0;
+         var snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n)
+         while (snLZ >= 0)
+         {
+            var ioLZ = SC.ReadIO("LZ", snLZ, -1, "LR;");
+//          Відповідність "Вид заходу" ІО ЗА____________________________________"Оперативна категорія особи" ІО ОС
+            if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn6, false) && !ioLZ.GetPropByPath("LR").Contains("", _S0002_8018, false))
+                Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn6+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_8018);//ЗАЖMAОСЖLR01
+            n++;
+            snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n);
+         }
 //       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Лінія роботи" ІО ЗА
          if (getbyThirdValue(ioMZ, "PZ", S1000_1_) &&                           //ЗАЖPZЗАЖM801
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_1, false))
@@ -105,6 +142,28 @@
          if (getbyThirdValue(ioMZ, "PZ", S1000_4_) &&                           //ЗАЖPZЗАЖM804
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_4, false))
                Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_4);
+
+         var PD = ioMZ.GetPropByPath("PD");
+           for (var j = 0; j < PD.Count; j++)
+           {
+//           Відповідність "Вид предмету" ІО ЗА_________________________________"Найменування валюти" ІО ЗА
+             if (PD.GetPropByPath("M1", j).ContainsAny("", S0007_mn1, false) && PD.GetPropByPath("M3", j).Value1(0) == "")
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_M1+space+S0007_mn1+space+emp+space+mes_M3);//ЗАЖM1ЗАЖM301
+//           Відповідність "Вид предмету" ІО ЗА_________________________________"Загальна вартість" ІО ЗА
+             if (PD.GetPropByPath("M1", j).ContainsAny("", S0007_804, false) && PD.GetPropByPath("M10", j).Value1(0) != "")
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_M1+space+S0007_804+space+noemp+space+mes_M10);//ЗАЖM1ЗАM1001
+//           Відповідність "Одиниці вимірювання" ІО ЗА__________________________"Кількість" ІО ЗА
+             if (PD.GetPropByPath("QA", j).Value1(0) != "" && PD.GetPropByPath("QB", j).Value1(0) == "")
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_QA+space+emp+space+mes_QB);  //ЗАЖQAЗАЖQB01
+//           Відповідність "Найменування валюти" ІО ЗА__________________________"Кількість" ІО ЗА
+             if (PD.GetPropByPath("M3", j).Value1(0) != "" && PD.GetPropByPath("QB", j).Value1(0) == "")
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_M3+space+emp+space+mes_QB);  //ЗАЖM3ЗАЖQB01
+//           Відповідність "Найменування валюти" ІО ЗА__________________________"Загальна вартість" ІО ЗА
+             if (PD.GetPropByPath("M3", j).Value1(0) >= S0101_70 && PD.GetPropByPath("M3", j).Value1(0) <= S0101_86 &&
+                  PD.GetPropByPath("M10", j).Value1(0) != "")
+                  Errors.Add(MZ+ioMZ.SNRV+space+mes_M3+space+S0101_70+"-"+S0101_86+space+noemp+space+mes_M10);//ЗАЖM3ЗАM1001
+           }
+
        ioMZ.Clear();
        ioMZ = null;
     }
@@ -141,8 +200,8 @@
                 !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_606, false))
                  Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_606+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_606);
             if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn2, false) &&   //ІДЖDIЗАЖMA06
-                !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn2, false))
-                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn2+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_mn2);
+                !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn3, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn2+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_mn3);
             n++;
             I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
          }

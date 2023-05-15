@@ -140,13 +140,21 @@
   var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
   var mes_M4 = "Для доручення слідчого, прокурора ... відсутнє кримінальне провадження."
   
+var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
+if (mes_type.substr(0, 1) == '2')
+{
+
+}
+else
+{
+
 // Для всіх ІО ІД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
   {
     if (MessageIOs.IO(io) == "MZ")
     {
        // Отримати зміст ІО ЗА
-       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M4");
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M4");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -389,8 +397,11 @@
                }
                
 //       Відповідність "Вид заходу" ІО ЗА_______________________________________"Підрозділ СБУ (інший орган), що провів захід" ІО ЗА
-         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_SP, false) && ioMZ.GetPropByPath("MB").StartWithAny("", "98", false))
+         var MB = ioMZ.GetPropByPath("MB");
+         if (MB == null) MB = ioMZ.GetPropByPath("MB1");
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_SP, false) && MB.StartWithAny("", "98", false))
              Warnings.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_SP+space+com+space+mes_MB+space+"98*");//MRЖMАMRЖMВ01
+         MB = null;
 
        ioMZ.Clear();
        ioMZ = null;
@@ -469,6 +480,8 @@
        ioIZ = null;
     }
   }
+
+}
 
 // функція перевірки відповідності "Вид документа" ІО ІД - "Вид заходу" ІО ЗА для ІДЖDIЗАЖMA07
   function DIMA()

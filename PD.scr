@@ -91,6 +91,14 @@
   var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
   var mes_DJ2 = "ТЕМАТИЧНОМУ ПЕРЕЛІКУ ІНФОРМАЦІЇ:"
 
+var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
+if (mes_type.substr(0, 1) == '2')
+{
+
+}
+else
+{
+
 // Для всіх ІО ПД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
   {
@@ -326,6 +334,8 @@
        ioIZ = null;
     }
   }
+
+}
 
 // служ. функція перевірка існування посилання в ІО
   function haveRef(io, group, ref, iocode, from)

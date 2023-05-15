@@ -1,2 +1,13 @@
 //Errors.Add(SC.OpenSql("select cbd.datetostr(20110101) from params"));
-Warnings.Add(MessageIOs.Station + "_" + MessageIOs.User);
+//Warnings.Add(MessageIOs.Station + "_" + MessageIOs.User);
+
+//Заглушка
+var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
+if (mes_type.substr(0, 1) == '2')
+{
+   Warnings.Add('CBD');
+}
+else
+{
+    Warnings.Add('LBD');
+}

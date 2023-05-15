@@ -13,6 +13,14 @@
   var mes_H07 = "ДАТА ПОСТАНОВКИ НА ОБЛІК В ОДП"
   var mes_H08 = "ДАТА ЗНЯТТЯ З ОБЛІКУ В ОДП"
 
+var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
+if (mes_type.substr(0, 1) == '2')
+{
+
+}
+else
+{
+
 // Для всіх ІО ДІ у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
   {
@@ -42,6 +50,8 @@
        ioIIZ = null;
     }
   }
+
+}
 
 // служ. функція перевірка існування посилання в ІО
   function haveRef(io, group, ref, iocode, from)

@@ -13,6 +13,14 @@
   var mes_XZX = "ХАРАКТЕРУ ЗВ'ЯЗКУ:"
   var dis = "не відповідає"
 
+var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
+if (mes_type.substr(0, 1) == '2')
+{
+
+}
+else
+{
+
 // Для всіх ІО ЗВ у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
   {
@@ -53,6 +61,8 @@
        ioZZ = null;
     }
   }
+
+}
 
 // служ. функція перевірка існування посилання в ІО
   function haveRef(io, group, ref, iocode, from)

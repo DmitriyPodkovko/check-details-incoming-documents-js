@@ -18,6 +18,12 @@
 //Відповідність "Вид справи" ІО СП______________________________________________"Оперативна категорія організації" ІО РГ
                                                                                   var _S0003_SP00 = "СП00";
                                                                                   var _S0003_SP32 = "СП32";
+                                                                                  
+//"Вид справи" ІО СП____________________________________________________________"Класифікація справи" ІО СП
+  var S0019_1_ = "1";                                                             var _S0020_000 = "000";
+                                                                                  var _S0020_599 = "599";
+  var S0019_2_ = "2";                                                             var _S0020_600 = "600";
+                                                                                  var _S0020_612 = "612";
 
 //"Вид справи" ІО СП____________________________________________________________"Причина закриття справи" ІО СП
   var S0019_1_ = "1";                                                             var _S0055_0_ = "0";
@@ -217,6 +223,13 @@
            n++;
            snRZ = haveRef(ioDZ, "D18", "D97", "RZ", n);
          }
+//       Відповідність "Вид справи" ІО СП_______________________________________"Класифікація справи" ІО СП
+         if (ioDZ.GetPropByPath("1E").StartWith("", S0019_1_, false) &&         //СПЖ1EСПЖ1D01
+            !(ioDZ.GetPropByPath("1D").Value1(0) >= _S0020_000 && ioDZ.GetPropByPath("1D").Value1(0) <= _S0020_599))
+             Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_1_+space+dis+space+mes_1D+space+_S0020_000+"-"+_S0020_599);
+         if (ioDZ.GetPropByPath("1E").StartWith("", S0019_2_, false) &&         //СПЖ1EСПЖ1D02
+            !(ioDZ.GetPropByPath("1D").Value1(0) >= _S0020_600 && ioDZ.GetPropByPath("1D").Value1(0) <= _S0020_612))
+             Errors.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_2_+space+dis+space+mes_1D+space+_S0020_600+"-"+_S0020_612);
 //       Відповідність "Вид справи" ІО СП_______________________________________"Причина закриття справи" ІО СП
          if (ioDZ.GetPropByPath("1E").StartWith("", S0019_1_, false) &&         //СПЖ1EСПЖ1L01
              !(ioDZ.GetPropByPath("1L").StartWith("", _S0055_0_, false) || ioDZ.GetPropByPath("1L").Contains("", _S0055_25, false)) && ioDZ.GetPropByPath("1K").Value1(0) != "")

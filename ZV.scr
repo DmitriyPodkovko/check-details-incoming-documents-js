@@ -1,0 +1,86 @@
+//########################################   П Е Р Е В І Р К А  І О  З В   ################################################
+
+//"Об'єкт зв'язку" ІО ЗВ________________________________________________________"Характер зв'язку" ІО ЗВ
+                                                                                var _S0098_0000 = "0000"
+                                                                                var _S0098_1_ = "1"
+                                                                                var _S0098_2_ = "2"
+                                                                                var _S0098_3_ = "3"
+  
+  var space = " "
+  var comma = ","
+  var ZZ = "ЗВ."
+  var mes_IOS = "ОБ'ЄКТ ЗВ'ЯЗКУ:"
+  var mes_XZX = "ХАРАКТЕРУ ЗВ'ЯЗКУ:"
+  var dis = "не відповідає"
+
+// Для всіх ІО ЗВ у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "ZZ")
+    {
+       // Отримати зміст ІО ЗВ
+       var ioZZ = SC.ReadIO("ZZ", MessageIOs.SN(io), -1, "XZ.XZX;IOS.18;");
+         if (haveRef(ioZZ, "IOS", "18", "LZ", 2) > 0) Errors.Add(ZZ+ioZZ.SNRV+space+"містить більше 2 ОС");
+         if (haveRef(ioZZ, "IOS", "18", "RZ", 2) > 0) Errors.Add(ZZ+ioZZ.SNRV+space+"містить більше 2 РГ");
+         if (haveRef(ioZZ, "IOS", "18", "LZ", 1) > 0)//ЗВIOSЗВXZX01
+         {
+            var XZ = ioZZ.GetPropByPath("XZ");
+             for (var j = 0; j < XZ.Count; j++)
+             {
+                 if (!(XZ.GetPropByPath("XZX", j).StartWith("", _S0098_1_, false) || XZ.GetPropByPath("XZX", j).Contains("", _S0098_0000, false)))
+                       Errors.Add(ZZ+ioZZ.SNRV+space+mes_IOS+space+"2 ОС"+space+dis+space+mes_XZX+space+_S0098_1_+comma+space+_S0098_0000);
+             }
+         } else
+         if (haveRef(ioZZ, "IOS", "18", "RZ", 1) > 0)//ЗВIOSЗВXZX02
+         {
+            var XZ = ioZZ.GetPropByPath("XZ");
+             for (var j = 0; j < XZ.Count; j++)
+             {
+                 if (!(XZ.GetPropByPath("XZX", j).StartWith("", _S0098_2_, false) || XZ.GetPropByPath("XZX", j).Contains("", _S0098_0000, false)))
+                       Errors.Add(ZZ+ioZZ.SNRV+space+mes_IOS+space+"2 РГ"+space+dis+space+mes_XZX+space+_S0098_2_+comma+space+_S0098_0000);
+             }
+         } else
+         if (haveRef(ioZZ, "IOS", "18", "RZ", 0) > 0 && haveRef(ioZZ, "IOS", "18", "LZ", 0) > 0)//ЗВIOSЗВXZX03
+         {
+            var XZ = ioZZ.GetPropByPath("XZ");
+             for (var j = 0; j < XZ.Count; j++)
+             {
+                 if (!(XZ.GetPropByPath("XZX", j).StartWith("", _S0098_3_, false) || XZ.GetPropByPath("XZX", j).Contains("", _S0098_0000, false)))
+                       Errors.Add(ZZ+ioZZ.SNRV+space+mes_IOS+space+"1 ОС 1 РГ"+space+dis+space+mes_XZX+space+_S0098_3_+comma+space+_S0098_0000);
+             }
+         }
+       ioZZ.Clear();
+       ioZZ = null;
+    }
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }
+

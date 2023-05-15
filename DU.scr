@@ -270,7 +270,7 @@
        var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;IV;DI;SF.I98;OD.O83;");
          var n = 0;
          var I98 = haveRef(ioIZ, "SF", "I98", "DZ", n);
-//ІДЖDIІДЖSF01 "Вид документа" передбачає наявність ІО СП, а ІО СП відсутня
+//IDЖDIIDЖSF01 "Вид документа" передбачає наявність ІО СП, а ІО СП відсутня
          if ((ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn13, false) || ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn14, false)) && (I98 < 0))
               Warnings.Add(IZ+ioIZ.SNRV+space+"ВИД ДОКУМЕНТА передбачає наявність СП, а СП відсутній");
          while (I98 >= 0)

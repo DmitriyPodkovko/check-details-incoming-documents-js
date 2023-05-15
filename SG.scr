@@ -114,8 +114,8 @@
             n++;
             I98 = haveRef(ioIZ, "SF", "I98", "SZ", n);
          }
-//ІДЖDIІДЖSF02 "Вид документа" передбачає наявність ІО СІ, а ІО СІ відсутній
-         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "SZ", 0) < 0))
+//IDЖDIIDЖSF02 "Вид документа" передбачає наявність ІО СІ, а ІО СІ відсутній
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && haveRef(ioIZ, "SF", "I98", "SZ", 0) < 0)
              Warnings.Add(IZ+ioIZ.SNRV+space+"ВИД ДОКУМЕНТА передбачає наявність СІ, а СІ відсутній");
 //IDЖSFIDЖ3001 В ІО ІД є ІО СІ, але немає ІО ПД
          if ((haveRef(ioIZ, "SF", "I98", "SZ", 0) >= 0) && (haveRef(ioIZ, "30", "D83", "PZ", 0) < 0))

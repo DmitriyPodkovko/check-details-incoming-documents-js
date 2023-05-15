@@ -71,6 +71,7 @@
   var mes_D09_3 = "відповідає СФЕРІ ДІЯЛЬНОСТІ:"
   var mes_HIA = "КАТЕГОРІЇ ДЖЕРЕЛА:"
   var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
+  var mes_L7 = "ОПЕРАТИВНА ЗАШИФРОВКА"
   var mes_1E = "ВИД СПРАВИ:"
   var mes_1D = "КЛАСИФІКАЦІЇ СПРАВИ:"
   var mes_1L = "ПРИЧИНА ЗАКРИТТЯ СПРАВИ"
@@ -155,13 +156,17 @@
               Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn3+space+"при закритій СП передбачає наявність ОС або РГ");//DUЖ1EDUD1803
          if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn4, false) && haveRef(ioDZ, "D18", "D97", "RZ", 0) > 0)
              Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn4+space+"не передбачає наявність РГ");//DUЖ1EDUD1804
-//       Відповідність "Вид справи" ІО СП_______________________________________"Оперативна категорія особи" ІО ОС
+
          var n = 0;
          var snLZ = haveRef(ioDZ, "D18", "D97", "LZ", n)
          while (snLZ >= 0)
          {
            var warnsstr = "";
-           var ioLZ = SC.ReadIO("LZ", snLZ, -1, "LR;");
+           var ioLZ = SC.ReadIO("LZ", snLZ, -1, "LR;L7;");
+//       Відповідність "Об'єкт справи" ІО СП____________________________________"Оперативна зашифровка" ІО ОС
+           if (ioLZ.GetPropByPath("L7").Count == 0)
+               Errors.Add("В "+DZ+ioDZ.SNRV+" не задано "+mes_L7+space+LZ+ioLZ.SNRV);//СПD18ОСЖL701
+//       Відповідність "Вид справи" ІО СП_______________________________________"Оперативна категорія особи" ІО ОС
            var LR = ioLZ.GetPropByPath("LR");
            //DUЖ1ELCЖLR01
            if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn5, false))

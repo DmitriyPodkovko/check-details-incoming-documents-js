@@ -69,7 +69,7 @@
   var S0999_04220 = "04220";
   var S0999_06140 = "06140";                                                      var _S0006_06140 = "029225,050040,070058,070060,070064,070065"
                                                                                   var _S0006_06140_ = "08,13"
-  var S0999_06150 = "06150";                                                      var _S0006_06150 = "100110,100180,100220,100226,100240,100336,100338,100440,100468,100480,110010,110015,110020,110025,110026,110030,110035,110040,110045,110046,110047,110055,110060,110065,110070,110075,110080"
+  var S0999_06150 = "06150";                                                      var _S0006_06150 = "100110,100180,100220,100226,100240,100336,100338,100440,100468,100480,110010,110011,110015,110017,110018,110020,110025,110026,110030,110035,110040,110045,110046,110047,110055,110060,110065,110070,110075,110080"
                                                                                   var _S0006_06150_2 = "переліку правоохоронних органів"
   var S0999_06170 = "06170";                                                      var _S0006_06170 = "130055,130065,130070,130075,130080,130085,130090"
   var S0999_07000 = "07000";                                                      var _S0006_07000 = "110005,110085"
@@ -120,7 +120,22 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DE;DG;DJ;DI;DO;IV;DZ;SA;SC.I99;D6;IIO.I97;IIO.II3;PZ;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DE;DG;DJ;DI;DO;DC;IV;DZ;SA;SC.I99;D6;IIO.I97;IIO.II3;PZ;");
+//ІДЖDCІДЖDC01 Перевірка на наявність вже існуючого документа за останні 3 роки
+	 var DD = ioIZ.GetPropByPath("DD").Value1(0);
+	 var DC = ioIZ.GetPropByPath("DC").Value1(0);
+	 var IV = ioIZ.GetPropByPath("IV").Value1(0);
+         var dt = new Date();
+	 var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
+	 var xDateNow = DateNow - 30000;
+	 var resultSQL = SC.OpenSQL("select sn from if_id where xdc='"+DC+"' and xiv="+IV+" and xdd='"+DD+"' and xiv>"+xDateNow);
+	 if (resultSQL.indexOf("Error") >= 0) Warnings.Add(resultSQL); //Помилка виконання SQL-запиту
+	 if (resultSQL != "") Errors.Add(IZ+ioIZ.SNRV+space+"Такий документ вже існує!!!");
+         DD = null;
+         DC = null;
+         xDateNow = null;
+         DateNow = null;
+         dt = null;
 //IDЖDGIDЖDG01 IDЖDGIDЖDG02 Перевірка "Зміст документа"
          var DG = ioIZ.GetPropByPath("DG");
          if (DG.ContainsAny("", listDG, false)) Warnings.Add(IZ+ioIZ.SNRV+space+mes_DG+space+"містить:"+space+listDG2);

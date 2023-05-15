@@ -10,7 +10,7 @@
   var S0019_mn4 = "10,11,12,13,20,21"
 
 //Відповідність "Вид справи" ІО СП______________________________________________"Оперативна категорія особи" ІО ОС
-  var S0019_mn5 = "10,11,12,13";                                                  var _S0002_SP50 = "СП50";
+  var S0019_mn5 = "12,13";                                                        var _S0002_SP54 = "СП54";
                                                                                   var _S0002_SP56 = "СП56";
   var S0019_mn6 = "20,21";                                                        var _S0002_SP00 = "СП00";
                                                                                   var _S0002_SP40 = "СП40";
@@ -169,13 +169,13 @@
              var LRinSP = false;
              for (var i = 0; i < LR.Count; i++)
              {
-                if ((LR.Value1(i) >= _S0002_SP50) && (LR.Value1(i) <= _S0002_SP56))
+                if ((LR.Value1(i) >= _S0002_SP54) && (LR.Value1(i) <= _S0002_SP56))
                 {
                    LRinSP = true;
                    break;
                 }
              }
-             if (!LRinSP) warnsstr += DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn5+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_SP50+"-"+_S0002_SP56 + "\x0D";
+             if (!LRinSP) warnsstr += DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn5+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_SP54+"-"+_S0002_SP56 + "\x0D";
            }
            //DUЖ1ELCЖLR02
            if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn6, false))

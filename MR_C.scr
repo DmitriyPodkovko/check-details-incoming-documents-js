@@ -1,4 +1,4 @@
-//this is script for @MIS only
+//this is script for @MVS only
 //########################################   П Е Р Е В І Р К А  І О  З А   ################################################
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Об'єкти заходу" ІО ЗА
@@ -15,15 +15,6 @@
 //"Вид заходу" ІО ЗА____________________________________________________________"Оперативна категорія особи" ІО ОС
   var S0018_mn5 = "295,296";                                                      var _S0002_8016 = "8016"
   var S0018_mn6 = "505,511,512,513,514";                                          var _S0002_8018 = "8018"
-
-//"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
-  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
-  var S1000_2_ = "2";                                                             var _S0012_2 = "40"
-  var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
-  var S1000_4_ = "4";                                                             var _S0012_4 = "20"
-  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
-  var S1000_87_ = "87";                                                           var _S0012_87 = "11"
-  var S1000_88_ = "88";                                                           var _S0012_88 = "80"
 
 //"Вид предмету" ІО ЗА__________________________________________________________"Найменування валюти" ІО ЗА
   var S0007_mn1 = "801,802,803,804";
@@ -129,7 +120,6 @@
   var emp = "відповідає пустому значенню"
   var noemp = "не передбачає заповнення"
   var more = "більша за"
-  var unDep = "Не співпадають ПІДРОЗДІЛИ"
   var mes_Date = "поточну дату"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_MA = "ВИД ЗАХОДУ:"
@@ -138,7 +128,6 @@
   var mes_M19 = "співробітник, ЗА МАТЕРІАЛАМИ ЯКОГО ..."
   var mes_M7 = "КАТЕГОРІЯ ДЕРЖАВНОГО ОРГАНУ, УСТАНОВИ"
   var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
-  var mes_M8 = "ЛІНІЇ РОБОТИ:"
   var mes_F1 = "ПІДСТАВА ПРОВЕДЕННЯ ЗАХОДУ"
   var mes_M1 = "ВИД ПРЕДМЕТУ"
   var mes_M3 = "НАЙМЕНУВАННЯ ВАЛЮТИ"
@@ -161,7 +150,7 @@
     if (MessageIOs.IO(io) == "MZ")
     {
        // Отримати зміст ІО ЗА
-       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M19;M4;ND;2C;M20;IIO.39;");
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M19;M4;ND;2C;M20;IIO.39;");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -193,9 +182,11 @@
                     if (_2ZCode != "")//проверка не работает, если нет таких реквизитов
                     {
                       var _uzExists = false;
+                      var _uzsomeExists = false;
                       for (var j = 0; j < MessageIOs.Count; j++)
                         if (MessageIOs.IO(j) == "UZ")
                         {
+                          _uzsomeExists = true;
                           var ioUZ = SC.ReadIO("UZ", MessageIOs.SN(j), -1, _2ZCode+";"+_2ZCode+"."+_2Z3Code+";");
                           var _2Z = ioUZ.GetPropByPath(_2ZCode);
                           for (var zz = 0; zz < _2Z.Count; zz++)
@@ -207,8 +198,9 @@
                           ioUZ.Clear();
                           if (_uzExists) break;
                         }
-                      if (!_uzExists)
-                          Warnings.Add(mes_M4+space+MZ+ioMZ.SNRV);
+                      if (!_uzsomeExists) Warnings.Add("Відсутнє КП!");
+                      if (_uzsomeExists)
+                          if (!_uzExists) Warnings.Add(mes_M4+space+MZ+ioMZ.SNRV);
                     }
                  }
          }
@@ -236,28 +228,6 @@
             n++;
             snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n);
          }
-//       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Лінія роботи" ІО ЗА
-         if (getbyThirdValue(ioMZ, "PZ", S1000_1_) &&                           //ЗАЖPZЗАЖM801
-             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_1, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_1);
-         if (getbyThirdValue(ioMZ, "PZ", S1000_2_) &&                           //ЗАЖPZЗАЖM802
-             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_2, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_2);
-         if (getbyThirdValue(ioMZ, "PZ", S1000_3_) &&                           //ЗАЖPZЗАЖM803
-             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_3, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_3);
-         if (getbyThirdValue(ioMZ, "PZ", S1000_4_) &&                           //ЗАЖPZЗАЖM804
-             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_4, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_4);
-         if (getbyThirdValue(ioMZ, "PZ", S1000_5_) &&                           //ЗАЖPZЗАЖM805
-             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_5, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_5);
-         if (getbyFirstThirdValue(ioMZ, "PZ", S1000_87_) &&                     //MRЖPZMRЖM801
-             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_87, false))
-               Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_87);
-         if (getbyFirstThirdValue(ioMZ, "PZ", S1000_88_) &&                     //MRЖPZMRЖM802
-             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_88, false))
-               Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_88);
 //       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Вид заходу" ІО ЗА
          if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861101, false) &&   //ЗАЖPZЗАЖMA01
              !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861101, false))
@@ -464,7 +434,7 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;IV;DI;SF.I98;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "IV;DI;SF.I98;");
 //ІДЖDIІДЖSF02 "Вид документа" передбачає наявність ІО ЗА, а ІО ЗА відсутній
          if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "MZ", 0) < 0))
              Errors.Add(IZ+ioIZ.SNRV+space+"ВИД ДОКУМЕНТА передбачає наявність ЗА, а ЗА відсутній");
@@ -510,19 +480,13 @@
          var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
          while (I98 >= 0)
          {
-            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;MD;M18;");
+            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;MD;");
 //ЗАЖMDІДЖIV01 Порівняння "Дата проведення заходу" з "Дата реєстрації документа"
             var MD = ioMZ.GetPropByPath("MD").Value1(0);
             var IV = ioIZ.GetPropByPath("IV").Value1(0);
-            if (MD != "" && IV != "" && MD > IV) Errors.Add(MZ+ioMZ.SNRV+space+mes_MD+space+more+space+IZ+ioIZ.SNRV+space+mes_IV);
+            if (MD != "" && IV != "" && MD > IV) Warnings.Add(MZ+ioMZ.SNRV+space+mes_MD+space+more+space+IZ+ioIZ.SNRV+space+mes_IV);
             MD = null;
             IV = null;
-//IDЖDDMRM1801 Перевірка відповідності "Підрозділ" ІО ІД й ІО ЗА
-            if (!ioMZ.GetPropByPath("MA").Contains("", S0018_SP, false))
-            {
-                if (ioIZ.GetPropByPath("DD").Value1(0).substr(0,5) != ioMZ.GetPropByPath("M18").Value1(0).substr(0,5))
-                    Warnings.Add(unDep+space+IZ+ioIZ.SNRV+space+MZ+ioMZ.SNRV+space+mes_M18);
-            }
 //          Відповідність "Вид заходу" ІО ЗА____________________________________"Вид документа" ІО ІД
             if (ioMZ.GetPropByPath("MA").Contains("", S0018_970, false) &&      //ЗАЖMAІДЖDI01
                 !ioIZ.GetPropByPath("DI").Contains("", _S0113_970, false))

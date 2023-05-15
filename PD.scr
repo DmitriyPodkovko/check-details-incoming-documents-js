@@ -1,3 +1,4 @@
+//this is script for @MIS only
 //########################################   П Е Р Е В І Р К А  І О  П Д   ################################################
 
 //"Проблематика відомостей" ІО ПД_______________________________________________"Проблематика відомостей" ІО ПД
@@ -79,8 +80,6 @@
   var DZ = "СП."
   var SZ = "СІ."
   var dis = "не відповідає"
-  var listPR = "п.р.,ПОТОЧНОГО РОКУ,поточного року,ТЕКУЩЕГО ГОДА,текущего года,ЦЬОГО РОКУ,цього року,ЭТОГО ГОДА,этого года,МИНУЛОГО РОКУ,минулого року,ПРОШЛОГО ГОДА,прошлого года,ДАНИЙ ЧАС,даний час,ДАННОЕ ВРЕМЯ,данное время,ТЕПЕРІШНІЙ ЧАС,теперішній час,НАСТОЯЩЕЕ ВРЕМЯ,настоящее время"
-  var listPR2 = "п.р.,ПОТОЧНОГО РОКУ,ТЕКУЩЕГО ГОДА,ЦЬОГО РОКУ,ЭТОГО ГОДА,МИНУЛОГО РОКУ,ПРОШЛОГО ГОДА,ДАНИЙ ЧАС,ДАННОЕ ВРЕМЯ,ТЕПЕРІШНІЙ ЧАС,НАСТОЯЩЕЕ ВРЕМЯ"
   var mes_PR = "ЗМІСТ ПРОТИПРАВНОЇ ДІЇ"
   var mes_DZ = "ПРОБЛЕМАТИКА ВІДОМОСТЕЙ:"
   var mes_DZ2 = "ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
@@ -91,23 +90,17 @@
   var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
   var mes_DJ2 = "ТЕМАТИЧНОМУ ПЕРЕЛІКУ ІНФОРМАЦІЇ:"
 
-var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
-if (mes_type.substr(0, 1) == '2')
-{
-
-}
-else
-{
-
 // Для всіх ІО ПД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
   {
     if (MessageIOs.IO(io) == "PZ")
     {
        // Отримати зміст ІО ПД
-       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;PO;DZ;DU.D83;SG.S73;OD.O83;");
+       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;PO;DZ;DU.D83;OD.O83;");
 //PDЖPRPDЖPR01 Перевірка на заповнення "Зміст протиправної дії"
-         if (ioPZ.GetPropByPath("PR").ContainsAny("", listPR, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listPR2);
+         if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR2);
+         if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR3, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR3);
+         if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPRprv, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPRprv);
 //       Відповідність "Проблематика відомостей" ІО ПД__________________________"Проблематика відомостей" ІО ПД
          if (ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_mn1, false) &&      //PDЖDZPDЖDZ01
              !ioPZ.GetPropByPath("DZ").StartWithAny("", _S0006_14_, false))
@@ -146,7 +139,7 @@ else
             if (ioIZ.GetPropByPath("DI").Contains("", S0113_704, false) &&      //IDЖDIPDЖPO01
                 !ioPZ.GetPropByPath("PO").ContainsAny("", _S0001_mn1, false))
                    Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_704+space+dis+space+PZ+ioPZ.SNRV+space+mes_PO2+space+_S0001_mn1);
-            if (ioPZ.GetPropByPath("CP").Contains("", "?", false)  || ioPZ.GetPropByPath("CP").Value1(0) == "")
+            if (ioPZ.GetPropByPath("CP").Contains("", "?", false) || ioPZ.GetPropByPath("CP").Value1(0) == "")
             {
 //           Відповідність "Оперативна кваліфікація" ІО ПД______________________"Тематичний перелік інформації" ІО ІД
              if (ioPZ.GetPropByPath("PO").StartWithAny("", S0001_0110_, false) &&//PDЖPOIDЖDJ01
@@ -334,36 +327,3 @@ else
        ioIZ = null;
     }
   }
-
-}
-
-// служ. функція перевірка існування посилання в ІО
-  function haveRef(io, group, ref, iocode, from)
-  {
-     var haveref = false;
-     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
-     var grp = io.GetPropByPath(group);   // група посилання
-     var n = 0;
-     if (grp != null)
-       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
-       {
-           var r = grp.GetPropByPath(ref, j); // реквізит посилання
-           if (r != null)
-           {
-               if (r.Count > 0)                   // врахувати множинність реквізиту
-               {
-                  if (r.Value1(0) == ionum)
-                  {
-                    n++;
-                    if (n > from)
-                    {
-                      haveref = true;  // посилання існує
-                      break;
-                    }
-                  }
-               }
-           }
-       }
-     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
-  }
-

@@ -1,3 +1,4 @@
+//this is script for @MIS only
 //########################################   П Е Р Е В І Р К А  І О  О С  і  Р Г   ########################################
 
 //"Характер проживання", "Характер тимчасового перебування" ІО ОС, "Статус адреси" ІО РГ
@@ -72,10 +73,8 @@
   var S0027_0 = "0000000"
   var S0027_UKR = "8010000000"
   var S0027_LC = "8100000100,9000000001"
-  var S0027_RG = "8100000100,9000000002"
+  var S0027_RG = "8100000100,9000000002,9000000003"
   var S0027_nonat = "9000000000,9000000001"
-  var listLE = "ІГОРЬ,КОНСТЯНТИН,ЗЕНОВ,ЗИНОВІЙ,ВЕЧЕС,АНАЛОЛИЙ,ГЕНА,АДНРІЙ,АЛЕКСІЙ"
-  var listLF = "ГЕНАД,ВАСИЛЬЙОВИЧ,АНРЕЕВИЧ,ВІТАЛИЙОВИЧ,НИКОЛАЄВНА,ГЕРГІЙОВИЧ,НИКОЛАЙОВИЧ,ЕВГЕЕВНА,ЕВГЕНИЕВИЧ,СЕРГЕЕВА,МИКОЛАЕВИЧ,НИКОЛЕЕВИЧ,ВОЛОДИМИРЫВНА,АНАТОЛИЕВИЧ"
   var lesLI = 19200000
   var nochar = " ,-,/,_,(,)"
   var com = "відповідає"
@@ -113,27 +112,22 @@
   var mes_EET2 = "ДИСЛОКАЦІЯ ОРГАНІЗАЦІЇ"
   var mes_ENT = "ХАРАКТЕР ТИМЧАСОВОГО ПЕРЕБУВАННЯ"
   var mes_LC = "реалізація ВІДОМА ЯК. Одночасна наявність символів кирилиці та латиниці ПРІЗВИЩЕ й ІМ`Я"
-  var mes_LC2 = "реалізація ВІДОМА ЯК. Одночасна наявність символів кирилиці та латиниці ПРІЗВИЩЕ й ПО БАТЬКОВІ/ДРУГЕ ІМ`Я"
-  var mes_LC3 = "реалізація ВІДОМА ЯК. Одночасна наявність символів кирилиці та латиниці ІМ`Я й ПО БАТЬКОВІ/ДРУГЕ ІМ`Я"
+  var mes_LC2 = "реалізація ВІДОМА ЯК. Одночасна наявність символів кирилиці та латиниці ПРІЗВИЩЕ й ПО БАТЬКОВІ (ДРУГЕ ІМ`Я)"
+  var mes_LC3 = "реалізація ВІДОМА ЯК. Одночасна наявність символів кирилиці та латиниці ІМ`Я й ПО БАТЬКОВІ (ДРУГЕ ІМ`Я)"
+  var mes_LD = "реалізація ПРІЗВИЩЕ. Невірне написання"
+  var mes_LD1 = "реалізація ПРІЗВИЩЕ. Кількість 0"
   var mes_LD2 = "реалізація ПРІЗВИЩЕ. Одночасна наявність символів кирилиці та латиниці"
   var mes_GC1 = "НАЗВА ОРГАНІЗАЦІЇ. Одночасна наявність символів кирилиці та латиниці"
   var mes_GC2 = "НАЗВА ОРГАНІЗАЦІЇ. Одночасна наявність українських та російських літер"
-  var mes_LF = "ПО БАТЬКОВІ/ДРУГЕ ІМ`Я"
-  var mes_LF2 = "реалізація ПО БАТЬКОВІ/ДРУГЕ ІМ`Я. Невірне написання"
+  var mes_LF = "ПО БАТЬКОВІ (ДРУГЕ ІМ`Я)"
+  var mes_LF2 = "реалізація ПО БАТЬКОВІ (ДРУГЕ ІМ`Я). Невірне написання"
   var mes_LE = "реалізація ІМ`Я. Невірне написання"
+  var mes_LE1 = "реалізація ІМ`Я. Кількість 0"
   var mes_LE2 = "реалізація ІМ`Я. Одночасна наявність символів кирилиці та латиниці"
   var mes_JA = "Невірне значення ВИД ДОКУМЕНТА"
   var mes_JB = "СЕРІЯ, НОМЕР ДОКУМЕНТА містить зайві символи: "
   var mes_BA = "Невірне значення ВИД ПРЕДМЕТУ"
   var mes_BC = "НАЙМЕНУВАННЯ, НОМЕР містить зайві символи: "
-
-var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
-if (mes_type.substr(0, 1) == '2')
-{
-
-}
-else
-{
 
 // Для всіх ІО у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -149,11 +143,15 @@ else
            var dt = new Date();
            var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
 //LCЖLILCЖLI01 Перевірка "Дата народження" (кількість реалізацій реквізиту не повинна бути > 1)
-//LCЖLILCЖLI02 Перевірка "Дата народження" (від 1920р до поточна дата-8р)
+//LCЖLILCЖLI02 Перевірка "Дата народження" (дата повинна бути у межах від 1920р до поточна дата - 8років, за виключенням 00.00.1900)
            var LI = ioLZ.GetPropByPath("LI");
            if (LI.Count > 1) Warnings.Add(LZ+ioLZ.SNRV+space+mes_LI+space+"містить більше 1 реалізації");
            for (var j = 0; j < LI.Count; j++)
-            if (LI.Value1(j) > DateNow - 80000 || LI.Value1(j) < lesLI) Warnings.Add(LZ+ioLZ.SNRV+space+"Некоректна"+space+mes_LI+space+"("+LI.Value2(j)+")");
+           if (LI.Value1(j) != 19000000)
+           {
+            if (LI.Value1(j) > DateNow - 80000 || LI.Value1(j) < lesLI)
+                Warnings.Add(LZ+ioLZ.SNRV+space+"Некоректна"+space+mes_LI+space+"("+LI.Value2(j)+")");
+           }
 //ОСЖE2ОСЖE201 Перевірка "Країна, АТО" ("Місце народження (адреса)") ІО ОС
            var E1 = ioLZ.GetPropByPath("E1");
            for (var j = 0; j < E1.Count; j++)
@@ -262,8 +260,12 @@ else
            {
              if (ioLZ.GetPropByPath("LJ").ContainsAny("", S0027_UKR, false) && LC.GetPropByPath("LF", j).Value1(0) == "")
                  Warnings.Add(LZ+ioLZ.SNRV+space+mes_LJ+space+S0027_UKR+space+emp+space+mes_LF);
-             if (LC.GetPropByPath("LE", j).ContainsAny("", listLE, false)) Warnings.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LE);
-             if (LC.GetPropByPath("LF", j).ContainsAny("", listLF, false)) Warnings.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LF2);
+             if (LC.GetPropByPath("LE", j).ContainsAny("", listLE, false) || LC.GetPropByPath("LE", j).ContainsAny("", listLEprv, false))
+                 Warnings.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LE);
+             if (LC.GetPropByPath("LF", j).ContainsAny("", listLF, false) || LC.GetPropByPath("LF", j).ContainsAny("", listLFprv, false))
+                 Warnings.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LF2);
+             if (LC.GetPropByPath("LD", j).ContainsAny("", listLD, false) || LC.GetPropByPath("LD", j).ContainsAny("", listLDprv, false))
+                 Warnings.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LD);
              if ((LC.GetPropByPath("LF", j).Contains("", "ВНА", false) && ioLZ.GetPropByPath("LH").Contains("", "М", false)) ||
                  (LC.GetPropByPath("LF", j).Contains("", "ВИЧ", false) && ioLZ.GetPropByPath("LH").Contains("", "Ж", false)))
                   Warnings.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LH);
@@ -280,6 +282,10 @@ else
              if ((haveRus(LC.GetPropByPath("LE", j).Value1(0)) && haveEng(LC.GetPropByPath("LF", j).Value1(0))) ||
                  (haveEng(LC.GetPropByPath("LE", j).Value1(0)) && haveRus(LC.GetPropByPath("LF", j).Value1(0))))
                   Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LC3);//ОСЖLEОСЖLF01
+             if (LC.GetPropByPath("LD", j).StartWithAny("", "0", false) && !(LC.GetPropByPath("LD", j).Value1(0) == "0000000000"))
+                 Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LD1+space+dis+space+"10");//ОСЖLDОСЖLD02 new
+             if (LC.GetPropByPath("LE", j).StartWithAny("", "0", false) && !(LC.GetPropByPath("LE", j).Value1(0) == "0000000000"))
+                 Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LE1+space+dis+space+"10");//ОСЖLEОСЖLE02 new
            }
            LC = null;
            LJ = null;
@@ -339,13 +345,13 @@ else
            var GD = ioRZ.GetPropByPath("GD");
            if (!GD.Count > 0) Warnings.Add(RZ+ioRZ.SNRV+space+mes_GD+space+emp);
 //RGЖGDRGЖGD02 RGЖGDRGЖYA01 Перевірка "Держналежність" ІО РГ
-            for (var j = 0; j < GD.Count; j++)
-            {
-             if ((S0027_RG.indexOf(GD.Value1(j)) < 0) && (GD.Value1(j).substr(3, 7) != S0027_0))
-                  Warnings.Add(RZ+ioRZ.SNRV+space+"Некоректне"+space+mes_GD+space+"("+GD.Value2(j)+")");
-             if ((GD.Value1(j) == S0027_UKR) && (ioRZ.GetPropByPath("YA").Value1(0) == ""))
-                  Warnings.Add(RZ+ioRZ.SNRV+space+mes_GD+space+S0027_UKR+space+emp+space+mes_YA);
-            }
+           for (var j = 0; j < GD.Count; j++)
+           {
+            if (((S0027_RG.indexOf(GD.Value1(j)) < 0) && (GD.Value1(j).substr(3, 7) != S0027_0)) || (LJ.Value1(j).ContainsAny("", S0027_nonat, false)))
+                 Warnings.Add(RZ+ioRZ.SNRV+space+"Некоректне"+space+mes_GD+space+"("+GD.Value2(j)+")");
+            if ((GD.Value1(j) == S0027_UKR) && (ioRZ.GetPropByPath("YA").Value1(0) == ""))
+                 Warnings.Add(RZ+ioRZ.SNRV+space+mes_GD+space+S0027_UKR+space+emp+space+mes_YA);
+           }
            GD = null;
 //RGЖGKRGЖGK01 Перевірка "Оперативна категорія" ІО РГ (НЕ *00)
            if (ioRZ.GetPropByPath("GK").EndWith("", "00", false)) Warnings.Add(RZ+ioRZ.SNRV+space+mes_GK2+space+"родовий код");
@@ -622,56 +628,3 @@ else
        ioIZ = null;
     }
   }
-
-}
-
-// служ. функція перевірка наявності латиниці
-  function haveEng(str)
-  {
-     var haveEng = false;
-     for (var i = 0; i < str.length; i++)
-       if ((str.substr(i, 1) >= "A") && (str.substr(i, 1) <= "Z"))
-            haveEng = true;
-     return haveEng;
-  }
-
-// служ. функція перевірка наявності кирилиці
-  function haveRus(str)
-  {
-     var haveRus = false;
-     for (var i = 0; i < str.length; i++)
-       if (((str.substr(i, 1) >= "А") && (str.substr(i, 1) <= "Я")) || (str.substr(i, 1) == "Ё") || (str.substr(i, 1) == "Ї") || (str.substr(i, 1) == "Є"))
-            haveRus = true;
-     return haveRus;
-  }
-
-// служ. функція перевірка існування посилання в ІО
-  function haveRef(io, group, ref, iocode, from)
-  {
-     var haveref = false;
-     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
-     var grp = io.GetPropByPath(group);   // група посилання
-     var n = 0;
-     if (grp != null)
-       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
-       {
-           var r = grp.GetPropByPath(ref, j); // реквізит посилання
-           if (r != null)
-           {
-               if (r.Count > 0)                   // врахувати множинність реквізиту
-               {
-                  if (r.Value1(0) == ionum)
-                  {
-                    n++;
-                    if (n > from)
-                    {
-                      haveref = true;  // посилання існує
-                      break;
-                    }
-                  }
-               }
-           }
-       }
-     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
-  }
-

@@ -1,4 +1,4 @@
-//this is script for @MIS only
+//this is script for @MVS only
 //########################################   П Е Р Е В І Р К А  І О  О Д   ################################################
 
 // ІО ОД________________________________________________________________________"Підстава обмеження" ІО ОД
@@ -78,7 +78,7 @@
               }
             }
             if (isDZ && (!isTrue) && (K1 == "")) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+" при незакритій СП "+dis+space+mes_CD+"="+mes_1H);
-            if (isDZZakr) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+com+space+S0908_02+" при закритій СП");
+            if (isDZZakr) Warnings.Add(XZ+ioXZ.SNRV+space+mes_XF+space+com+space+S0908_02+" при закритій СП");
             n++;
             O83 = haveRef(ioIZ, "OD", "O83", "XZ", n);
          }

@@ -1,4 +1,4 @@
-//this is script for @MIS only
+//this is script for @MVS only
 //########################################   Ï Å Ð Å Â ² Ð Ê À  ² Î  Ê Ï   ################################################
 
 //"Ñòàòòÿ ³ êîäåêñ" ²Î ÊÏ_______________________________________________________"Ñòàòòÿ ³ êîäåêñ" ²Î ÊÏ
@@ -28,15 +28,6 @@
   var S0036_980000 = "980000";
   var S0036_980306 = "980306";
 
-//"Ïð³îðèòåòí³ çàâäàííÿ" ²Î ÊÏ__________________________________________________"Ë³í³ÿ ðîáîòè" ²Î ÊÏ
-  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
-  var S1000_2_ = "2";                                                             var _S0012_2 = "40"
-  var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
-  var S1000_4_ = "4";                                                             var _S0012_4 = "20"
-  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
-  var S1000_87_ = "87";                                                           var _S0012_87 = "11"
-  var S1000_88_ = "88";                                                           var _S0012_88 = "80"
-
 //"Âèä äîêóìåíòà" ²Î ²Ä_________________________________________________________"Ðåàë³çàö³ÿ ³íôîðìàö³¿" ²Î ²Ä ²Î ÊÏ
   var S0113_mn1 = "450,451,452,453,454,455,459,460,464,"+
                   "465,466,467,503,604,605,608,609";
@@ -56,12 +47,10 @@
   var mes_DPS = "ÄÀÒÀ ÏÎÐÓØÅÍÍß ÑÏÐÀÂÈ"
   var mes_2I = "ÑÒÀÒÒß ² ÊÎÄÅÊÑ:"
   var mes_2I2 = "ì³ñòèòü ìåíøå 2 ðåàë³çàö³é"
-  var mes_U8 = "Ë²Í²¯ ÐÎÁÎÒÈ"
   var mes_U18 = "ÑÓÁ'ªÊÒ ÏÐÀÂÎÏÎÐÓØÅÍÍß"
   var mes_LR = "ÎÏÅÐÀÒÈÂÍ²É ÊÀÒÅÃÎÐ²¯:"
   var mes_PU = "ÏÐÅÄÌÅÒÓ ÊÐÈÌ²ÍÀËÜÍÎ¯ ÑÏÐÀÂÈ"
   var mes_PPS = "ÎÐÃÀÍ (Ï²ÄÐÎÇÄ²Ë), ÙÎ ÏÎÐÓØÈÂ ÑÏÐÀÂÓ..."
-  var mes_PZ = "ÏÐ²ÎÐÈÒÅÒÍ² ÇÀÂÄÀÍÍß"
   var mes_2C = "ÐÅªÑÒÐÀÖ²ÉÍÈÉ ÍÎÌÅÐ"
 
 // Äëÿ âñ³õ ²Î ÊÏ ó ïîâ³äîìëåíí³
@@ -126,28 +115,6 @@
 //       Â³äïîâ³äí³ñòü "Îðãàí (ï³äðîçä³ë), ùî ïîðóøèâ ñïðàâó..." ²Î ÊÏ__________"Îðãàí (ï³äðîçä³ë), ùî ïîðóøèâ ñïðàâó..." ²Î ÊÏ
          if (ioUZ.GetPropByPath("PPS").Value1(0) >= S0036_980000 && ioUZ.GetPropByPath("PPS").Value1(0) <= S0036_980306)
              Errors.Add(UZ+ioUZ.SNRV+space+mes_PPS+space+com+space+S0036_980000+"-"+S0036_980306);//ÊÑPPSÊÑPPS01
-//       Â³äïîâ³äí³ñòü "Ïð³îðèòåòí³ çàâäàííÿ" ²Î ÊÏ_____________________________"Ë³í³ÿ ðîáîòè" ²Î ÊÏ
-         if (getbyThirdValue(ioUZ, "PZ", S1000_1_) &&                           //ÊÑÆPZÊÑÆU801
-             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_1, false))
-               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_1);
-         if (getbyThirdValue(ioUZ, "PZ", S1000_2_) &&                           //ÊÑÆPZÊÑÆU802
-             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_2, false))
-               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_2);
-         if (getbyThirdValue(ioUZ, "PZ", S1000_3_) &&                           //ÊÑÆPZÊÑÆU803
-             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_3, false))
-               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_3);
-         if (getbyThirdValue(ioUZ, "PZ", S1000_4_) &&                           //ÊÑÆPZÊÑÆU804
-             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_4, false))
-               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_4);
-         if (getbyThirdValue(ioUZ, "PZ", S1000_5_) &&                           //ÊÑÆPZÊÑÆU805
-             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_5, false))
-               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_5);
-         if (getbyFirstThirdValue(ioUZ, "PZ", S1000_87_) &&                     //UGÆPZUGÆU801
-             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_87, false))
-               Warnings.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_87);
-         if (getbyFirstThirdValue(ioUZ, "PZ", S1000_88_) &&                     //UGÆPZUGÆU802
-             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_88, false))
-               Warnings.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_88);
 
        ioUZ.Clear();
        ioUZ = null;

@@ -1,0 +1,60 @@
+//this is script for @MVS only
+//########################################   П Е Р Е В І Р К А  І О  П Д   ################################################
+
+//"Вид документа" ІО ІД_________________________________________________________"Оперативна кваліфікація відомостей" ІО ПД
+  var S0113_704 = "704";                                                          var _S0001_mn1 = "0116115,0116120,0116125"
+
+  var space = " "
+  var IZ = "ІД."
+  var PZ = "ПД."
+  var DZ = "СП."
+  var SZ = "СІ."
+  var dis = "не відповідає"
+  var mes_DZ = "ПРОБЛЕМАТИКА ВІДОМОСТЕЙ:"
+  var mes_DZ2 = "ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
+  var mes_DZ3 = "відповідає ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
+  var mes_DI = "ВИД ДОКУМЕНТА:"
+  var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
+
+// Для всіх ІО ПД у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "PZ")
+    {
+       // Отримати зміст ІО ПД
+       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "DZ;DU.D83;OD.O83;");
+//ПДЖDUПДЖOD01 В ІО СП не задано "Дата закриття справи", а в ІО ПД відсутнє посилання на ІО ОД
+         var n = 0;
+         var snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n)
+         while (snDZ >= 0)
+         {
+            var ioDZ = SC.ReadIO("DZ", snDZ, -1, "1K;");
+            if ((ioDZ.GetPropByPath("1K").Value1(0) == "") && (haveRef(ioPZ, "OD", "O83", "XZ", 0) < 0))
+                 Errors.Add("В "+DZ+ioDZ.SNRV+" не задано ДАТА ЗАКРИТТЯ СПРАВИ, а в "+PZ+ioPZ.SNRV+" відсутнє посилання на ОД");
+            n++;
+            snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
+         }
+       ioPZ.Clear();
+       ioPZ = null;
+    }
+
+    if (MessageIOs.IO(io) == "IZ")
+    {
+       // Отримати зміст ІО ІД
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DI;30.D83;");
+         var n = 0;
+         var D83 = haveRef(ioIZ, "30", "D83", "PZ", n);
+         while (D83 >= 0)
+         {
+            var ioPZ = SC.ReadIO("PZ", D83, -1, "CP;PO;DZ;");
+//          Відповідність "Вид документа" ІО ІД_________________________________"Оперативна кваліфікація відомостей" ІО ПД
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_704, false) &&      //IDЖDIPDЖPO01
+                !ioPZ.GetPropByPath("PO").ContainsAny("", _S0001_mn1, false))
+                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_704+space+dis+space+PZ+ioPZ.SNRV+space+mes_PO2+space+_S0001_mn1);
+            n++;
+            D83 = haveRef(ioIZ, "30", "D83", "PZ", n);
+         }
+       ioIZ.Clear();
+       ioIZ = null;
+    }
+  }

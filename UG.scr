@@ -1,17 +1,21 @@
 //########################################   П Е Р Е В І Р К А  І О  К С   ################################################
 
 //"Стаття і кодекс" ІО КС_______________________________________________________"Стаття і кодекс" ІО КС
-  var S0105_2_ = "2";                                                             var _S0105_2_ = "4"
-  var S0105_mn1_ = "201001,202,203,204";                                          var _S0105_mn1_ = "20104"
+  var S0105_mn1_ = "2,8";                                                         var _S0105_mn1_ = "4"
+  var S0105_20101000 = "20101000";                                                var _S0105_mn2_ = "20104,8013"
+  var S0105_20103000 = "20103000";
+  var S0105_20105000 = "20105000";
+  var S0105_20133000 = "20133000";
+  var S0105_80100000 = "80100000";
+  var S0105_80120000 = "80120000";
+  var S0105_80400000 = "80400000";
+  var S0105_81273000 = "81273000";
 
 //"Стаття і кодекс" ІО КС_______________________________________________________"Проходять за справою" ІО КС
   var S0105_70021202 = "70021202";
-
-//"Стаття і кодекс" ІО КС_______________________________________________________"Предмет кримінальної справи" ІО КС
-  var S0105_mn2_ = "4207201,4213305";
-
-//"Стаття і кодекс" ІО КС_______________________________________________________"Предмет кримінальної справи" ІО КС
-  var S0105_mn3_ = "4207201,4213305";
+  
+//"Суб'єкт правопорушення" ІО КС________________________________________________"Оперативна категорія особи" ІО ОС
+                                                                                  var _S0002_8016 = "8016"
 
 //"Орган (підрозділ), що порушив справу..." ІО КС_______________________________"Орган (підрозділ), що порушив справу..." ІО КС
   var S0036_980000 = "980000";
@@ -32,6 +36,7 @@
   var comma = ","
   var IZ = "ІД."
   var UZ = "КС."
+  var LZ = "ОС."
   var com = "відповідає"
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
@@ -40,8 +45,10 @@
   var mes_Date = "поточну дату"
   var mes_DPS = "ДАТА ПОРУШЕННЯ СПРАВИ"
   var mes_2I = "СТАТТЯ І КОДЕКС:"
-  var mes_U8 = "ЛІНІЇ РОБОТИ"
   var mes_2I2 = "містить менше 2 реалізацій"
+  var mes_U8 = "ЛІНІЇ РОБОТИ"
+  var mes_U18 = "СУБ'ЄКТ ПРАВОПОРУШЕННЯ"
+  var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
   var mes_PU = "ПРЕДМЕТУ КРИМІНАЛЬНОЇ СПРАВИ"
   var mes_PPS = "ОРГАН (ПІДРОЗДІЛ), ЩО ПОРУШИВ СПРАВУ..."
   var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
@@ -62,20 +69,40 @@
          DateNow = null;
          dt = null;
 //       Відповідність "Стаття і кодекс" ІО КС__________________________________"Стаття і кодекс" ІО КС
-         if (ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false) && ioUZ.GetPropByPath("2I").Count < 2)
-             Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_2_+space+mes_2I2);//КСЖ2IКСЖ2I01
-         if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false) && !ioUZ.GetPropByPath("2I").StartWith("", _S0105_mn1_, false))
-             Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn1_+space+dis+space+_S0105_mn1_);//КСЖ2IКСЖ2I02
-         if ((ioUZ.GetPropByPath("2I").Contains("", S0105_70021202, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
-             (ioUZ.GetPropByPath("2I").StartWith("", _S0105_2_, false)))
-              Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_70021202+comma+S0105_2_+space+com+space+_S0105_2_);//КСЖ2IКСЖ2I03
+         if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false) && ioUZ.GetPropByPath("2I").Count < 2)
+             Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn1_+space+mes_2I2);//КСЖ2IКСЖ2I01
+         for (var i = 0; i < ioUZ.GetPropByPath("2I").Count; i++)//КСЖ2IКСЖ2I02
+         {
+            if ((((ioUZ.GetPropByPath("2I").Value1(i) >= S0105_20101000) && (ioUZ.GetPropByPath("2I").Value1(i) <= S0105_20103000)) ||
+                 ((ioUZ.GetPropByPath("2I").Value1(i) >= S0105_20105000) && (ioUZ.GetPropByPath("2I").Value1(i) <= S0105_20133000)) ||
+                 ((ioUZ.GetPropByPath("2I").Value1(i) >= S0105_80100000) && (ioUZ.GetPropByPath("2I").Value1(i) <= S0105_80120000)) ||
+                 ((ioUZ.GetPropByPath("2I").Value1(i) >= S0105_80400000) && (ioUZ.GetPropByPath("2I").Value1(i) <= S0105_81273000)))
+                   && !ioUZ.GetPropByPath("2I").StartWithAny("", _S0105_mn2_, false))
+                   Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_20101000+"-"+S0105_20103000+comma+space+
+                                                              S0105_20105000+"-"+S0105_20133000+comma+space+
+                                                              S0105_80100000+"-"+S0105_80120000+comma+space+
+                                                              S0105_80400000+"-"+S0105_81273000+comma+space+dis+space+_S0105_mn2_);
+         }
+//       Відповідність "Стаття і кодекс" ІО КС__________________________________"Проходять за справою" ІО КС
+         if ((ioUZ.GetPropByPath("2I").Contains("", S0105_70021202, false) || ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false)) &&
+             (ioUZ.GetPropByPath("2I").StartWith("", _S0105_mn1_, false)))
+              Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_70021202+comma+S0105_mn1_+space+com+space+_S0105_mn1_);//КСЖ2IКСЖ2I03
 //КСЖ2IКСU1801 "Стаття і кодекс" ІО КС передбачає наявність тільки ІО ОС
-           if ((ioUZ.GetPropByPath("2I").Contains("", S0105_70021202, false) || ioUZ.GetPropByPath("2I").StartWith("", S0105_2_, false)) &&
+           if ((ioUZ.GetPropByPath("2I").Contains("", S0105_70021202, false) || ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn1_, false)) &&
                (haveRef(ioUZ, "U18", "U97", "LZ", 0) < 0))
-                Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_70021202+comma+S0105_2_+space+"передбачає наявність ОС");
-//       Відповідність "Стаття і кодекс" ІО КС__________________________________"Предмет кримінальної справи" ІО КС
-         if (ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn2_, false) && !ioUZ.GetPropByPath("PU").Count > 0)
-             Warnings.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_mn2_+space+emp+space+mes_PU);//КСЖ2IКСЖPU01
+                Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_70021202+comma+S0105_mn1_+space+"передбачає наявність ОС");
+
+         var n = 0;
+         var snLZ = haveRef(ioUZ, "U18", "U97", "LZ", n)
+         while (snLZ >= 0)
+         {
+            var ioLZ = SC.ReadIO("LZ", snLZ, -1, "LR;");
+//       Відповідність "Суб'єкт правопорушення" ІО КС___________________________"Оперативна категорія особи" ІО ОС
+            if (!ioLZ.GetPropByPath("LR").Contains("", _S0002_8016, false))
+                Errors.Add(UZ+ioUZ.SNRV+space+mes_U18+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_8016);//КСU18ОСЖLR01
+            n++;
+            snLZ = haveRef(ioUZ, "U18", "U97", "LZ", n);
+         }
 //       Відповідність "Орган (підрозділ), що порушив справу..." ІО КС__________"Орган (підрозділ), що порушив справу..." ІО КС
          if (ioUZ.GetPropByPath("PPS").Value1(0) >= S0036_980000 && ioUZ.GetPropByPath("PPS").Value1(0) <= S0036_980306)
              Errors.Add(UZ+ioUZ.SNRV+space+mes_PPS+space+com+space+S0036_980000+"-"+S0036_980306);//КСPPSКСPPS01

@@ -1,18 +1,19 @@
 //########################################   П Е Р Е В І Р К А  І О  З А   ################################################
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Об'єкти заходу" ІО ЗА
-  var S0018_mn1 = "511,512,513";
+  var S0018_mn1 = "511,512,513,514";
   var S0018_mn2 = "501,502,503,504";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Підстава проведення заходу" ІО ЗА
-  var S0018_mn3 = "511,512,513";
+  var S0018_mn3 = "511,512,513,514";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Категорія державного органу, установи" ІО ЗА
   var S0018_612 = "612";
   var S0018_613 = "613";                                                          var _S0114_613 = "268,920,921,923,924"
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Оперативна категорія особи" ІО ОС
-  var S0018_mn4 = "511,512,513";                                                  var _S0002_8018 = "8018"
+  var S0018_mn4 = "295,296";                                                      var _S0002_8016 = "8016"
+  var S0018_mn5 = "505,511,512,513,514";                                          var _S0002_8018 = "8018"
 
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
   var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
@@ -32,7 +33,7 @@
   var S0101_86 = "86";
 
 //"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО ЗА
-  var S0113_mn1 = "119,120,208,603,811,819";
+  var S0113_mn1 = "120,140,208,603,811,819";
 
 //"Вид документа" ІО ІД_________________________________________________________"Вид заходу" ІО ЗА
   var S0113_124 = "124";                                                          var _S0018_124 = "970"
@@ -41,6 +42,7 @@
   var S0113_603 = "603";                                                          var _S0018_603 = "512"
   var S0113_606 = "606";                                                          var _S0018_606 = "301,336,337"
   var S0113_120 = "120";                                                          var _S0018_502 = "502"
+                                                                                  var _S0018_504 = "504"
                                                                                   var _S0018_506 = "506"
                                                                                   var _S0018_511 = "511"
                                                                                   var _S0018_514 = "514"
@@ -125,8 +127,10 @@
          {
             var ioLZ = SC.ReadIO("LZ", snLZ, -1, "LR;");
 //          Відповідність "Вид заходу" ІО ЗА____________________________________"Оперативна категорія особи" ІО ОС
-            if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn4, false) && !ioLZ.GetPropByPath("LR").Contains("", _S0002_8018, false))
-                Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn4+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_8018);//ЗАЖMAОСЖLR01
+            if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn4, false) && !ioLZ.GetPropByPath("LR").Contains("", _S0002_8016, false))
+                Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn4+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_8016);//ЗАЖMAОСЖLR01
+            if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn5, false) && !ioLZ.GetPropByPath("LR").Contains("", _S0002_8018, false))
+                Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn5+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_8018);//ЗАЖMAОСЖLR02
             n++;
             snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n);
          }
@@ -173,7 +177,7 @@
     {
        // Отримати зміст ІО ІД
        var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;IV;DI;SF.I98;");
-//ІДЖDIІДЖSF03 "Вид документа" передбачає наявність ІО ЗА, а ІО ЗА відсутній
+//ІДЖDIІДЖSF02 "Вид документа" передбачає наявність ІО ЗА, а ІО ЗА відсутній
          if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "MZ", 0) < 0))
              Errors.Add(IZ+ioIZ.SNRV+space+"ВИД ДОКУМЕНТА передбачає наявність ЗА, а ЗА відсутній");
          var n = 0;
@@ -206,10 +210,6 @@
             if (ioIZ.GetPropByPath("DI").Contains("", S0113_606, false) &&      //ІДЖDIЗАЖMA05
                 !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_606, false))
                  Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_606+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_606);
-            if (ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) &&      //ІДЖDIЗАЖMA06
-                !((ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_502 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_506)
-                ||(ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_511 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_514)))
-                Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis +space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_502+"-"+_S0018_506+comma+space+_S0018_511+"-"+_S0018_514);
             if (ioIZ.GetPropByPath("DI").Contains("", S0113_832, false) &&      //ІДЖDIЗАЖMA07
                 !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_832, false))
                  Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_832+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_832);
@@ -229,9 +229,39 @@
             n++;
             I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
          }
+         if (n == 2)//ІДЖDIЗАЖMA06
+         {
+            var ioMZ1 = SC.ReadIO("MZ", haveRef(ioIZ, "SF", "I98", "MZ", 0), -1, "MA;");
+            var ioMZ2 = SC.ReadIO("MZ", haveRef(ioIZ, "SF", "I98", "MZ", 1), -1, "MA;");
+            if ((ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) && ioMZ1.GetPropByPath("MA").Contains("", S0018_612, false)) &&
+                 !ioMZ2.GetPropByPath("MA").Contains("", _S0018_504, false))
+                  Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis+space+MZ+ioMZ2.SNRV+space+mes_MA+space+_S0018_504)
+            if ((ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) && ioMZ2.GetPropByPath("MA").Contains("", S0018_612, false)) &&
+                 !ioMZ1.GetPropByPath("MA").Contains("", _S0018_504, false))
+                  Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis+space+MZ+ioMZ1.SNRV+space+mes_MA+space+_S0018_504)
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) && !ioMZ1.GetPropByPath("MA").Contains("", S0018_612, false) &&
+                 !ioMZ2.GetPropByPath("MA").Contains("", S0018_612, false)) DIMA()
+         } else DIMA()
        ioIZ.Clear();
        ioIZ = null;
     }
+  }
+
+// функція перевірки відповідності "Вид документа" ІО ІД - "Вид заходу" ІО ЗА для ІДЖDIЗАЖMA06
+  function DIMA()
+  {
+     var n = 0;
+     var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+     while (I98 >= 0)
+     {
+        var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;");
+        if (ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) &&
+            !((ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_502 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_506)
+            ||(ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_511 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_514)))
+            Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis +space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_502+"-"+_S0018_506+comma+space+_S0018_511+"-"+_S0018_514);
+        n++;
+        I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+     }
   }
 
 // служ. функція перевірки третього значення в коді реквізиту

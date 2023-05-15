@@ -114,7 +114,8 @@
   var mes_LC2 = "реалізація ВІДОМА ЯК. Одночасна наявність символів кирилиці та латиниці ПРІЗВИЩЕ й ПО БАТЬКОВІ/ДРУГЕ ІМ`Я"
   var mes_LC3 = "реалізація ВІДОМА ЯК. Одночасна наявність символів кирилиці та латиниці ІМ`Я й ПО БАТЬКОВІ/ДРУГЕ ІМ`Я"
   var mes_LD2 = "реалізація ПРІЗВИЩЕ. Одночасна наявність символів кирилиці та латиниці"
-  var mes_GC = "НАЗВА ОРГАНІЗАЦІЇ. Одночасна наявність символів кирилиці та латиниці"
+  var mes_GC1 = "НАЗВА ОРГАНІЗАЦІЇ. Одночасна наявність символів кирилиці та латиниці"
+  var mes_GC2 = "НАЗВА ОРГАНІЗАЦІЇ. Одночасна наявність українських та російських літер"
   var mes_LF = "ПО БАТЬКОВІ/ДРУГЕ ІМ`Я"
   var mes_LF2 = "реалізація ПО БАТЬКОВІ/ДРУГЕ ІМ`Я. Невірне написання"
   var mes_LE = "реалізація ІМ`Я. Невірне написання"
@@ -299,10 +300,15 @@
         if (CG == null) CG = ioRZ.GetPropByPath("NN");
         if (CG.Contains("", "?", false) || CG.Value1(0) == "")
         {
-//RGЖGCRGЖGC01 Перевірка "Назва організації" ІО РГ
+//RGЖGCRGЖGC01 РГЖGCРГЖGC01 Перевірка "Назва організації" ІО РГ
            var GC = ioRZ.GetPropByPath("GC");
            for (var j = 0; j < GC.Count; j++)
-            if (haveEng(GC.Value1(j)) && haveRus(GC.Value1(j))) Warnings.Add(RZ+ioRZ.SNRV+space+mes_GC);
+           {
+            if (haveEng(GC.Value1(j)) && haveRus(GC.Value1(j))) Warnings.Add(RZ+ioRZ.SNRV+space+mes_GC1);
+            if (((GC.Value1(j).indexOf("Ы") > 0) || (GC.Value1(j).indexOf("Э") > 0)) &&
+                ((GC.Value1(j).indexOf("Ї") > 0) || (GC.Value1(j).indexOf("Є") > 0)))
+                  Errors.Add(RZ+ioRZ.SNRV+space+mes_GC2);
+           }
            GC = null;
 //RGЖBARGЖBC01 Відповідність "Вид предмету" ІО РГ_______________________________"Найменування, номер" ІО РГ
            var BB = ioRZ.GetPropByPath("BB");

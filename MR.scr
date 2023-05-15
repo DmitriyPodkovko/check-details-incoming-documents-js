@@ -9,6 +9,7 @@
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Категорія державного органу, установи" ІО ЗА
   var S0018_612 = "612";
+  var S0018_613 = "613";                                                          var _S0114_613 = "268,920,921,923,924"
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Оперативна категорія особи" ІО ОС
   var S0018_mn4 = "511,512,513";                                                  var _S0002_8018 = "8018"
@@ -39,10 +40,15 @@
   var S0113_463 = "463";                                                          var _S0018_463 = "231"
   var S0113_603 = "603";                                                          var _S0018_603 = "512"
   var S0113_606 = "606";                                                          var _S0018_606 = "301,330,336,337"
-  var S0113_120 = "120";                                                          var _S0018_502 = "502";
-                                                                                  var _S0018_506 = "506";
-                                                                                  var _S0018_511 = "511";
-                                                                                  var _S0018_514 = "514";
+  var S0113_120 = "120";                                                          var _S0018_502 = "502"
+                                                                                  var _S0018_506 = "506"
+                                                                                  var _S0018_511 = "511"
+                                                                                  var _S0018_514 = "514"
+  var S0113_831 = "831";                                                          var _S0018_831 = "291"
+  var S0113_mn2 = "472,833";                                                      var _S0018_mn2 = "293"
+
+//"Вид заходу" ІО ІД____________________________________________________________"Вид документа" ІО ЗА
+  var S0018_970 = "970";                                                          var _S0113_970 = "124";
 
   var space = " "
   var comma = ","
@@ -107,6 +113,9 @@
 //       Відповідність "Вид заходу" ІО ЗА_______________________________________"Категорія державного органу, установи" ІО ЗА
          if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_612, false) && ioMZ.GetPropByPath("M7").Value1(0) == "")
              Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_612+space+emp+space+mes_M7);//ЗАЖMAЗАЖM701
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_613, false) &&      //ЗАЖMAЗАЖM702
+             !ioMZ.GetPropByPath("M7").ContainsAny("", _S0114_613, false))
+              Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_613+space+dis+space+mes_M7+space+_S0114_613);
 
          var n = 0;
          var snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n)
@@ -199,6 +208,16 @@
                 !((ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_502 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_506)
                 ||(ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_511 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_514)))
                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis +space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_502+"-"+_S0018_506+comma+space+_S0018_511+"-"+_S0018_514);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_831, false) &&      //IDЖDIMRЖMA01
+                !ioMZ.GetPropByPath("MA").Contains("", _S0018_831, false))
+                 Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_831+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_831);
+            if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn2, false) &&   //IDЖDIMRЖMA02
+                !ioMZ.GetPropByPath("MA").Contains("", _S0018_mn2, false))
+                 Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn2+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_mn2);
+//          Відповідність "Вид заходу" ІО ІД____________________________________"Вид документа" ІО ЗА
+            if (ioMZ.GetPropByPath("MA").Contains("", S0018_970, false) &&      //ЗАЖMAІДЖDI01
+                !ioIZ.GetPropByPath("DI").Contains("", _S0113_970, false))
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_970+space+dis+space+IZ+ioIZ.SNRV+space+mes_DI+space+_S0113_970);
             n++;
             I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
          }

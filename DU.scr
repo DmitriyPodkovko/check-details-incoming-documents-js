@@ -265,10 +265,10 @@
                Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_5);
          if (getbyFirstThirdValue(ioDZ, "PZ", S1000_87_) &&                     //严芇Z严D0806
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_87, false))
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_87);
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_87);
          if (getbyFirstThirdValue(ioDZ, "PZ", S1000_88_) &&                     //严芇Z严D0807
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_88, false))
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_88);
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_88);
                
        ioDZ.Clear();
        ioDZ = null;

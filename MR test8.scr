@@ -1,0 +1,507 @@
+//########################################   П Е Р Е В І Р К А  І О  З А   ################################################
+
+//"Вид заходу" ІО ЗА____________________________________________________________"Об'єкти заходу" ІО ЗА
+  var S0018_mn1 = "511,512,513,514";
+  var S0018_mn2 = "501,502,503,504";
+
+//"Вид заходу" ІО ЗА____________________________________________________________"Підстава проведення заходу" ІО ЗА
+  var S0018_mn3 = "511,512,513,514";
+
+//"Вид заходу" ІО ЗА____________________________________________________________"Категорія державного органу, установи" ІО ЗА
+  var S0018_mn4 = "612,614";
+  var S0018_613 = "613";                                                          var _S0114_613 = "268,920,921,923,924"
+
+//"Вид заходу" ІО ЗА____________________________________________________________"Оперативна категорія особи" ІО ОС
+  var S0018_mn5 = "295,296";                                                      var _S0002_8016 = "8016"
+  var S0018_mn6 = "505,511,512,513,514";                                          var _S0002_8018 = "8018"
+
+//"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
+  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
+  var S1000_2_ = "2";                                                             var _S0012_2 = "40"
+  var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
+  var S1000_4_ = "4";                                                             var _S0012_4 = "20"
+  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
+  var S1000_87_ = "87";                                                           var _S0012_87 = "11"
+  var S1000_88_ = "88";                                                           var _S0012_88 = "80"
+
+//"Вид предмету" ІО ЗА__________________________________________________________"Найменування валюти" ІО ЗА
+  var S0007_mn1 = "801,802,803,804";
+
+//"Вид предмету" ІО ЗА__________________________________________________________"Загальна вартість" ІО ЗА
+  var S0007_804 = "804";
+
+//"Найменування валюти" ІО ЗА___________________________________________________"Загальна вартість" ІО ЗА
+  var S0101_70 = "70";
+  var S0101_86 = "86";
+
+//"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО ЗА
+  var S0113_mn1 = "120,140,208,603,811,819";
+
+//"Вид документа" ІО ІД_________________________________________________________"Вид заходу" ІО ЗА
+  var S0113_124 = "124";                                                          var _S0018_124 = "970"
+  var S0113_462 = "462";                                                          var _S0018_462 = "230"
+  var S0113_463 = "463";                                                          var _S0018_463 = "231"
+  var S0113_603 = "603";                                                          var _S0018_603 = "512"
+  var S0113_606 = "606";                                                          var _S0018_606 = "301,336,337"
+  var S0113_120 = "120";                   var S0018_612 = "612";                 var _S0018_502 = "502"
+                                                                                  var _S0018_504 = "504"
+                                                                                  var _S0018_506 = "506"
+                                                                                  var _S0018_511 = "511"
+                                                                                  var _S0018_514 = "514"
+  var S0113_832 = "832";                                                          var _S0018_832 = "003,294"
+  var S0113_834 = "834";                                                          var _S0018_834 = "003,296"
+  var S0113_831 = "831";                                                          var _S0018_831 = "003,293"
+  var S0113_mn2 = "472,833";                                                      var _S0018_mn2 = "003,295"
+  
+//"Пріоритетні завдання" ІО ЗА__________________________________________________"Вид заходу" ІО ЗА
+  var S1000_861101 = "861101";                                                    var _S0018_861101 = "920"
+  var S1000_mn3 = "861102,862302,862304";                                         var _S0018_mn3 = "723,255"
+  var S1000_861103 = "861103";                                                    var _S0018_861103 = "706"
+  var S1000_mn4 = "861104,862314,863401,865203";                                  var _S0018_mn4 = "615"
+  var S1000_861105 = "861105";                                                    var _S0018_861105 = "335"
+  var S1000_mn5 = "861106,862315,863402,865204";                                  var _S0018_mn5 = "301,335,318"
+  var S1000_mn6 = "861107,862316,863404,864522,865205";                           var _S0018_mn6_ = "5"
+  var S1000_861108 = "861108";                                                    var _S0018_861108 = "613"
+  var S1000_861109 = "861109";                                                    var _S0018_861109 = "725"
+  var S1000_mn7 = "861110,863414,865216";                                         var _S0018_mn7 = "145,146,147"
+  var S1000_mn8 = "861111,861112,861113,862309,862310,"+
+                  "862311,862312,862313,863410,863411,"+
+                  "863412,863413,864501,864502,864503,"+
+                  "864504,864505,864506,864507,865206,"+
+                  "865207,865208,865209,867605";                                  var _S0018_mn8 = "243,242"
+  var S1000_mn9 = "861114,862317,863415,864514,865213";                           var _S0018_mn9 = "246,255"
+  var S1000_mn10 = "861115,862318,863416,864515,865214,867606";                   var _S0018_mn10 = "614"
+  var S1000_mn11 = "861116,862319,863417,864517,864519,865217,865218,867604";     var _S0018_mn11 = "391"
+  var S1000_mn12 = "861117,862320,863418,864520,865219,867601";                   var _S0018_mn12 = "351"
+  var S1000_mn13 = "861118,862321,863419,864521,865220,867603";                   var _S0018_mn13 = "353"
+  var S1000_mn14 = "861119,862308";                                               var _S0018_mn14 = "875"
+  var S1000_mn15 = "861120,863403";                                               var _S0018_mn15 = "867"
+  var S1000_mn16 = "861121,863407";                                               var _S0018_mn16 = "451,453,454,460,470"
+  var S1000_862301 = "862301";                                                    var _S0018_862301 = "876"
+  var S1000_862303 = "862303";                                                    var _S0018_862303 = "603"
+  var S1000_mn17 = "862305,862307";                                               var _S0018_mn17 = "878"
+  var S1000_862306 = "862306";                                                    var _S0018_862306 = "621"
+  var S1000_863405 = "863405";                                                    var _S0018_863405 = "426"
+  var S1000_863406 = "863406";                                                    var _S0018_863406 = "425"
+  var S1000_863408 = "863408";                                                    var _S0018_863408 = "668"
+  var S1000_863409 = "863409";                                                    var _S0018_863409 = "877"
+  var S1000_mn18 = "864508,864509,864510,864511,864512,864513";                   var _S0018_mn18 = "295,296,603"
+  var S1000_864516 = "864516";                                                    var _S0018_864516 = "308"
+  var S1000_864518 = "864518";                                                    var _S0018_864518 = "922"
+  var S1000_865201 = "865201";                                                    var _S0018_865201 = "722"
+  var S1000_865202 = "865202";                                                    var _S0018_865202 = "721"
+  var S1000_865210 = "865210";                                                    var _S0018_865210 = "143"
+  var S1000_865211 = "865211";                                                    var _S0018_865211 = "724"
+  var S1000_865212 = "865212";                                                    var _S0018_865212 = "924"
+  var S1000_865215 = "865215";                                                    var _S0018_865215 = "720"
+  var S1000_867602 = "867602";                                                    var _S0018_867602 = "352"
+  var S1000_868701 = "868701";                                                    var _S0018_868701 = "273"
+  var S1000_868702 = "868702";                                                    var _S0018_868702 = "243"
+  var S1000_868703 = "868703";                                                    var _S0018_868703 = "411"
+
+//"Вид заходу" ІО ІД____________________________________________________________"Вид документа" ІО ЗА
+  var S0018_970 = "970";                                                          var _S0113_970 = "124";
+
+  var space = " "
+  var comma = ","
+  var IZ = "ІД."
+  var MZ = "ЗА."
+  var LZ = "ОС."
+  var dis = "не відповідає"
+  var emp = "відповідає пустому значенню"
+  var noemp = "не передбачає заповнення"
+  var more = "більша за"
+  var unDep = "Не співпадають ПІДРОЗДІЛИ"
+  var mes_Date = "поточну дату"
+  var mes_DI = "ВИД ДОКУМЕНТА:"
+  var mes_MA = "ВИД ЗАХОДУ:"
+  var mes_M18 = "підрозділ, ЗА МАТЕРІАЛАМИ ЯКОГО"
+  var mes_M7 = "КАТЕГОРІЯ ДЕРЖАВНОГО ОРГАНУ, УСТАНОВИ"
+  var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
+  var mes_M8 = "ЛІНІЇ РОБОТИ:"
+  var mes_F1 = "ПІДСТАВА ПРОВЕДЕННЯ ЗАХОДУ"
+  var mes_M1 = "ВИД ПРЕДМЕТУ"
+  var mes_M3 = "НАЙМЕНУВАННЯ ВАЛЮТИ"
+  var mes_M10 = "ЗАГАЛЬНА ВАРТІСТЬ"
+  var mes_QA = "ОДИНИЦІ ВИМІРЮВАННЯ"
+  var mes_QB = "КІЛЬКІСТЬ"
+  var mes_MD = "ДАТА ПРОВЕДЕННЯ ЗАХОДУ"
+  var mes_IV = "ДАТА РЕЄСТРАЦІЇ ДОКУМЕНТА"
+  var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
+
+// Для всіх ІО ІД у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "MZ")
+    {
+       // Отримати зміст ІО ЗА
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;");
+
+         var dt = new Date();
+         var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
+//ЗАЖMDЗАЖMD01 Порівняння "Дата проведення заходу" з поточною датою
+         var MD = ioMZ.GetPropByPath("MD").Value1(0);
+         if (MD != "" && MD > DateNow) Errors.Add(MZ+ioMZ.SNRV+space+mes_MD+space+more+space+mes_Date);
+         MD = null;
+         DateNow = null;
+         dt = null;
+
+         var CM = ioMZ.GetPropByPath("CM");
+         if (CM == null) CM = ioMZ.GetPropByPath("NN");
+         if (CM.Contains("", "?", false) || CM.Value1(0) == "")
+         {
+//ЗАЖMAЗАЖLR01 ЗАЖMAЗАЖLR02 "Вид заходу" ІО ЗА передбачає наявність тільки ІО ОС
+           if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn1, false) &&
+               ((haveRef(ioMZ, "LR", "LR3", "LZ", 0) < 0) || (haveRef(ioMZ, "LR", "LR3", "RZ", 0) > 0)))
+                 Errors.Add(MZ+ioMZ.SNRV+space+"ВИД ЗАХОДУ передбачає наявність тільки ОС");
+//ЗАЖMAЗАЖLR03 "Вид заходу" ІО ЗА не передбачає наявність ІО ОС
+           if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn2, false) && haveRef(ioMZ, "LR", "LR3", "LZ", 0) > 0)
+                 Errors.Add(MZ+ioMZ.SNRV+space+"ВИД ЗАХОДУ не передбачає наявність ОС");
+         }
+         CM = null;
+//       Відповідність "Вид заходу" ІО ЗА_______________________________________"Підстава проведення заходу" ІО ЗА
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn3, false) && !ioMZ.GetPropByPath("F1").Count > 0)
+             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn3+space+emp+space+mes_F1);//ЗАЖMAЗАЖF101
+//       Відповідність "Вид заходу" ІО ЗА_______________________________________"Категорія державного органу, установи" ІО ЗА
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn4, false) && ioMZ.GetPropByPath("M7").Value1(0) == "")
+             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn4+space+emp+space+mes_M7);//ЗАЖMAЗАЖM701
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_613, false) &&      //ЗАЖMAЗАЖM702
+             !ioMZ.GetPropByPath("M7").ContainsAny("", _S0114_613, false))
+              Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_613+space+dis+space+mes_M7+space+_S0114_613);
+
+         var n = 0;
+         var snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n)
+         while (snLZ >= 0)
+         {
+            var ioLZ = SC.ReadIO("LZ", snLZ, -1, "LR;");
+//          Відповідність "Вид заходу" ІО ЗА____________________________________"Оперативна категорія особи" ІО ОС
+            if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn5, false) && !ioLZ.GetPropByPath("LR").Contains("", _S0002_8016, false))
+                Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn5+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_8016);//ЗАЖMAОСЖLR01
+            if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn6, false) && !ioLZ.GetPropByPath("LR").Contains("", _S0002_8018, false))
+                Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn6+space+dis+space+LZ+ioLZ.SNRV+space+mes_LR+space+_S0002_8018);//ЗАЖMAОСЖLR02
+            n++;
+            snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n);
+         }
+//       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Лінія роботи" ІО ЗА
+         if (getbyThirdValue(ioMZ, "PZ", S1000_1_) &&                           //ЗАЖPZЗАЖM801
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_1, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_1);
+         if (getbyThirdValue(ioMZ, "PZ", S1000_2_) &&                           //ЗАЖPZЗАЖM802
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_2, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_2);
+         if (getbyThirdValue(ioMZ, "PZ", S1000_3_) &&                           //ЗАЖPZЗАЖM803
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_3, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_3);
+         if (getbyThirdValue(ioMZ, "PZ", S1000_4_) &&                           //ЗАЖPZЗАЖM804
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_4, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_4);
+         if (getbyThirdValue(ioMZ, "PZ", S1000_5_) &&                           //ЗАЖPZЗАЖM805
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_5, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_5);
+         if (getbyFirstThirdValue(ioMZ, "PZ", S1000_87_) &&                     //ЗАЖPZЗАЖM806
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_87, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_87);
+         if (getbyFirstThirdValue(ioMZ, "PZ", S1000_88_) &&                     //ЗАЖPZЗАЖM807
+             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_88, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_88);
+         if (ioMZ.GetPropByPath("PZ").StartWithAny("", "8", false) && ioMZ.GetPropByPath("M8").Count > 1)//ЗАЖPZЗАЖM808
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_M8+space+"містить більше 1 реалізації");
+//       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Вид заходу" ІО ЗА
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861101, false) &&   //ЗАЖPZЗАЖMA01
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861101, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_861101+space+dis+space+mes_MA+space+_S0018_861101);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn3, false) &&      //ЗАЖPZЗАЖMA02
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn3, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn3+space+dis+space+mes_MA+space+_S0018_mn3);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861103, false) &&   //ЗАЖPZЗАЖMA03
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861103, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_861103+space+dis+space+mes_MA+space+_S0018_861103);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn4, false) &&      //ЗАЖPZЗАЖMA04
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn4, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn4+space+dis+space+mes_MA+space+_S0018_mn4);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861105, false) &&   //ЗАЖPZЗАЖMA05
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861105, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_861105+space+dis+space+mes_MA+space+_S0018_861105);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn5, false) &&      //ЗАЖPZЗАЖMA06
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn5, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn5+space+dis+space+mes_MA+space+_S0018_mn5);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn6, false) &&      //ЗАЖPZЗАЖMA07
+             !ioMZ.GetPropByPath("MA").StartWithAny("", _S0018_mn6_, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn6+space+dis+space+mes_MA+space+_S0018_mn6_);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861108, false) &&   //ЗАЖPZЗАЖMA08
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861108, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_861108+space+dis+space+mes_MA+space+_S0018_861108);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861109, false) &&   //ЗАЖPZЗАЖMA09
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861109, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_861109+space+dis+space+mes_MA+space+_S0018_861109);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn7, false) &&      //ЗАЖPZЗАЖMA10
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn7, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn7+space+dis+space+mes_MA+space+_S0018_mn7);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn8, false) &&      //ЗАЖPZЗАЖMA11
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn8, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn8+space+dis+space+mes_MA+space+_S0018_mn8);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn9, false) &&      //ЗАЖPZЗАЖMA12
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn9, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn9+space+dis+space+mes_MA+space+_S0018_mn9);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn10, false) &&     //ЗАЖPZЗАЖMA13
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn10, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn10+space+dis+space+mes_MA+space+_S0018_mn10);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn11, false) &&     //ЗАЖPZЗАЖMA14
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn11, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn11+space+dis+space+mes_MA+space+_S0018_mn11);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn12, false) &&     //ЗАЖPZЗАЖMA15
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn12, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn12+space+dis+space+mes_MA+space+_S0018_mn12);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn13, false) &&     //ЗАЖPZЗАЖMA16
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn13, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn13+space+dis+space+mes_MA+space+_S0018_mn13);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn14, false) &&     //ЗАЖPZЗАЖMA17
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn14, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn14+space+dis+space+mes_MA+space+_S0018_mn14);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn15, false) &&     //ЗАЖPZЗАЖMA18
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn15, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn15+space+dis+space+mes_MA+space+_S0018_mn15);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn16, false) &&     //ЗАЖPZЗАЖMA19
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn16, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn16+space+dis+space+mes_MA+space+_S0018_mn16);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_862301, false) &&   //ЗАЖPZЗАЖMA20
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_862301, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_862301+space+dis+space+mes_MA+space+_S0018_862301);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_862303, false) &&   //ЗАЖPZЗАЖMA21
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_862303, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_862303+space+dis+space+mes_MA+space+_S0018_862303);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn17, false) &&     //ЗАЖPZЗАЖMA22
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn17, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn17+space+dis+space+mes_MA+space+_S0018_mn17);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_862306, false) &&   //ЗАЖPZЗАЖMA23
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_862306, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_862306+space+dis+space+mes_MA+space+_S0018_862306);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_863405, false) &&   //ЗАЖPZЗАЖMA24
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_863405, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_863405+space+dis+space+mes_MA+space+_S0018_863405);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_863406, false) &&   //ЗАЖPZЗАЖMA25
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_863406, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_863406+space+dis+space+mes_MA+space+_S0018_863406);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_863408, false) &&   //ЗАЖPZЗАЖMA26
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_863408, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_863408+space+dis+space+mes_MA+space+_S0018_863408);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_863409, false) &&   //ЗАЖPZЗАЖMA27
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_863409, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_863409+space+dis+space+mes_MA+space+_S0018_863409);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_mn18, false) &&     //ЗАЖPZЗАЖMA28
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn18, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_mn18+space+dis+space+mes_MA+space+_S0018_mn18);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_864516, false) &&   //ЗАЖPZЗАЖMA29
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_864516, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_864516+space+dis+space+mes_MA+space+_S0018_864516);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_864518, false) &&   //ЗАЖPZЗАЖMA30
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_864518, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_864518+space+dis+space+mes_MA+space+_S0018_864518);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_865201, false) &&   //ЗАЖPZЗАЖMA31
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_865201, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_865201+space+dis+space+mes_MA+space+_S0018_865201);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_865202, false) &&   //ЗАЖPZЗАЖMA32
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_865202, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_865202+space+dis+space+mes_MA+space+_S0018_865202);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_865210, false) &&   //ЗАЖPZЗАЖMA33
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_865210, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_865210+space+dis+space+mes_MA+space+_S0018_865210);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_865211, false) &&   //ЗАЖPZЗАЖMA34
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_865211, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_865211+space+dis+space+mes_MA+space+_S0018_865211);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_865212, false) &&   //ЗАЖPZЗАЖMA35
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_865212, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_865212+space+dis+space+mes_MA+space+_S0018_865212);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_865215, false) &&   //ЗАЖPZЗАЖMA36
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_865215, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_865215+space+dis+space+mes_MA+space+_S0018_865215);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_867602, false) &&   //ЗАЖPZЗАЖMA37
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_867602, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_867602+space+dis+space+mes_MA+space+_S0018_867602);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_868701, false) &&   //ЗАЖPZЗАЖMA38
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_868701, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_868701+space+dis+space+mes_MA+space+_S0018_868701);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_868702, false) &&   //ЗАЖPZЗАЖMA39
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_868702, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_868702+space+dis+space+mes_MA+space+_S0018_868702);
+         if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_868703, false) &&   //ЗАЖPZЗАЖMA40
+             !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_868703, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+S1000_868703+space+dis+space+mes_MA+space+_S0018_868703);
+
+         var PD = ioMZ.GetPropByPath("PD");
+           for (var j = 0; j < PD.Count; j++)
+           {
+//           Відповідність "Вид предмету" ІО ЗА_________________________________"Найменування валюти" ІО ЗА
+             if (PD.GetPropByPath("M1", j).ContainsAny("", S0007_mn1, false) && PD.GetPropByPath("M3", j).Value1(0) == "")
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_M1+space+S0007_mn1+space+emp+space+mes_M3);//ЗАЖM1ЗАЖM301
+//           Відповідність "Вид предмету" ІО ЗА_________________________________"Загальна вартість" ІО ЗА
+             if (PD.GetPropByPath("M1", j).ContainsAny("", S0007_804, false) && PD.GetPropByPath("M10", j).Value1(0) != "")
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_M1+space+S0007_804+space+noemp+space+mes_M10);//ЗАЖM1ЗАM1001
+//           Відповідність "Одиниці вимірювання" ІО ЗА__________________________"Кількість" ІО ЗА
+             if (PD.GetPropByPath("QA", j).Value1(0) != "" && PD.GetPropByPath("QB", j).Value1(0) == "")
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_QA+space+emp+space+mes_QB);  //ЗАЖQAЗАЖQB01
+//           Відповідність "Найменування валюти" ІО ЗА__________________________"Загальна вартість" ІО ЗА
+             if (PD.GetPropByPath("M3", j).Value1(0) >= S0101_70 && PD.GetPropByPath("M3", j).Value1(0) <= S0101_86 &&
+                  PD.GetPropByPath("M10", j).Value1(0) != "")
+                  Errors.Add(MZ+ioMZ.SNRV+space+mes_M3+space+S0101_70+"-"+S0101_86+space+noemp+space+mes_M10);//ЗАЖM3ЗАM1001
+           }
+
+       ioMZ.Clear();
+       ioMZ = null;
+    }
+
+    if (MessageIOs.IO(io) == "IZ")
+    {
+       // Отримати зміст ІО ІД
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;IV;DI;SF.I98;");
+//ІДЖDIІДЖSF02 "Вид документа" передбачає наявність ІО ЗА, а ІО ЗА відсутній
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "MZ", 0) < 0))
+             Errors.Add(IZ+ioIZ.SNRV+space+"ВИД ДОКУМЕНТА передбачає наявність ЗА, а ЗА відсутній");
+         var n = 0;
+         var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+         while (I98 >= 0)
+         {
+            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;MD;M18;");
+//ЗАЖMDІДЖIV01 Порівняння "Дата проведення заходу" з "Дата реєстрації документа"
+            var MD = ioMZ.GetPropByPath("MD").Value1(0);
+            var IV = ioIZ.GetPropByPath("IV").Value1(0);
+            if (MD != "" && IV != "" && MD > IV) Errors.Add(MZ+ioMZ.SNRV+space+mes_MD+space+more+space+IZ+ioIZ.SNRV+space+mes_IV);
+            MD = null;
+            IV = null;
+//IDЖDDMRM1801 Перевірка відповідності "Підрозділ" ІО ІД й ІО ЗА
+            if (ioIZ.GetPropByPath("DD").Value1(0).substr(0,5) != ioMZ.GetPropByPath("M18").Value1(0).substr(0,5))
+                 Warnings.Add(unDep+space+IZ+ioIZ.SNRV+space+MZ+ioMZ.SNRV+space+mes_M18);
+//          Відповідність "Вид документа" ІО ІД_________________________________"Вид заходу" ІО ЗА
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_124, false) &&      //ІДЖDIЗАЖMA01
+                !ioMZ.GetPropByPath("MA").Contains("", _S0018_124, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_124+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_124);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_462, false) &&      //ІДЖDIЗАЖMA02
+                !ioMZ.GetPropByPath("MA").Contains("", _S0018_462, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_462+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_462);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_463, false) &&      //ІДЖDIЗАЖMA03
+                !ioMZ.GetPropByPath("MA").Contains("", _S0018_463, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_463+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_463);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_603, false) &&      //ІДЖDIЗАЖMA04
+                !ioMZ.GetPropByPath("MA").Contains("", _S0018_603, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_603+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_603);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_606, false) &&      //ІДЖDIЗАЖMA05
+                !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_606, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_606+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_606);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_832, false) &&      //ІДЖDIЗАЖMA07
+                !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_832, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_832+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_832);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_834, false) &&      //ІДЖDIЗАЖMA08
+                !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_834, false))
+                 Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_834+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_834);
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_831, false) &&      //IDЖDIMRЖMA01
+                !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_831, false))
+                 Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_831+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_831);
+            if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn2, false) &&   //IDЖDIMRЖMA02
+                !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_mn2, false))
+                 Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn2+space+dis+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_mn2);
+//          Відповідність "Вид заходу" ІО ІД____________________________________"Вид документа" ІО ЗА
+            if (ioMZ.GetPropByPath("MA").Contains("", S0018_970, false) &&      //ЗАЖMAІДЖDI01
+                !ioIZ.GetPropByPath("DI").Contains("", _S0113_970, false))
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_970+space+dis+space+IZ+ioIZ.SNRV+space+mes_DI+space+_S0113_970);
+            n++;
+            I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+         }
+         if (n == 2)//ІДЖDIЗАЖMA06
+         {
+            var ioMZ1 = SC.ReadIO("MZ", haveRef(ioIZ, "SF", "I98", "MZ", 0), -1, "MA;");
+            var ioMZ2 = SC.ReadIO("MZ", haveRef(ioIZ, "SF", "I98", "MZ", 1), -1, "MA;");
+            if ((ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) && ioMZ1.GetPropByPath("MA").Contains("", S0018_612, false)) &&
+                 !ioMZ2.GetPropByPath("MA").Contains("", _S0018_504, false))
+                  Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis+space+MZ+ioMZ2.SNRV+space+mes_MA+space+_S0018_504)
+            if ((ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) && ioMZ2.GetPropByPath("MA").Contains("", S0018_612, false)) &&
+                 !ioMZ1.GetPropByPath("MA").Contains("", _S0018_504, false))
+                  Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis+space+MZ+ioMZ1.SNRV+space+mes_MA+space+_S0018_504)
+            if (ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) && !ioMZ1.GetPropByPath("MA").Contains("", S0018_612, false) &&
+                 !ioMZ2.GetPropByPath("MA").Contains("", S0018_612, false)) DIMA()
+         } else DIMA()
+       ioIZ.Clear();
+       ioIZ = null;
+    }
+  }
+
+// функція перевірки відповідності "Вид документа" ІО ІД - "Вид заходу" ІО ЗА для ІДЖDIЗАЖMA06
+  function DIMA()
+  {
+     var n = 0;
+     var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+     while (I98 >= 0)
+     {
+        var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;");
+        if (ioIZ.GetPropByPath("DI").Contains("", S0113_120, false) &&
+            !((ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_502 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_506)
+            ||(ioMZ.GetPropByPath("MA").Value1(0) >= _S0018_511 && ioMZ.GetPropByPath("MA").Value1(0) <= _S0018_514)))
+            Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_120+space+dis +space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_502+"-"+_S0018_506+comma+space+_S0018_511+"-"+_S0018_514);
+        n++;
+        I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+     }
+  }
+
+// служ. функція перевірки третього значення в коді реквізиту
+  function getbyThirdValue(io, recvizit, thirdvalue)
+  {
+     var ThirdValueFound = false;
+     var rv = io.GetPropByPath(recvizit);
+     if (rv != null)
+       for (var j = 0; j < rv.Count; j++)
+       {
+           if ((rv.Value1(j) > 2) && (rv.Value1(j).substr(2, 1) == thirdvalue))
+           {
+              ThirdValueFound = true;
+              break;
+           }
+       }
+       return ThirdValueFound;
+  }
+  
+// служ. функція перевірки першого, третього значення в коді реквізиту
+  function getbyFirstThirdValue(io, recvizit, firstthirdvalue)
+  {
+     var FirstThirdValueFound = false;
+     var rv = io.GetPropByPath(recvizit);
+     if (rv != null)
+       for (var j = 0; j < rv.Count; j++)
+       {
+           if ((rv.Value1(j) > 2) && (rv.Value1(j).substr(0, 1) == firstthirdvalue.substr(0, 1)) && (rv.Value1(j).substr(2, 1) == firstthirdvalue.substr(1, 1)))
+           {
+              FirstThirdValueFound = true;
+              break;
+           }
+       }
+       return FirstThirdValueFound;
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }
+

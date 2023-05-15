@@ -1,0 +1,2 @@
+//Errors.Add(SC.OpenSql("select cbd.datetostr(20110101) from params"));
+Warnings.Add(MessageIOs.Station + "_" + MessageIOs.User);

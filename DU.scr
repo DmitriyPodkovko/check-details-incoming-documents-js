@@ -43,6 +43,9 @@
   var S1000_5_ = "5";                                                             var _S0012_5 = "50"
   var S1000_87_ = "87";                                                           var _S0012_87 = "11"
   var S1000_88_ = "88";                                                           var _S0012_88 = "80"
+  
+//"Стаття і кодекс" ІО СП
+  var S0105_mn1_ = "0,1";
 
 //"Вид документа" ІО ІД_________________________________________________________"Вид справи" ІО СП
   var S0113_mn13 = "109,401,403,404,405,406,407,408,410,"+
@@ -62,6 +65,7 @@
   var RZ = "РГ."
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
+  var noemp = "не передбачає заповнення"
   var more = "більша за"
   var less = "менша за"
   var unDep = "Не співпадають ПІДРОЗДІЛИ"
@@ -84,6 +88,7 @@
   var mes_D3 = "ДАТА ЗАВЕДЕННЯ СПРАВИ"
   var mes_DP = "ДАТУ ТИМЧАСОВОГО ПРИПИНЕННЯ ВЕДЕННЯ СПРАВИ"
   var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
+  var mes_D10 = "СТАТТЯ І КОДЕКС"
 
 // Для всіх ІО СП у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -263,13 +268,17 @@
          if (getbyThirdValue(ioDZ, "PZ", S1000_5_) &&                           //СПЖPZСПD0805
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_5, false))
                Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_5);
-         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_87_) &&                     //СПЖPZСПD0806
+         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_87_) &&                     //DUЖPZDUD0801
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_87, false))
                Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_87);
-         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_88_) &&                     //СПЖPZСПD0807
+         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_88_) &&                     //DUЖPZDUD0802
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_88, false))
                Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_88);
-               
+
+//       Перевірка "Стаття і кодекс" ІО СП на наявність статей старого ККУ
+         if (ioDZ.GetPropByPath("D10").StartWithAny("", S0105_mn1_, false))
+             Errors.Add(DZ+ioDZ.SNRV+space+mes_D10+space+noemp+space+S0105_mn1_);//СПD10СПD1001
+
        ioDZ.Clear();
        ioDZ = null;
     }

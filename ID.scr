@@ -378,10 +378,10 @@
          if (getbyThirdValue(ioIZ, "PZ", S1000_5_) &&                           //第鹼Z第鑪605
              !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_5, false))
                Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_5);
-         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_87_) &&                     //第鹼Z第鑪606
+         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_87_) &&                     //ID鹼ZID鑪601
              !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_87, false))
                Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_87);
-         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_88_) &&                     //第鹼Z第鑪607
+         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_88_) &&                     //ID鹼ZID鑪602
              !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_88, false))
                Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_88);
 

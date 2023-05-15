@@ -27,6 +27,8 @@
   var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
   var S1000_4_ = "4";                                                             var _S0012_4 = "20"
   var S1000_5_ = "5";                                                             var _S0012_5 = "50"
+  var S1000_87_ = "87";                                                           var _S0012_87 = "11"
+  var S1000_88_ = "88";                                                           var _S0012_88 = "80"
 
 //"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО КС
   var S0113_mn1 = "450,451,452,453,454,455,459,460,464,"+
@@ -122,6 +124,13 @@
          if (getbyThirdValue(ioUZ, "PZ", S1000_5_) &&                           //КСЖPZКСЖU805
              !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_5, false))
                Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_5);
+         if (getbyFirstThirdValue(ioUZ, "PZ", S1000_87_) &&                     //КСЖPZКСЖU806
+             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_87, false))
+               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_87);
+         if (getbyFirstThirdValue(ioUZ, "PZ", S1000_88_) &&                     //КСЖPZКСЖU807
+             !ioUZ.GetPropByPath("U8").ContainsAny("", _S0012_88, false))
+               Errors.Add(UZ+ioUZ.SNRV+space+mes_PZ+space+dis+space+mes_U8+space+_S0012_88);
+               
        ioUZ.Clear();
        ioUZ = null;
     }
@@ -153,6 +162,23 @@
            }
        }
        return ThirdValueFound;
+  }
+  
+// служ. функція перевірки першого, третього значення в коді реквізиту
+  function getbyFirstThirdValue(io, recvizit, firstthirdvalue)
+  {
+     var FirstThirdValueFound = false;
+     var rv = io.GetPropByPath(recvizit);
+     if (rv != null)
+       for (var j = 0; j < rv.Count; j++)
+       {
+           if ((rv.Value1(j) > 2) && (rv.Value1(j).substr(0, 1) == firstthirdvalue.substr(0, 1)) && (rv.Value1(j).substr(2, 1) == firstthirdvalue.substr(1, 1)))
+           {
+              FirstThirdValueFound = true;
+              break;
+           }
+       }
+       return FirstThirdValueFound;
   }
 
 // служ. функція перевірка існування посилання в ІО

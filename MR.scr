@@ -103,7 +103,7 @@
   var S1000_868703 = "868703";                                                    var _S0018_868703 = "411"
 
 //Доручення слідчого та слідчі підрозділи СБУ
-  var S0036_SP = "3105,3205,3305,3405,3505,3605,3705,3805,4005,4105,4205,4305,4405,4605,4705,4805,4905,5005,5105,5205,5305,5405,2905,23";
+  var S0036_SP = "3105,3205,3305,3405,3505,3605,3705,3805,4005,4105,4205,4305,4405,4605,4705,4805,4905,5005,5105,5205,5305,5405,5905,2905,23";
   var S0018_SP = "297";
 
 //"Вид заходу" ІО ІД____________________________________________________________"Вид документа" ІО ЗА
@@ -114,6 +114,7 @@
   var IZ = "ІД."
   var MZ = "ЗА."
   var LZ = "ОС."
+  var com = "відповідає"
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
   var noemp = "не передбачає заповнення"
@@ -122,6 +123,7 @@
   var mes_Date = "поточну дату"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_MA = "ВИД ЗАХОДУ:"
+  var mes_MB = "ПІДРОЗДІЛ СБУ (ІНШИЙ ОРГАН), ЩО ПРОВІВ ЗАХІД:"
   var mes_M18 = "підрозділ, ЗА МАТЕРІАЛАМИ ЯКОГО"
   var mes_M7 = "КАТЕГОРІЯ ДЕРЖАВНОГО ОРГАНУ, УСТАНОВИ"
   var mes_LR = "ОПЕРАТИВНІЙ КАТЕГОРІЇ:"
@@ -144,7 +146,7 @@
     if (MessageIOs.IO(io) == "MZ")
     {
        // Отримати зміст ІО ЗА
-       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M4");
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M4");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -358,13 +360,13 @@
              Errors.Add(MZ+ioMZ.SNRV+space+mes_SK+space+noemp+space+S0105_mn1_);//ЗАЖSKЗАЖSK01
 
 //       Наявність посилання на КП для доручення слідчого
-         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_SP, false) &&       //ЗАM18ЗАЖM401
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_SP, false) &&       //MRM18MRЖM401
                ioMZ.GetPropByPath("M18").StartWithAny("", S0036_SP, false))
                {  // пошук КП з посиланням на цей ЗА
-                  var _2ZCode = ""; var _2Z3Code = ""; //код отсылки с КП на ЗА в РБД отличается от ЦБД ((
+                  var _2ZCode = ""; var _2Z3Code = "";//код отсылки с КП на ЗА в РБД отличается от ЦБД
                   if (SC.IOMList.GetIOByAttr("CODE", "UZ").GetRVByAttr("CODE", "2Z") != null) { _2ZCode = "2Z"; _2Z3Code = "2Z3"; } else
                   if (SC.IOMList.GetIOByAttr("CODE", "UZ").GetRVByAttr("CODE", "U2") != null) { _2ZCode = "U2"; _2Z3Code = "U23"; }
-                  if (_2ZCode != "") //проверка не работает, если нет таких реквизитов
+                  if (_2ZCode != "")//проверка не работает, если нет таких реквизитов
                   {
                     var _uzExists = false;
                     for (var j = 0; j < MessageIOs.Count; j++)
@@ -382,9 +384,13 @@
                         if (_uzExists) break;
                       }
                     if (!_uzExists)
-                      Errors.Add(mes_M4+space+MZ+ioMZ.SNRV);
+                        Warnings.Add(mes_M4+space+MZ+ioMZ.SNRV);
                   }
                }
+               
+//       Відповідність "Вид заходу" ІО ЗА_______________________________________"Підрозділ СБУ (інший орган), що провів захід" ІО ЗА
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_SP, false) && ioMZ.GetPropByPath("MB").StartWithAny("", "98", false))
+             Warnings.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_SP+space+com+space+mes_MB+space+"98*");//MRЖMАMRЖMВ01
 
        ioMZ.Clear();
        ioMZ = null;

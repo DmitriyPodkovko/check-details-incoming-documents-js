@@ -51,34 +51,24 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "OD.O83;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "OD.O83;SF.I98;");
          var n = 0;
          var O83 = haveRef(ioIZ, "OD", "O83", "XZ", n);
          while (O83 >= 0)
          {
-            var ioXZ = SC.ReadIO("XZ", O83, -1, "XF;CD;");            
-            var isTrue = false;
-            var isDZ = false;
-            var isDZZakr = false;
-            for (var io2 = 0; io2 < MessageIOs.Count; io2++)
+            var ioXZ = SC.ReadIO("XZ", O83, -1, "XF;");
+            if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false))
             {
-              if (MessageIOs.IO(io2) == "DZ")
-              {
-                 isDZ = true;
-                 // Отримати зміст ІО СП
-                 var ioDZ = SC.ReadIO("DZ", MessageIOs.SN(io2), -1, "1H;1K;");
-                 var K1 = ioDZ.GetPropByPath("1K").Value1(0);
-                 if (K1 == "")
-                 {
-                    if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false) && (ioXZ.GetPropByPath("CD").Value1(0) == ioDZ.GetPropByPath("1H").Value1(0)))
-                        isTrue = true;
-                 } else if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false)) isDZZakr = true;
-                 ioDZ.Clear();
-                 ioDZ = null;
-              }
+               var k = 0;
+               var I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
+               while (I98 >= 0)
+               {
+                  var ioDZ = SC.ReadIO("DZ", I98, -1, "1K;");
+                  if (ioDZ.GetPropByPath("1K").Value1(0) != "")  Errors.Add("eryhfgjhfgjhgjghjghjРаботает")
+                  k++;
+                  I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
+               }
             }
-            if (isDZ && (!isTrue) && (K1 == "")) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+" при незакритій СП "+dis+space+mes_CD+"="+mes_1H);
-            if (isDZZakr) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+com+space+S0908_02+" при закритій СП");
             n++;
             O83 = haveRef(ioIZ, "OD", "O83", "XZ", n);
          }

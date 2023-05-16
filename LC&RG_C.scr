@@ -268,7 +268,7 @@
 //RGЖGDRGЖGD02 Перевірка "Держналежність" ІО РГ
            for (var j = 0; j < GD.Count; j++)
            {
-            if (((S0027_RG.indexOf(GD.Value1(j)) < 0) && (GD.Value1(j).substr(3, 7) != S0027_0)) || (LJ.Value1(j).ContainsAny("", S0027_nonat, false)))
+            if ((S0027_nonat.indexOf(GD.Value1(j)) >= 0) || ((S0027_RG.indexOf(GD.Value1(j)) < 0) && (GD.Value1(j).substr(3, 7) != S0027_0)))
                  Warnings.Add(RZ+ioRZ.SNRV+space+"Некоректне"+space+mes_GD+space+"("+GD.Value2(j)+")");
            }
            GD = null;

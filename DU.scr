@@ -12,7 +12,7 @@
 //Â³äïîâ³äí³ñòü "Âèä ñïðàâè" ²Î ÑÏ______________________________________________"Îïåðàòèâíà êàòåãîð³ÿ îñîáè" ²Î ÎÑ
   var S0019_mn5 = "12,13";                                                        var _S0002_SP54 = "ÑÏ54";
                                                                                   var _S0002_SP56 = "ÑÏ56";
-  var S0019_mn6 = "20,21";                                                        var _S0002_SP00 = "ÑÏ00";
+  var S0019_mn6 = "20,21,22,23";                                                  var _S0002_SP00 = "ÑÏ00";
                                                                                   var _S0002_SP40 = "ÑÏ40";
 
 //Â³äïîâ³äí³ñòü "Âèä ñïðàâè" ²Î ÑÏ______________________________________________"Îïåðàòèâíà êàòåãîð³ÿ îðãàí³çàö³¿" ²Î ÐÃ
@@ -301,9 +301,6 @@
              if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn13, false) && //²ÄÆDIÑÏÆ1E01
                  !ioDZ.GetPropByPath("1E").ContainsAny("", _S0019_mn13, false))
                    Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn13+space+dis+space+DZ+ioDZ.SNRV+space+mes_1E+space+_S0019_mn13);
-             if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn14, false) && //²ÄÆDIÑÏÆ1E02
-                 !ioDZ.GetPropByPath("1E").ContainsAny("", _S0019_mn14, false))
-                   Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn14+space+dis+space+DZ+ioDZ.SNRV+space+mes_1E+space+_S0019_mn14);
              if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_412, false) && //²ÄÆDIÑÏÆ1E03
                  !ioDZ.GetPropByPath("1E").ContainsAny("", _S0019_412, false))
                    Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_412+space+dis+space+DZ+ioDZ.SNRV+space+mes_1E+space+_S0019_412);
@@ -320,6 +317,25 @@
              _1K = null;
             n++;
             I98 = haveRef(ioIZ, "SF", "I98", "DZ", n);
+         }
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn14, false)) //²ÄÆDIÑÏÆ1E02
+         {
+            var k = 0;
+            var I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
+            var isTrue = false;
+            var isDZ = false;
+            while (I98 >= 0)
+            {
+               isDZ = true;
+               if (ioDZ.GetPropByPath("1E").ContainsAny("", _S0019_mn14, false))
+               {
+                  isTrue = true;
+                  break;
+               }
+               k++;
+               I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
+            }
+            if (isDZ) if (!isTrue) Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn14+space+dis+space+DZ+ioDZ.SNRV+space+mes_1E+space+_S0019_mn14);
          }
        ioIZ.Clear();
        ioIZ = null;

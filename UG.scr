@@ -39,7 +39,7 @@
 
 //"Вид документа" ІО ІД_________________________________________________________"Реалізація інформації" ІО ІД ІО КП
   var S0113_mn1 = "450,451,452,453,454,455,459,460,464,"+
-                  "465,466,467,503,604,605,608,609,831,832,833,834";
+                  "465,466,467,503,604,605,608,609";
 
   var space = " "
   var comma = ","
@@ -158,22 +158,21 @@
        // Отримати зміст ІО ІД
        var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DI;SF.I98;");
 //IDЖDIIDЖSF01 "Вид документа" передбачає наявність ІО КП, а ІО КП відсутня
-         //var n = 0;
-         //var isTrue = false;
-         //var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
-         //while (I98 >= 0)
-         //{
-         //   var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;");
-         //   if (ioMZ.GetPropByPath("MA").Contains("", "294", false))
-         //   {
-         //      isTrue = true;
-         //      break;
-         //   }
-         //   n++;
-         //   I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
-         //}
-         //if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "UZ", 0) < 0) && (!isTrue))
-         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "UZ", 0) < 0))
+         var n = 0;
+         var isTrue = false;
+         var I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+         while (I98 >= 0)
+         {
+            var ioMZ = SC.ReadIO("MZ", I98, -1, "MA;");
+            if (ioMZ.GetPropByPath("MA").Contains("", "294", false))
+            {
+               isTrue = true;
+               break;
+            }
+            n++;
+            I98 = haveRef(ioIZ, "SF", "I98", "MZ", n);
+         }
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn1, false) && (haveRef(ioIZ, "SF", "I98", "UZ", 0) < 0) && (!isTrue))
              Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn1+space+"передбачає наявність КП, а КП відсутній");
        ioIZ.Clear();
        ioIZ = null;

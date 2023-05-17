@@ -35,7 +35,7 @@
             var ioIIZ = SC.ReadIO("IIZ", I97, -1, "H08;");
             var H08 = ioIIZ.GetPropByPath("H08").Value1(0);
             //ДІH08ІДЖIV01 Порівняння "Дата зняття з обліку в ОДП" ІО ДІ з "Дата реєстрації документа" ІО ІД
-            if (H08 != "" && IV != "" && H08 < IV) Errors.Add(IIZ+ioIIZ.SNRV+space+mes_H08+space+less+space+IZ+ioIZ.SNRV+space+mes_IV);
+            if (H08 != "" && IV != "" && H08 < IV) Warnings.Add(IIZ+ioIIZ.SNRV+space+mes_H08+space+less+space+IZ+ioIZ.SNRV+space+mes_IV);
             n++;
             I97 = haveRef(ioIZ, "IIO", _I97, "IIZ", n);
          }

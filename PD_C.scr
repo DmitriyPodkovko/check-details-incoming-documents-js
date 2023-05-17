@@ -35,7 +35,7 @@
             n++;
             snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
          }
-//ПДЖPXПДЖPX01 NEW нужно добавить в Реестр ловушек .doc
+//ПДЖPXПДЖPX01
          if (ioPZ.GetPropByPath("PX").Value1(0).substr(6,2) == "00")
              Errors.Add(PZ+ioPZ.SNRV+space+"Некоректна"+space+mes_PX+space+"(починається з 00.)");
 

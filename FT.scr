@@ -11,7 +11,7 @@
     {
        // Отримати зміст ІО ФТ
        var ioFZ = SC.ReadIO("FZ", MessageIOs.SN(io), -1, "FT;");
-//ФТЖFTФТЖFT01 NEW нужно добавить в Реестр ловушек .doc
+//ФТЖFTФТЖFT01
          var foto = ioFZ.GetPropByPath("FT").Value1(0);
          if (foto != "" && foto.substr(0,3) != "яШя") Warnings.Add(FZ+ioFZ.SNRV+space+"Потрібен JPG!");
        ioFZ.Clear();

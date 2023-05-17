@@ -294,7 +294,7 @@
            if ((ioRZ.GetPropByPath("EEP").Count == 0) && (ioRZ.GetPropByPath("EET").Count == 0))
                 Errors.Add(RZ+ioRZ.SNRV+space+mes_EEP2+"/"+mes_EET2+space+emp);
 //РГЖYAРГЖYA01 Перевірка довжини "Ідентифікаційний код" ІО РГ
-           if (ioRZ.GetPropByPath("YA").Value1(0).length > 10) Errors.Add(RZ+ioRZ.SNRV+space+"Велика довжина"+space+mes_YA);
+           if (ioRZ.GetPropByPath("YA").Value1(0).length > 8) Errors.Add(RZ+ioRZ.SNRV+space+"Велика довжина"+space+mes_YA);
 //RGЖYARGEEP01 Відповідність "Ідентифікаційний код" ІО РГ_______________________"Юридична/фактична адреса" ІО РГ
            if (ioRZ.GetPropByPath("YA").Value1(0) != "" && !ioRZ.GetPropByPath("EEP").Count > 0)
                Warnings.Add(RZ+ioRZ.SNRV+space+mes_YA+space+emp+space+mes_EEP2);

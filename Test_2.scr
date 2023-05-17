@@ -1,0 +1,83 @@
+// служ. функція перевірка наявності латиниці
+  function haveEng(str)
+  {
+     var haveEng = false;
+     for (var i = 0; i < str.length; i++)
+       if ((str.substr(i, 1) >= "A") && (str.substr(i, 1) <= "Z"))
+            haveEng = true;
+     return haveEng;
+  }
+
+// служ. функція перевірка наявності кирилиці
+  function haveRus(str)
+  {
+     var haveRus = false;
+     for (var i = 0; i < str.length; i++)
+       if (((str.substr(i, 1) >= "А") && (str.substr(i, 1) <= "Я")) || (str.substr(i, 1) == "Ё") || (str.substr(i, 1) == "Ї") || (str.substr(i, 1) == "Є"))
+            haveRus = true;
+     return haveRus;
+  }
+
+// служ. функція перевірки третього значення в коді реквізиту
+  function getbyThirdValue(io, recvizit, thirdvalue)
+  {
+     var ThirdValueFound = false;
+     var rv = io.GetPropByPath(recvizit);
+     if (rv != null)
+       for (var j = 0; j < rv.Count; j++)
+       {
+           if ((rv.Value1(j) > 2) && (rv.Value1(j).substr(2, 1) == thirdvalue))
+           {
+              ThirdValueFound = true;
+              break;
+           }
+       }
+       return ThirdValueFound;
+  }
+
+// служ. функція перевірки першого, третього значення в коді реквізиту
+  function getbyFirstThirdValue(io, recvizit, firstthirdvalue)
+  {
+     var FirstThirdValueFound = false;
+     var rv = io.GetPropByPath(recvizit);
+     if (rv != null)
+       for (var j = 0; j < rv.Count; j++)
+       {
+           if ((rv.Value1(j) > 2) && (rv.Value1(j).substr(0, 1) == firstthirdvalue.substr(0, 1)) && (rv.Value1(j).substr(2, 1) == firstthirdvalue.substr(1, 1)))
+           {
+              FirstThirdValueFound = true;
+              break;
+           }
+       }
+       return FirstThirdValueFound;
+  }
+
+// служ. функція перевірка існування посилання в ІО
+  function haveRef(io, group, ref, iocode, from)
+  {
+     var haveref = false;
+     var ionum = SC.IOMList.GetIOByAttr("CODE", iocode).Attr("NUM"); // номер ІО за кодом
+     var grp = io.GetPropByPath(group);   // група посилання
+     var n = 0;
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+           var r = grp.GetPropByPath(ref, j); // реквізит посилання
+           if (r != null)
+           {
+               if (r.Count > 0)                   // врахувати множинність реквізиту
+               {
+                  if (r.Value1(0) == ionum)
+                  {
+                    n++;
+                    if (n > from)
+                    {
+                      haveref = true;  // посилання існує
+                      break;
+                    }
+                  }
+               }
+           }
+       }
+     if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
+  }

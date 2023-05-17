@@ -1,13 +1,46 @@
+//выполнять всегда первым #1
+//this is common script
+
 //Errors.Add(SC.OpenSql("select cbd.datetostr(20110101) from params"));
 //Warnings.Add(MessageIOs.Station + "_" + MessageIOs.User);
 
 //Заглушка
-var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
-if (mes_type.substr(0, 1) == '2')
-{
-   Warnings.Add('CBD');
-}
-else
-{
-    Warnings.Add('LBD');
-}
+//var mes_type = SC.OpenSql('select xkt from mis_sk where sn = (select sk_sn from mis_messages where num = '+ MessageIOs.MesNum + ')');
+//if (mes_type.substr(0, 1) == '2')
+//{
+//   Warnings.Add('CBD');
+//}
+//else
+//{
+//    Warnings.Add('LBD');
+//}
+
+Warnings.Add('Common Script 1');
+
+var leftAD = SC.OpenSql("select count(*) from cbd.mis_az where sn in (select x902 from cbd.mis_sk_900 where sn_io in (select sk_sn from cbd.mis_messages where num = " + MessageIOs.MesNum + ") and x901=" + SC.IOMList.GetIOByAttr("CODE","AZ").Attr("NUM") + ") and sn not in (" +
+                        "select sn2 from cbd.mis_lz_jn where io2=" + SC.IOMList.GetIOByAttr("CODE","AZ").Attr("NUM") + " and sn1 in (select x902 from cbd.mis_sk_900 where sn_io in (select sk_sn from cbd.mis_messages where num = " + MessageIOs.MesNum + ") and x901=" + SC.IOMList.GetIOByAttr("CODE","LZ").Attr("NUM")+") " +
+                        "union " +
+                        "select sn2 from cbd.mis_rz_jn where io2=" + SC.IOMList.GetIOByAttr("CODE","AZ").Attr("NUM") + " and sn1 in (select x902 from cbd.mis_sk_900 where sn_io in (select sk_sn from cbd.mis_messages where num = " + MessageIOs.MesNum + ") and x901=" + SC.IOMList.GetIOByAttr("CODE","RZ").Attr("NUM")+"))").split(';')[0];
+
+if (leftAD != "0") Warnings.Add(leftAD + '  Висячие АД!!!');
+
+//SC.IOMList.GetIOByAttr("CODE","AZ").Attr("NUM")+ ""  " )");
+ //MessageIOs.MesNum
+
+
+for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "LZ")
+    {
+       var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "TT.TB;");
+       var TT = ioLZ.GetPropByPath("TT");
+           for (var j = 0; j < TT.Count; j++)
+           {
+            if (TT.GetPropByPath("TB", j).Contains('', '\n', false))
+            //var tb = TT.GetPropByPath("TB", j).Value1(0)
+            //for (var i = 0; i < tb.length; i++)
+            //   if (tb.substr(i, 1) == '\n')
+                Warnings.Add('Встречается перевод каретки!');
+           }
+    }
+  }

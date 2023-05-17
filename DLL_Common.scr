@@ -99,3 +99,27 @@
        }
      if (haveref) return r.Value2(0); else return(-1);  // -1 посилання не існує
   }
+  
+// служ. функція
+// перевірка коректного формування (заповнення) складних множинних груп
+// приклад: Фотографія
+// правило перевірки: в груповому реквізиті Фото не повинно бути більш 1 посиллання на ІО ФТ
+  function haveRef2(io, group, group2)
+  {
+     var haveref = false;
+     var grp = io.GetPropByPath(group);   // група посилання
+     if (grp != null)
+       for (var j = 0; j < grp.Count; j++)    // врахувати множинність групи
+       {
+         var grp2 = grp.GetPropByPath(group2, j);
+         if (grp2 != null)
+         {
+             if (grp2.Count > 1)              // перевірка множинності реквізиту
+             {
+               haveref = true;
+               break;
+             }
+         }
+       }
+     if (haveref) return grp2.Count; else return(-1);  // -1 (кількість посилань або 0, або 1, тобто правильно)
+  }

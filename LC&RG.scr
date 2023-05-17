@@ -135,7 +135,14 @@
     if (MessageIOs.IO(io) == "LZ")
     {
        // Отримати зміст ІО ОС
-       var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;");
+       var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ADP.AP3;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;FTG.FTO.FT3;");
+//ОСFTGОСFT301 Перевірка коректного заповнення "Фотографія"
+        if (haveRef2(ioLZ, "FTG", "FTO", "FT3") > 1)
+            Errors.Add(LZ+ioLZ.SNRV+space+"Некоректне формування ФОТОГРАФІЯ ! ! !");
+//ОСEEPОСAP301 Перевірка коректного заповнення в "Місце проживання" реквізиту "Адреса"
+        if (haveRef2(ioLZ, "EEP", "ADP", "AP3") > 1)
+            Errors.Add(LZ+ioLZ.SNRV+space+"Некоректне формування в МІСЦЕ ПРОЖИВАННЯ реквізиту АДРЕСА ! ! !");
+            
         var CL = ioLZ.GetPropByPath("CL");
         if (CL == null) CL = ioLZ.GetPropByPath("NN");
         if (CL.Contains("", "?", false) || CL.Value1(0) == "")
@@ -320,7 +327,11 @@
     if (MessageIOs.IO(io) == "RZ")
     {
        // Отримати зміст ІО РГ
-       var ioRZ = SC.ReadIO("RZ", MessageIOs.SN(io), -1, "CG;NN;GC;YA;BB.BA;BB.BC;GD;GK;EEP.ENP;EET.EAR;");
+       var ioRZ = SC.ReadIO("RZ", MessageIOs.SN(io), -1, "CG;NN;GC;YA;BB.BA;BB.BC;GD;GK;EEP.ADP.AP3;EEP.ENP;EET.EAR;");
+//РГEEPРГAP301 Перевірка коректного заповнення в "Юридична/фактична адреса" реквізиту "Адреса"
+        if (haveRef2(ioRZ, "EEP", "ADP", "AP3") > 1)
+            Errors.Add(RZ+ioRZ.SNRV+space+"Некоректне формування в ЮРИДИЧНА/ФАКТИЧНА АДРЕСА реквізиту АДРЕСА ! ! !");
+
         var CG = ioRZ.GetPropByPath("CG");
         if (CG == null) CG = ioRZ.GetPropByPath("NN");
         if (CG.Contains("", "?", false) || CG.Value1(0) == "")

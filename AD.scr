@@ -29,3 +29,9 @@
        ioAZ = null;
     }
   }
+
+var leftAD = SC.OpenSql("select count(*) from cbd.mis_az where sn in (select x902 from cbd.mis_sk_900 where sn_io in (select sk_sn from cbd.mis_messages where num = " + MessageIOs.MesNum + ") and x901=" + SC.IOMList.GetIOByAttr("CODE","AZ").Attr("NUM") + ") and sn not in (" +
+                        "select sn2 from cbd.mis_lz_jn where io2=" + SC.IOMList.GetIOByAttr("CODE","AZ").Attr("NUM") + " and sn1 in (select x902 from cbd.mis_sk_900 where sn_io in (select sk_sn from cbd.mis_messages where num = " + MessageIOs.MesNum + ") and x901=" + SC.IOMList.GetIOByAttr("CODE","LZ").Attr("NUM")+") " +
+                        "union " +
+                        "select sn2 from cbd.mis_rz_jn where io2=" + SC.IOMList.GetIOByAttr("CODE","AZ").Attr("NUM") + " and sn1 in (select x902 from cbd.mis_sk_900 where sn_io in (select sk_sn from cbd.mis_messages where num = " + MessageIOs.MesNum + ") and x901=" + SC.IOMList.GetIOByAttr("CODE","RZ").Attr("NUM")+"))").split(';')[0];
+if (leftAD != "0") Errors.Add(leftAD+space+'АД не містить посилання на інші ІО ! ! !');

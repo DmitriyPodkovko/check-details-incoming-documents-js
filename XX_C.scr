@@ -13,13 +13,16 @@
 
   var space = " "
   var XZ = "ОД."
+  var DZ = "СП."
   var com = "відповідає"
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
   var noemp = "не передбачає заповнення"
   var mes_XA = "ВИД ОБМЕЖЕННЯ"
+  var mes_XC = "СПІВРОБІТНИК"
   var mes_XF = "ПІДСТАВА ОБМЕЖЕННЯ"
   var mes_XD = "ТЕРМІН ДІІ ОБМЕЖЕННЯ"
+  var mes_12 = "СПІВРОБІТНИК, ЩО ВЕДЕ СПРАВУ"
 
 // Для всіх ІО ОД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -54,7 +57,7 @@
          var isXZ_S0908_02 = false;
          while (O83 >= 0)
          {
-            var ioXZ = SC.ReadIO("XZ", O83, -1, "XF;");
+            var ioXZ = SC.ReadIO("XZ", O83, -1, "XF;XC;");
             if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false))
             {
                isXZ_S0908_02 = true;
@@ -62,7 +65,9 @@
                var I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
                while (I98 >= 0)
                {
-                  var ioDZ = SC.ReadIO("DZ", I98, -1, "1K;");
+                  var ioDZ = SC.ReadIO("DZ", I98, -1, "1K;12;");
+                  if (ioDZ.GetPropByPath("12").Value1(0) != ioXZ.GetPropByPath("XC").Value1(0))//ОДЖXFСПЖ1201
+                      Errors.Add(DZ+ioDZ.SNRV+space+mes_12+space+dis+space+XZ+ioXZ.SNRV+space+mes_XC);
                   if (ioDZ.GetPropByPath("1K").Value1(0) == "")
                   {
                      isTrue = true;

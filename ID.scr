@@ -127,7 +127,10 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DE;DG;DJ;DI;DO;IV;DZ;SA;SC.I99;D6;IIO.I97;IIO.II3;AU;PZ;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DE;DG;DJ;DI;DO;IV;DZ;SA;SC.I99;D6;IIO.I97;IIO.II3;AU;PZ;FTG.FTO.FT3;");
+//ІДFTGІДFT301 Перевірка коректного заповнення "Фотографія"
+         if (haveRef2(ioIZ, "FTG", "FTO", "FT3") > 1)
+             Errors.Add(IZ+ioIZ.SNRV+space+"Некоректне формування ФОТОГРАФІЯ ! ! !");
 //IDЖDGIDЖDG01 IDЖDGIDЖDG02 IDЖDGIDЖDG03 Перевірка "Зміст документа"
          var DG = ioIZ.GetPropByPath("DG");
          if (DG.ContainsAny("", listDGPR, false)) Warnings.Add(IZ+ioIZ.SNRV+space+mes_DG+space+"містить:"+space+listDGPR2);

@@ -227,7 +227,7 @@
          for (var j = 0; j < PZ.Count; j++)
          {
             if (PZ.Value1(j) != "000000")
-             if (IV < 20180101 && !(PZ.Value1(j).substr(0, 1) == "8" || PZ.Value2(j).substr(0, 2) == "(л" || PZ.Value3(j).substr(0, 2) == "(л"))
+             if (IV < 20181219 && !(PZ.Value1(j).substr(0, 1) == "8" || PZ.Value2(j).substr(0, 2) == "(л" || PZ.Value3(j).substr(0, 2) == "(л"))
                  Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+com+space+"кодам поточного року")
          }
 //IDЖSAIDЖSA01 Порівняння "Дата вчинення дії" з поточною датою

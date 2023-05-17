@@ -1,0 +1,20 @@
+//this is script for @MVS only
+//########################################   П Е Р Е В І Р К А  І О  Ф Т   ################################################
+
+  var space = " "
+  var FZ = "ФТ."
+
+// Для всіх ІО ФТ у повідомленні
+  for (var io = 0; io < MessageIOs.Count; io++)
+  {
+    if (MessageIOs.IO(io) == "FZ")
+    {
+       // Отримати зміст ІО ФТ
+       var ioFZ = SC.ReadIO("FZ", MessageIOs.SN(io), -1, "FT;");
+//ФТЖFTФТЖFT01
+         var foto = ioFZ.GetPropByPath("FT").Value1(0);
+         if (foto != "" && foto.substr(0,3) != "яШя") Warnings.Add(FZ+ioFZ.SNRV+space+"Потрібен JPG!");
+       ioFZ.Clear();
+       ioFZ = null;
+    }
+  }

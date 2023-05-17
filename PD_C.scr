@@ -15,6 +15,7 @@
   var mes_DZ3 = "відповідає ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
+  var mes_PX = "ДАТА РЕЄСТРАЦІЇ ПЕРВИННОГО ДОКУМЕНТА"
 
 // Для всіх ІО ПД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -22,7 +23,7 @@
     if (MessageIOs.IO(io) == "PZ")
     {
        // Отримати зміст ІО ПД
-       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "DZ;DU.D83;OD.O83;");
+       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "DZ;DU.D83;OD.O83;PX;");
 //ПДЖDUПДЖOD01 В ІО СП не задано "Дата закриття справи", а в ІО ПД відсутнє посилання на ІО ОД
          var n = 0;
          var snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n)
@@ -34,6 +35,10 @@
             n++;
             snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
          }
+//ПДЖPXПДЖPX01
+         if (ioPZ.GetPropByPath("PX").Value1(0).substr(6,2) == "00")
+             Errors.Add(PZ+ioPZ.SNRV+space+"Некоректна"+space+mes_PX+space+"(починається з 00.)");
+
        ioPZ.Clear();
        ioPZ = null;
     }

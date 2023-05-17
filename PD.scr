@@ -89,6 +89,7 @@
   var mes_PO = "ОПЕРАТИВНА КВАЛІФІКАЦІЯ ВІДОМОСТЕЙ:"
   var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
   var mes_DJ2 = "ТЕМАТИЧНОМУ ПЕРЕЛІКУ ІНФОРМАЦІЇ:"
+  var mes_PX = "ДАТА РЕЄСТРАЦІЇ ПЕРВИННОГО ДОКУМЕНТА"
 
 // Для всіх ІО ПД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -96,7 +97,7 @@
     if (MessageIOs.IO(io) == "PZ")
     {
        // Отримати зміст ІО ПД
-       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;PO;DZ;DU.D83;OD.O83;");
+       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;PO;DZ;DU.D83;OD.O83;PX;");
 //PDЖPRPDЖPR01 Перевірка на заповнення "Зміст протиправної дії"
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR2);
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR3, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR3);
@@ -122,6 +123,10 @@
             n++;
             snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
          }
+//ПДЖPXПДЖPX01
+         if (ioPZ.GetPropByPath("PX").Value1(0).substr(6,2) == "00")
+             Errors.Add(PZ+ioPZ.SNRV+space+"Некоректна"+space+mes_PX+space+"(починається з 00.)");
+
        ioPZ.Clear();
        ioPZ = null;
     }

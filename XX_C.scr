@@ -11,10 +11,8 @@
   var S0908_26 = "26";
   var S0908_02 = "02";
 
-
   var space = " "
   var XZ = "ОД."
-  var DZ = "СП."
   var com = "відповідає"
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
@@ -22,8 +20,6 @@
   var mes_XA = "ВИД ОБМЕЖЕННЯ"
   var mes_XF = "ПІДСТАВА ОБМЕЖЕННЯ"
   var mes_XD = "ТЕРМІН ДІІ ОБМЕЖЕННЯ"
-  var mes_CD = "РЕЄСТРАЦІЙНИЙ НОМЕР СІ/СП/ІД"
-  var mes_1H = "РЕЄСТРАЦІЙНИЙ НОМЕР СПРАВИ"
 
 // Для всіх ІО ОД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -31,7 +27,7 @@
     if (MessageIOs.IO(io) == "XZ")
     {
        // Отримати зміст ІО ОД
-       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XA;XD;XF;CD;");
+       var ioXZ = SC.ReadIO("XZ", MessageIOs.SN(io), -1, "XA;XD;XF;");
 //       Відповідність ІО ОД____________________________________________________"Підстава обмеження" ІО ОД
          if (!ioXZ.GetPropByPath("XF").ContainsAny("", _S0908_mn1, false))      //ОДЖXFОДЖXF01
               Errors.Add(XZ+ioXZ.SNRV+space+dis+space+mes_XF+space+_S0908_mn1);
@@ -47,30 +43,38 @@
        ioXZ = null;
     }
 
-//ОДЖСDСПЖ1H01
+//ОДЖXFСПЖ1К01
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
        var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "OD.O83;SF.I98;");
          var n = 0;
          var O83 = haveRef(ioIZ, "OD", "O83", "XZ", n);
+         var isTrue = false;
+         var isXZ_S0908_02 = false;
          while (O83 >= 0)
          {
             var ioXZ = SC.ReadIO("XZ", O83, -1, "XF;");
             if (ioXZ.GetPropByPath("XF").Contains("", S0908_02, false))
             {
+               isXZ_S0908_02 = true;
                var k = 0;
                var I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
                while (I98 >= 0)
                {
                   var ioDZ = SC.ReadIO("DZ", I98, -1, "1K;");
-                  if (ioDZ.GetPropByPath("1K").Value1(0) != "")  Errors.Add("eryhfgjhfgjhgjghjghjРаботает")
+                  if (ioDZ.GetPropByPath("1K").Value1(0) == "")
+                  {
+                     isTrue = true;
+                     break;
+                  }
                   k++;
                   I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
                }
             }
             n++;
             O83 = haveRef(ioIZ, "OD", "O83", "XZ", n);
+            if (isXZ_S0908_02) if (!isTrue) Errors.Add(XZ+ioXZ.SNRV+space+mes_XF+space+S0908_02+space+"- повинно бути посилання на відкриту СП!")
          }
        ioIZ.Clear();
        ioIZ = null;

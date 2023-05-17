@@ -29,6 +29,9 @@
   var S0019_1_ = "1";                                                             var _S0055_0_ = "0";
                                                                                   var _S0055_25 = "25";
   var S0019_2_ = "2";                                                             var _S0055_5_ = "5";
+  
+//"Вид справи" ІО СП_____________________________________________________________"Пов'язана зі справою" ІО СП
+  var S0019_mn7 = "11,13,21,23,25"
 
 //"Пріоритетні завдання" ІО СП__________________________________________________"Лінія роботи" ІО СП
   var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
@@ -71,6 +74,7 @@
   var mes_1D = "КЛАСИФІКАЦІЇ СПРАВИ:"
   var mes_1L = "ПРИЧИНА ЗАКРИТТЯ СПРАВИ"
   var mes_1L2 = "ПРИЧИНІ ЗАКРИТТЯ СПРАВИ:"
+  var mes_D22 = "ПОВ`ЯЗАНА ЗІ СПРАВОЮ"
   var mes_1K = "ДАТА ЗАКРИТТЯ СПРАВИ"
   var mes_1K2 = "ДАТУ ЗАКРИТТЯ СПРАВИ"
   var mes_1M = "ДАТУ ПОНОВЛЕННЯ ВЕДЕННЯ СПРАВИ"
@@ -85,7 +89,7 @@
     if (MessageIOs.IO(io) == "DZ")
     {
        // Отримати зміст ІО СП
-       var ioDZ = SC.ReadIO("DZ", MessageIOs.SN(io), -1, "C1;NN;1D;1E;1L;1K;1M;D3;DP;D08;D10;D18.D97;IIO.58;IIO.II3;PZ;");
+       var ioDZ = SC.ReadIO("DZ", MessageIOs.SN(io), -1, "C1;NN;1D;1E;1L;1K;1M;D3;DP;D08;D22.D99;D10;D18.D97;IIO.58;IIO.II3;PZ;");
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
 //СПЖD3СПЖD301 Порівняння "Дата заведення справи" з поточною датою
@@ -136,13 +140,16 @@
          }
          ioIIZ = null;
 
-//       Відповідність "Вид справи" ІО СП_______________________________________"Об'єкт справи" ІО СП
          var C1 = ioDZ.GetPropByPath("C1");
          if (C1 == null) C1 = ioDZ.GetPropByPath("NN");
          if (C1.Contains("", "?", false) || C1.Value1(0) == "")
          {
+//        Відповідність "Вид справи" ІО СП______________________________________"Об'єкт справи" ІО СП
           if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn1, false) && haveRef(ioDZ, "D18", "D97", "LZ", 0) < 0)
               Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn1+space+"передбачає наявність ОС");//DUЖ1EDUD1801
+//        Відповідність "Вид справи" ІО СП______________________________________"Пов'язана зі справою" ІО СП
+          if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn7, false) && haveRef(ioDZ, "D22", "D99", "DZ", 0) < 0)
+              Warnings.Add(DZ+ioDZ.SNRV+space+mes_1E+space+S0019_mn7+space+"передбачає наявність СП у"+space+mes_D22);//DUЖ1EDUD2201
          }
          C1 = null;
          if (ioDZ.GetPropByPath("1E").ContainsAny("", S0019_mn4, false) && haveRef(ioDZ, "D18", "D97", "RZ", 0) > 0)
@@ -299,6 +306,7 @@
             var isDZ = false;
             while (I98 >= 0)
             {
+               var ioDZ = SC.ReadIO("DZ", I98, -1, "1E;");
                isDZ = true;
                if (ioDZ.GetPropByPath("1E").ContainsAny("", _S0019_mn14, false))
                {
@@ -308,7 +316,7 @@
                k++;
                I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
             }
-            if (isDZ) if (!isTrue) Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn14+space+dis+space+DZ+ioDZ.SNRV+space+mes_1E+space+_S0019_mn14);
+            if (isDZ) if (!isTrue) Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn14+space+dis+space+DZ+space+mes_1E+space+_S0019_mn14);
          }
        ioIZ.Clear();
        ioIZ = null;

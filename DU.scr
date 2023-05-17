@@ -326,6 +326,7 @@
             var isDZ = false;
             while (I98 >= 0)
             {
+               var ioDZ = SC.ReadIO("DZ", I98, -1, "1E;");
                isDZ = true;
                if (ioDZ.GetPropByPath("1E").ContainsAny("", _S0019_mn14, false))
                {
@@ -335,7 +336,7 @@
                k++;
                I98 = haveRef(ioIZ, "SF", "I98", "DZ", k);
             }
-            if (isDZ) if (!isTrue) Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn14+space+dis+space+DZ+ioDZ.SNRV+space+mes_1E+space+_S0019_mn14);
+            if (isDZ) if (!isTrue) Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn14+space+dis+space+DZ+space+mes_1E+space+_S0019_mn14);
          }
        ioIZ.Clear();
        ioIZ = null;

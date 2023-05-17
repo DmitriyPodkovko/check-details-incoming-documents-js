@@ -129,11 +129,14 @@
   var mes_BA = "Невірне значення ВИД ПРЕДМЕТУ"
   var mes_BC = "НАЙМЕНУВАННЯ, НОМЕР містить зайві символи: "
 
+  var cntLC = 0;
+  var newLC = false;
 // Для всіх ІО у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
   {
     if (MessageIOs.IO(io) == "LZ")
     {
+       var cntLC = cntLC + 1;
        // Отримати зміст ІО ОС
        var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ADP.AP3;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;FTG.FTO.FT3;");
 //ОСFTGОСFT301 Перевірка коректного заповнення "Фотографія"
@@ -147,6 +150,7 @@
         if (CL == null) CL = ioLZ.GetPropByPath("NN");
         if (CL.Contains("", "?", false) || CL.Value1(0) == "")
         {
+           newLC = true;
            var dt = new Date();
            var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
 //LCЖLILCЖLI01 Перевірка "Дата народження" (кількість реалізацій реквізиту не повинна бути > 1)
@@ -639,3 +643,8 @@
        ioIZ = null;
     }
   }
+
+  var isZZ = false;
+  for (var io = 0; io < MessageIOs.Count; io++)
+   if (MessageIOs.IO(io) == "ZZ") isZZ = true;
+  if (cntLC > 1) if (newLC) if (!isZZ) Warnings.Add("Відсутній ІО ЗВ'ЯЗОК ! ! !");

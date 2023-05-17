@@ -17,12 +17,12 @@
   var S0018_mn6 = "505,511,512,513,514";                                          var _S0002_8018 = "8018"
 
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
-  var S1000_1_ = "1";                                                             var _S0012_1 = "11,30,31"
-  var S1000_2_ = "2";                                                             var _S0012_2 = "40"
-  var S1000_3_ = "3";                                                             var _S0012_3 = "10,12"
-  var S1000_4_ = "4";                                                             var _S0012_4 = "20"
+  var S1000_1_ = "1";                                                             var _S0012_1 = "10,70"
+  var S1000_2_ = "2";                                                             var _S0012_2 = "20"
+  var S1000_3_ = "3";                                                             var _S0012_3 = "30"
+  var S1000_4_ = "4";                                                             var _S0012_4 = "40"
   var S1000_5_ = "5";                                                             var _S0012_5 = "50"
-  var S1000_87_ = "87";                                                           var _S0012_87 = "11"
+  var S1000_87_ = "87";                                                           var _S0012_87 = "70"
   var S1000_88_ = "88";                                                           var _S0012_88 = "80"
 
 //"Вид предмету" ІО ЗА__________________________________________________________"Найменування валюти" ІО ЗА
@@ -114,6 +114,7 @@
   var S0018_SP = "297";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Реєстраційний номер кримінального провадження" ІО ЗА
+  var S0018_mn7 = "289,295,296";
 
 //"Вид заходу" ІО ЗА____________________________________________________________"Реєстраційний номер доручення" ІО ЗА
 
@@ -428,8 +429,8 @@
          if (!ioMZ.GetPropByPath("M18").ContainsAny("", S0036_SP2, false))
               if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_SP, false) && !ioMZ.GetPropByPath("2C").Count > 0)
                   Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_SP+space+emp+space+mes_2C);//ЗАЖMAЗАЖ2C01 new
-         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn5, false) && !ioMZ.GetPropByPath("2C").Count > 0)
-             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn5+space+emp+space+mes_2C);//ЗАЖMAЗАЖ2C02 new
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn7, false) && !ioMZ.GetPropByPath("2C").Count > 0)
+             Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn7+space+emp+space+mes_2C);//ЗАЖMAЗАЖ2C02 new
 
          var C2 = ioMZ.GetPropByPath("2C");//ЗАЖ2CЗАЖ2C01 new
          if (C2.Count > 0)
@@ -455,7 +456,7 @@
          {
            if (M20.Count == 1) Errors.Add(MZ+ioMZ.SNRV+space+mes_M20+space+"містить 1 реалізацію");//ЗАM20ЗАM2001 new
            if (ioMZ.GetPropByPath("M18").Value1(0) != "001000") Errors.Add(MZ+ioMZ.SNRV+space+mes_M18+space+dis+space+"001000");//ЗАM20ЗАM1801 new
-           if (ioMZ.GetPropByPath("M19").Value1(0) != "СПІВРОБІТНИК СБУ") Errors.Add(MZ+ioMZ.SNRV+space+mes_M19+space+dis+space+"СПІВРОБІТНИК СБУ");//ЗАM20ЗАM1901 new
+           if (ioMZ.GetPropByPath("M19").Value2(0) != "СПІВРОБІТНИК СБУ") Errors.Add(MZ+ioMZ.SNRV+space+mes_M19+space+dis+space+"СПІВРОБІТНИК СБУ");//ЗАM20ЗАM1901 new
            for (var j = 0; j < M20.Count; j++)//ЗАM20ЗАM2002 new
            {
              var xxxx = M20.Value1(j).substr(2, 4);

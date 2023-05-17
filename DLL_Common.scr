@@ -36,6 +36,23 @@
      return haveRus;
   }
 
+// служ. функція перевірки останніх чотирьох значень в коді реквізиту
+  function getbyLast4Value(io, recvizit, last4value)
+  {
+     var Last4ValueFound = false;
+     var rv = io.GetPropByPath(recvizit);
+     if (rv != null)
+       for (var j = 0; j < rv.Count; j++)
+       {
+           if ((rv.Value1(j) > 2) && (rv.Value1(j).substr(2, 4) == last4value))
+           {
+              Last4ValueFound = true;
+              break;
+           }
+       }
+       return Last4ValueFound;
+  }
+
 // служ. функція перевірки третього значення в коді реквізиту
   function getbyThirdValue(io, recvizit, thirdvalue)
   {

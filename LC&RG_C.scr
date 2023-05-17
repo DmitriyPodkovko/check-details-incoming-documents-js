@@ -68,17 +68,21 @@
   var mes_BA = "Невірне значення ВИД ПРЕДМЕТУ"
   var mes_BC = "НАЙМЕНУВАННЯ, НОМЕР містить зайві символи: "
 
+  var cntLC = 0;
+  var newLC = false;
 // Для всіх ІО у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
   {
     if (MessageIOs.IO(io) == "LZ")
     {
+       var cntLC = cntLC + 1;
        // Отримати зміст ІО ОС
        var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;CPU;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;");
         var CL = ioLZ.GetPropByPath("CL");
         if (CL == null) CL = ioLZ.GetPropByPath("NN");
         if (CL.Contains("", "?", false) || CL.Value1(0) == "")
         {
+           newLC = true;
 //ОСЖE2ОСЖE201 Перевірка "Країна, АТО" ("Місце народження (адреса)") ІО ОС
            var E1 = ioLZ.GetPropByPath("E1");
            for (var j = 0; j < E1.Count; j++)
@@ -324,3 +328,8 @@
        ioIZ = null;
     }
   }
+
+  var isZZ = false;
+  for (var io = 0; io < MessageIOs.Count; io++)
+   if (MessageIOs.IO(io) == "ZZ") isZZ = true;
+  if (cntLC > 1) if (newLC) if (!isZZ) Warnings.Add("Відсутній ІО ЗВ'ЯЗОК ! ! !");

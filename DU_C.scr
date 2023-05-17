@@ -287,12 +287,12 @@
 //           Порівняння "Вид документа", "Дата реєстрації документа" ІО ІД______"Дата закриття справи" ІО СП
              var IV = ioIZ.GetPropByPath("IV").Value1(0);
              var _1K = ioDZ.GetPropByPath("1K").Value1(0);
-             if (!ioIZ.GetPropByPath("DI").Contains("", S0113_406, false) &&    //IDЖIVDUЖ1K01
+             if (!ioIZ.GetPropByPath("DI").ContainsAny("", S0113_406, false) &&//IDЖIVDUЖ1K01
                   IV != "" && _1K != "" && IV > _1K)
-                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+' не '+S0113_406+comma+' а '+mes_IV+space+more+space+DZ+ioDZ.SNRV+space+mes_1K2);
-             if (ioIZ.GetPropByPath("DI").Contains("", S0113_406, false) &&     //IDЖIVDUЖ1K02
+                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_IV+space+more+space+DZ+ioDZ.SNRV+space+mes_1K2);
+             if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_406, false) && //IDЖIVDUЖ1K02
                   IV != "" && _1K != "" && IV < _1K)
-                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_406+comma+' а '+mes_IV+space+less+space+DZ+ioDZ.SNRV+space+mes_1K2);
+                   Warnings.Add(IZ+ioIZ.SNRV+space+mes_IV+space+less+space+DZ+ioDZ.SNRV+space+mes_1K2);
              IV = null;
              _1K = null;
             n++;

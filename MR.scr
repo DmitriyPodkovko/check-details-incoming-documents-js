@@ -284,12 +284,21 @@
          {
               var PZ = ioMZ.GetPropByPath("PZ");
               isTrue = false;
+              CriteriyCount = 0;
+              PrioritetCount = 0;
               for (var j = 0; j < PZ.Count; j++)
               {
+                 if ((PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
+                      CriteriyCount = CriteriyCount + 1;
                  if (!(PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
-                     isTrue = true;
+                 {
+                      PrioritetCount = PrioritetCount + 1;
+                      isTrue = true;
+                 }
               }
-              if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Критеріїв оцінки... необхідно додати"+space+mes_PZ);
+              if (CriteriyCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Критерій оцінки повинен бути тільки 1");
+              if (PrioritetCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Пріоритет повинен бути тільки 1");
+              if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Критерія оцінки... необхідно додати"+space+mes_PZ);
               PZ = null;
          }
 //       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Вид заходу" ІО ЗА

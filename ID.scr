@@ -89,117 +89,123 @@
   var S0999_06_ = "06";                                                           var _S0012_06 = "04"
 
 //"Ïğ³îğèòåòí³ çàâäàííÿ" ²Î ²Ä__________________________________________________"Ë³í³ÿ ğîáîòè" ²Î ²Ä
-  var S1000_1_ = "1";                                                             var _S0012_1 = "01,07"
-  var S1000_2_ = "2";                                                             var _S0012_2 = "02"
-  var S1000_3_ = "3";                                                             var _S0012_3 = "03"
-  var S1000_4_ = "4";                                                             var _S0012_4 = "04"
-  var S1000_5_ = "5";                                                             var _S0012_5 = "05"
-  var S1000_87_ = "87";                                                           var _S0012_87 = "07"
-  var S1000_88_ = "88";                                                           var _S0012_88 = "08"
+//  var S1000_1_ = "1";                                                             var _S0012_1 = "01,07"
+//  var S1000_2_ = "2";                                                             var _S0012_2 = "02"
+//  var S1000_3_ = "3";                                                             var _S0012_3 = "03"
+//  var S1000_4_ = "4";                                                             var _S0012_4 = "04"
+//  var S1000_5_ = "5";                                                             var _S0012_5 = "05"
+  var S1000_71_ = "71";                                                           var _S0012_71 = "01"
+  var S1000_72_ = "72";                                                           var _S0012_72 = "12"
+  var S1000_73_ = "73";                                                           var _S0012_73 = "05"
+  var S1000_74_ = "74";                                                           var _S0012_74 = "02"
+  var S1000_75_ = "75";                                                           var _S0012_75 = "03"
+  var S1000_76_ = "76";                                                           var _S0012_76 = "04"
+  var S1000_77_ = "77";                                                           var _S0012_77 = "07"
+  var S1000_78_ = "78";                                                           var _S0012_78 = "08"
 
 //"Ë³í³ÿ ğîáîòè" ²Î ²Ä__________________________________________________________"Ë³í³ÿ ğîáîòè" ²Î ²Ä
   var S0012_0_ = "0,1";                                                           var _S0012_0 = "20"
 
 //"Ïğ³îğèòåòí³ çàâäàííÿ" ²Î ²Ä__________________________________________________"Ïğ³îğèòåòí³ çàâäàííÿ" ²Î ²Ä
-                              var S0036_29 = "290000"; var S0036_60 = "609999";
-  var S1000_5801 = "5801";                                                        var _S1000_5851 = "5851";
-  var S1000_5802 = "5802";                                                        var _S1000_5852 = "5852";
-  var S1000_5803 = "5803";                                                        var _S1000_5853 = "5853";
-                              var S0036_31 = "310000";
-  var S1000_5804 = "5804";                                                        var _S1000_5854 = "5854";
-  var S1000_5805 = "5805";                                                        var _S1000_5855 = "5855";
-  var S1000_295806 = "295806";                                                    var _S1000_295854 = "295854";
-  var S1000_5806 = "5806";                                                        var _S1000_5856 = "5856";
-  var S1000_295807 = "295807";                                                    var _S1000_295855 = "295855";
-  var S1000_5807 = "5807";                                                        var _S1000_5857 = "5857";
+//                              var S0036_29 = "290000"; var S0036_60 = "609999";
+//  var S1000_5801 = "5801";                                                        var _S1000_5851 = "5851";
+//  var S1000_5802 = "5802";                                                        var _S1000_5852 = "5852";
+//  var S1000_5803 = "5803";                                                        var _S1000_5853 = "5853";
+//                              var S0036_31 = "310000";
+//  var S1000_5804 = "5804";                                                        var _S1000_5854 = "5854";
+//  var S1000_5805 = "5805";                                                        var _S1000_5855 = "5855";
+//  var S1000_295806 = "295806";                                                    var _S1000_295854 = "295854";
+//  var S1000_5806 = "5806";                                                        var _S1000_5856 = "5856";
+//  var S1000_295807 = "295807";                                                    var _S1000_295855 = "295855";
+//  var S1000_5807 = "5807";                                                        var _S1000_5857 = "5857";
 
-                              var S0036_mn1_ = "29,31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2802 = "2802";                                                        var _S1000_2852 = "2852";
-                              var S0036_mn2_ = "33,37,44,49,50,59,60";
-                                                                                  var _S1000_2853 = "2853";
-                              var S0036_mn3_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2803 = "2803";
-                              var S0036_mn4_ = "33,37,44,49,50,59,60";
-										  var _S1000_2854 = "2854";
-                              var S0036_mn5_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2804 = "2804";
-                              var S0036_mn6_ = "33,37,44,49,50,59,60";
-										  var _S1000_2855 = "2855";
+//                              var S0036_mn1_ = "29,31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2802 = "2802";                                                        var _S1000_2852 = "2852";
+//                              var S0036_mn2_ = "33,37,44,49,50,59,60";
+//                                                                                  var _S1000_2853 = "2853";
+//                              var S0036_mn3_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2803 = "2803";
+//                              var S0036_mn4_ = "33,37,44,49,50,59,60";
+//										  var _S1000_2854 = "2854";
+//                              var S0036_mn5_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2804 = "2804";
+//                              var S0036_mn6_ = "33,37,44,49,50,59,60";
+//										  var _S1000_2855 = "2855";
 
-  var S1000_292805 = "292805";                                                    var _S1000_292853 = "292853";
-                              var S0036_mn7_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2805 = "2805";
-                              var S0036_mn8_ = "33,37,44,49,50,59,60";
-										  var _S1000_2856 = "2856";
+//  var S1000_292805 = "292805";                                                    var _S1000_292853 = "292853";
+//                              var S0036_mn7_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2805 = "2805";
+//                              var S0036_mn8_ = "33,37,44,49,50,59,60";
+//										  var _S1000_2856 = "2856";
+//
+//  var S1000_292806 = "292806";                                                    var _S1000_292854 = "292854";
+//                              var S0036_mn9_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2806 = "2806";
+//                              var S0036_mn10_ = "33,37,44,49,50,59,60";
+//										  var _S1000_2857 = "2857";
 
-  var S1000_292806 = "292806";                                                    var _S1000_292854 = "292854";
-                              var S0036_mn9_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2806 = "2806";
-                              var S0036_mn10_ = "33,37,44,49,50,59,60";
-										  var _S1000_2857 = "2857";
+//  var S1000_292807 = "292807";                                                    var _S1000_292855 = "292855";
+//                              var S0036_mn11_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2807 = "2807";
+//                              var S0036_mn12_ = "33,37,44,49,50,59,60";
+//										  var _S1000_2858 = "2858";
 
-  var S1000_292807 = "292807";                                                    var _S1000_292855 = "292855";
-                              var S0036_mn11_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2807 = "2807";
-                              var S0036_mn12_ = "33,37,44,49,50,59,60";
-										  var _S1000_2858 = "2858";
+//  var S1000_292808 = "292808";                                                    var _S1000_292856 = "292856";
+//                              var S0036_mn13_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2808 = "2808";
+//                              var S0036_mn14_ = "33,37,44,49,50,59,60";
+//										  var _S1000_2859 = "2859";
 
-  var S1000_292808 = "292808";                                                    var _S1000_292856 = "292856";
-                              var S0036_mn13_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2808 = "2808";
-                              var S0036_mn14_ = "33,37,44,49,50,59,60";
-										  var _S1000_2859 = "2859";
+//  var S1000_292809 = "292809";                                                    var _S1000_292857 = "292857";
+//                              var S0036_mn15_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2809 = "2809";
+//                              var S0036_mn16_ = "33,37,44,49,50,59";
+//										  var _S1000_2860 = "2860";
 
-  var S1000_292809 = "292809";                                                    var _S1000_292857 = "292857";
-                              var S0036_mn15_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2809 = "2809";
-                              var S0036_mn16_ = "33,37,44,49,50,59";
-										  var _S1000_2860 = "2860";
+//  var S1000_292810 = "292810";                                                    var _S1000_292858 = "292858";
+//                              var S0036_mn17_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2810 = "2810";
+//                              var S0036_mn18_ = "33,37,44,49,50,59";
+//										  var _S1000_2861 = "2861";
 
-  var S1000_292810 = "292810";                                                    var _S1000_292858 = "292858";
-                              var S0036_mn17_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2810 = "2810";
-                              var S0036_mn18_ = "33,37,44,49,50,59";
-										  var _S1000_2861 = "2861";
-
-  var S1000_292811 = "292811";                                                    var _S1000_292859 = "292859";
-                              var S0036_mn19_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
-  var S1000_2811 = "2811";
-                              var S0036_mn20_ = "33,37,44,49,50,59";
-										  var _S1000_2862 = "2862";
+//  var S1000_292811 = "292811";                                                    var _S1000_292859 = "292859";
+//                              var S0036_mn19_ = "31,32,35,36,38,40,41,43,45,46,47,48,51,52,53,54";
+//  var S1000_2811 = "2811";
+//                              var S0036_mn20_ = "33,37,44,49,50,59";
+//										  var _S1000_2862 = "2862";
 										  
-  var S1000_2901 = "2901";                                                        var _S1000_2951 = "2951";
-  var S1000_2902 = "2902";                                                        var _S1000_2952 = "2952";
-  var S1000_2903 = "2903";                                                        var _S1000_2953 = "2953";
-  var S1000_2904 = "2904";                                                        var _S1000_2954 = "2954";
-  var S1000_2905 = "2905";                                                        var _S1000_2955 = "2955";
-  var S1000_2906 = "2906";                                                        var _S1000_2956 = "2956";
-  var S1000_2907 = "2907";                                                        var _S1000_2957 = "2957";
-  var S1000_2908 = "2908";                                                        var _S1000_2958 = "2958";
-  var S1000_2909 = "2909";                                                        var _S1000_2959 = "2959";
-  var S1000_2910 = "2910";                                                        var _S1000_2960 = "2960";
-  var S1000_2911 = "2911";                                                        var _S1000_2961 = "2961";
-  var S1000_2912 = "2912";                                                        var _S1000_2962 = "2962";
-  var S1000_3901 = "3901";                                                        var _S1000_3951 = "3951";
-  var S1000_3902 = "3902";                                                        var _S1000_3952 = "3952";
-  var S1000_3903 = "3903";                                                        var _S1000_3953 = "3953";
-  var S1000_3904 = "3904";                                                        var _S1000_3954 = "3954";
-  var S1000_3905 = "3905";                                                        var _S1000_3955 = "3955";
-                             var S0036_mn21_ = "31,33,36,37,41,43,44,46,49,52,59,60";
-  var S1000_4901 = "4901";                                                        var _S1000_4951 = "4951";
-  var S1000_4902 = "4902";                                                        var _S1000_4952 = "4952";
-  var S1000_4903 = "4903";                                                        var _S1000_4953 = "4953";
-  var S1000_4904 = "4904";                                                        var _S1000_4954 = "4954";
-  var S1000_4905 = "4905";                                                        var _S1000_4955 = "4955";
-  var S1000_4906 = "4906";                                                        var _S1000_4956 = "4956";
-  var S1000_4907 = "4907";                                                        var _S1000_4957 = "4957";
-  var S1000_4908 = "4908";                                                        var _S1000_4958 = "4958";
-  var S1000_5901 = "5901";                                                        var _S1000_5951 = "5951";
-  var S1000_5902 = "5902";                                                        var _S1000_5952 = "5952";
-  var S1000_5903 = "5903";                                                        var _S1000_5953 = "5953";
-  var S1000_5904 = "5904";                                                        var _S1000_5954 = "5954";
-  var S1000_5905 = "5905";                                                        var _S1000_5955 = "5955";
-  var S1000_5906 = "5906";                                                        var _S1000_5956 = "5956";
+//  var S1000_2901 = "2901";                                                        var _S1000_2951 = "2951";
+//  var S1000_2902 = "2902";                                                        var _S1000_2952 = "2952";
+//  var S1000_2903 = "2903";                                                        var _S1000_2953 = "2953";
+//  var S1000_2904 = "2904";                                                        var _S1000_2954 = "2954";
+//  var S1000_2905 = "2905";                                                        var _S1000_2955 = "2955";
+//  var S1000_2906 = "2906";                                                        var _S1000_2956 = "2956";
+//  var S1000_2907 = "2907";                                                        var _S1000_2957 = "2957";
+//  var S1000_2908 = "2908";                                                        var _S1000_2958 = "2958";
+//  var S1000_2909 = "2909";                                                        var _S1000_2959 = "2959";
+//  var S1000_2910 = "2910";                                                        var _S1000_2960 = "2960";
+//  var S1000_2911 = "2911";                                                        var _S1000_2961 = "2961";
+//  var S1000_2912 = "2912";                                                        var _S1000_2962 = "2962";
+//  var S1000_3901 = "3901";                                                        var _S1000_3951 = "3951";
+//  var S1000_3902 = "3902";                                                        var _S1000_3952 = "3952";
+//  var S1000_3903 = "3903";                                                        var _S1000_3953 = "3953";
+//  var S1000_3904 = "3904";                                                        var _S1000_3954 = "3954";
+//  var S1000_3905 = "3905";                                                        var _S1000_3955 = "3955";
+//                             var S0036_mn21_ = "31,33,36,37,41,43,44,46,49,52,59,60";
+//  var S1000_4901 = "4901";                                                        var _S1000_4951 = "4951";
+//  var S1000_4902 = "4902";                                                        var _S1000_4952 = "4952";
+//  var S1000_4903 = "4903";                                                        var _S1000_4953 = "4953";
+//  var S1000_4904 = "4904";                                                        var _S1000_4954 = "4954";
+//  var S1000_4905 = "4905";                                                        var _S1000_4955 = "4955";
+//  var S1000_4906 = "4906";                                                        var _S1000_4956 = "4956";
+//  var S1000_4907 = "4907";                                                        var _S1000_4957 = "4957";
+//  var S1000_4908 = "4908";                                                        var _S1000_4958 = "4958";
+//  var S1000_5901 = "5901";                                                        var _S1000_5951 = "5951";
+//  var S1000_5902 = "5902";                                                        var _S1000_5952 = "5952";
+//  var S1000_5903 = "5903";                                                        var _S1000_5953 = "5953";
+//  var S1000_5904 = "5904";                                                        var _S1000_5954 = "5954";
+//  var S1000_5905 = "5905";                                                        var _S1000_5955 = "5955";
+//  var S1000_5906 = "5906";                                                        var _S1000_5956 = "5956";
 
   var space = " "
   var comma = ","
@@ -219,7 +225,7 @@
   var mes_DZ = "ÏĞÎÁËÅÌÀÒÈÊÀ Â²ÄÎÌÎÑÒÅÉ:"
   var mes_DZ2 = "ÏĞÎÁËÅÌÀÒÈÖ² Â²ÄÎÌÎÑÒÅÉ:"
   var mes_DZ3 = "â³äïîâ³äàº ÏĞÎÁËÅÌÀÒÈÖ² Â²ÄÎÌÎÑÒÅÉ:"
-  var mes_D6 = "Ë²Í²¯ ĞÎÁÎÒÈ"
+  var mes_D6 = "Ë²Í²¯ ĞÎÁÎÒÈ:"
   var mes_HIA = "ÊÀÒÅÃÎĞ²¯ ÄÆÅĞÅËÀ:"
   var mes_HIA2 = "íå ïîâèíåí â³äïîâ³äàòè ÊÀÒÅÃÎĞ²¯ ÄÆÅĞÅËÀ:"
   var mes_IV = "ÄÀÒÀ ĞÅªÑÒĞÀÖ²¯ ÄÎÊÓÌÅÍÒÀ"
@@ -262,9 +268,11 @@
          DG = null;
 //IDÆPZIDÆPZ01 Ïåğåâ³ğêà "Ïğ³îğèòåòí³ çàâäàííÿ" (ÍÅ 9*)
          if (ioIZ.GetPropByPath("PZ").StartWith("", "9", false)) Warnings.Add(IZ+ioIZ.SNRV+space+"Íåâ³ğíå çíà÷åííÿ"+space+mes_PZ);
-//IDÆPZIDÆ3001 Ïåğåâ³ğêà "Ïğ³îğèòåòí³ çàâäàííÿ" (8*, 7*)
-         if (ioIZ.GetPropByPath("PZ").StartWithAny("", "8,7", false) && haveRef(ioIZ, "30", "D83", "PZ", 0) < 0)
-             Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+"ïåğåäáà÷àº íàÿâí³ñòü ÏÄ");
+//IDÆPZIDÆ3001 Ïåğåâ³ğêà "Ïğ³îğèòåòí³ çàâäàííÿ" (8*, 7*, ÍÅ 770101, ÍÅ 770201)
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", "8,7", false) &&
+              !ioIZ.GetPropByPath("PZ").ContainsAny("", "770101,770201", false) &&
+                haveRef(ioIZ, "30", "D83", "PZ", 0) < 0)
+                 Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+"ïåğåäáà÷àº íàÿâí³ñòü ÏÄ");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -511,27 +519,51 @@
              !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_06, false))
                Warnings.Add(IZ+ioIZ.SNRV+space+mes_DJ+space+S0999_06_+space+dis+space+mes_D6+space+_S0012_06);
 //       Â³äïîâ³äí³ñòü "Ïğ³îğèòåòí³ çàâäàííÿ" ²Î ²Ä_____________________________"Ë³í³ÿ ğîáîòè" ²Î ²Ä
-         if (getbyThirdValue(ioIZ, "PZ", S1000_1_) &&                           //²ÄÆPZ²ÄÆD601
-             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_1, false))
-               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_1);
-         if (getbyThirdValue(ioIZ, "PZ", S1000_2_) &&                           //²ÄÆPZ²ÄÆD602
-             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_2, false))
-               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_2);
-         if (getbyThirdValue(ioIZ, "PZ", S1000_3_) &&                           //²ÄÆPZ²ÄÆD603
-             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_3, false))
-               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_3);
-         if (getbyThirdValue(ioIZ, "PZ", S1000_4_) &&                           //²ÄÆPZ²ÄÆD604
-             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_4, false))
-               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_4);
-         if (getbyThirdValue(ioIZ, "PZ", S1000_5_) &&                           //²ÄÆPZ²ÄÆD605
-             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_5, false))
-               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_5);
-         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_87_) &&                     //IDÆPZIDÆD601
-             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_87, false))
-               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_87);
-         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_88_) &&                     //IDÆPZIDÆD602
-             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_88, false))
-               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_88);
+//         if (getbyThirdValue(ioIZ, "PZ", S1000_1_) &&                           //²ÄÆPZ²ÄÆD601  Âèäàëåíî 01.2021
+//             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_1, false))
+//               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_1);
+//         if (getbyThirdValue(ioIZ, "PZ", S1000_2_) &&                           //²ÄÆPZ²ÄÆD602
+//             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_2, false))
+//               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_2);
+//         if (getbyThirdValue(ioIZ, "PZ", S1000_3_) &&                           //²ÄÆPZ²ÄÆD603
+//             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_3, false))
+//               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_3);
+//         if (getbyThirdValue(ioIZ, "PZ", S1000_4_) &&                           //²ÄÆPZ²ÄÆD604
+//             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_4, false))
+//               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_4);
+//         if (getbyThirdValue(ioIZ, "PZ", S1000_5_) &&                           //²ÄÆPZ²ÄÆD605
+//             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_5, false))
+//               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_5);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_71_, false) &&     //IDÆPZIDÆD601
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_71, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_71);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_72_, false) &&     //IDÆPZIDÆD602
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_72, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_72);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_73_, false) &&     //IDÆPZIDÆD603
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_73, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_73);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_74_, false) &&     //IDÆPZIDÆD604
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_74, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_74);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_75_, false) &&     //IDÆPZIDÆD605
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_75, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_75);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_76_, false) &&     //IDÆPZIDÆD606
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_76, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_76);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_77_, false) &&     //IDÆPZIDÆD607
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_77, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_77);
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", S1000_78_, false) &&     //IDÆPZIDÆD608
+             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_78, false))
+               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_78);
+//         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_87_) &&                     //IDÆPZIDÆD601  Âèäàëåíî 01.2021
+//             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_87, false))
+//               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_87);
+//         if (getbyFirstThirdValue(ioIZ, "PZ", S1000_88_) &&                     //IDÆPZIDÆD602
+//             !ioIZ.GetPropByPath("D6").ContainsAny("", _S0012_88, false))
+//               Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+dis+space+mes_D6+space+_S0012_88);
 //       Â³äïîâ³äí³ñòü "Ë³í³ÿ ğîáîòè" ²Î ²Ä_____________________________________"Ë³í³ÿ ğîáîòè" ²Î ²Ä
          if (ioIZ.GetPropByPath("D6").StartWithAny("", S0012_0_, false))        //²ÄÆD6²ÄÆD601
          {

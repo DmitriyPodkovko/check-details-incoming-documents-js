@@ -36,13 +36,19 @@
   var S0006_140446 = "140446";
 
 //"Ïð³îðèòåòí³ çàâäàííÿ" ²Î ÑÏ__________________________________________________"Ë³í³ÿ ðîáîòè" ²Î ÑÏ
-  var S1000_1_ = "1";                                                             var _S0012_1 = "01,07"
-  var S1000_2_ = "2";                                                             var _S0012_2 = "02"
-  var S1000_3_ = "3";                                                             var _S0012_3 = "03"
-  var S1000_4_ = "4";                                                             var _S0012_4 = "04"
-  var S1000_5_ = "5";                                                             var _S0012_5 = "05"
-  var S1000_87_ = "87";                                                           var _S0012_87 = "07"
-  var S1000_88_ = "88";                                                           var _S0012_88 = "08"
+//  var S1000_1_ = "1";                                                             var _S0012_1 = "01,07"
+//  var S1000_2_ = "2";                                                             var _S0012_2 = "02"
+//  var S1000_3_ = "3";                                                             var _S0012_3 = "03"
+//  var S1000_4_ = "4";                                                             var _S0012_4 = "04"
+//  var S1000_5_ = "5";                                                             var _S0012_5 = "05"
+  var S1000_71_ = "71";                                                           var _S0012_71 = "01"
+  var S1000_72_ = "72";                                                           var _S0012_72 = "12"
+  var S1000_73_ = "73";                                                           var _S0012_73 = "05"
+  var S1000_74_ = "74";                                                           var _S0012_74 = "02"
+  var S1000_75_ = "75";                                                           var _S0012_75 = "03"
+  var S1000_76_ = "76";                                                           var _S0012_76 = "04"
+  var S1000_77_ = "77";                                                           var _S0012_77 = "07"
+  var S1000_78_ = "78";                                                           var _S0012_78 = "08"
 
 //"Ë³í³ÿ ðîáîòè" ²Î ÑÏ__________________________________________________________"Ë³í³ÿ ðîáîòè" ²Î ÑÏ
   var S0012_0_ = "0,1";                                                           var _S0012_0 = "20"
@@ -75,7 +81,7 @@
   var mes_Date = "ïîòî÷íó äàòó"
   var mes_DI = "ÂÈÄ ÄÎÊÓÌÅÍÒÀ:"
   var mes_IV = "ÄÀÒÀ ÐÅªÑÒÐÀÖ²¯ ÄÎÊÓÌÅÍÒÀ"
-  var mes_D08 = "Ë²Í²¯ ÐÎÁÎÒÈ"
+  var mes_D08 = "Ë²Í²¯ ÐÎÁÎÒÈ:"
   var mes_D09 = "ÑÔÅÐÀ Ä²ßËÜÍÎÑÒ²:"
   var mes_D09_2 = "ÑÔÅÐ² Ä²ßËÜÍÎÑÒ²:"
   var mes_D09_3 = "â³äïîâ³äàº ÑÔÅÐ² Ä²ßËÜÍÎÑÒ²:"
@@ -251,27 +257,51 @@
              ioDZ.GetPropByPath("D09").Contains("", S0006_140446, false))
                Warnings.Add(DZ+ioDZ.SNRV+space+mes_D09+space+S0006_mn1+space+mes_D09_3+space+S0006_140446);
 //       Â³äïîâ³äí³ñòü "Ïð³îðèòåòí³ çàâäàííÿ" ²Î ÑÏ_____________________________"Ë³í³ÿ ðîáîòè" ²Î ÑÏ
-         if (getbyThirdValue(ioDZ, "PZ", S1000_1_) &&                           //ÑÏÆPZÑÏD0801
-             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_1, false))
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_1);
-         if (getbyThirdValue(ioDZ, "PZ", S1000_2_) &&                           //ÑÏÆPZÑÏD0802
-             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_2, false))
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_2);
-         if (getbyThirdValue(ioDZ, "PZ", S1000_3_) &&                           //ÑÏÆPZÑÏD0803
-             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_3, false))
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_3);
-         if (getbyThirdValue(ioDZ, "PZ", S1000_4_) &&                           //ÑÏÆPZÑÏD0804
-             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_4, false))
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_4);
-         if (getbyThirdValue(ioDZ, "PZ", S1000_5_) &&                           //ÑÏÆPZÑÏD0805
-             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_5, false))
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_5);
-         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_87_) &&                     //DUÆPZDUD0801
-             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_87, false))
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_87);
-         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_88_) &&                     //DUÆPZDUD0802
-             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_88, false))
-               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_88);
+//         if (getbyThirdValue(ioDZ, "PZ", S1000_1_) &&                           //ÑÏÆPZÑÏD0801  Âèäàëåíî 01.2021
+//             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_1, false))
+//               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_1);
+//         if (getbyThirdValue(ioDZ, "PZ", S1000_2_) &&                           //ÑÏÆPZÑÏD0802
+//             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_2, false))
+//               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_2);
+//         if (getbyThirdValue(ioDZ, "PZ", S1000_3_) &&                           //ÑÏÆPZÑÏD0803
+//             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_3, false))
+//               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_3);
+//         if (getbyThirdValue(ioDZ, "PZ", S1000_4_) &&                           //ÑÏÆPZÑÏD0804
+//             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_4, false))
+//               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_4);
+//         if (getbyThirdValue(ioDZ, "PZ", S1000_5_) &&                           //ÑÏÆPZÑÏD0805
+//             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_5, false))
+//               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_5);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_71_, false) &&     //DUÆPZDUD0801
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_71, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_71);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_72_, false) &&     //DUÆPZDUD0802
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_72, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_72);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_73_, false) &&     //DUÆPZDUD0803
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_73, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_73);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_74_, false) &&     //DUÆPZDUD0804
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_74, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_74);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_75_, false) &&     //DUÆPZDUD0805
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_75, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_75);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_76_, false) &&     //DUÆPZDUD0806
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_76, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_76);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_77_, false) &&     //DUÆPZDUD0807
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_77, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_77);
+         if (ioDZ.GetPropByPath("PZ").StartWithAny("", S1000_78_, false) &&     //DUÆPZDUD0808
+             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_78, false))
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_78);
+//         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_87_) &&                     //DUÆPZDUD0801  Âèäàëåíî 01.2021
+//             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_87, false))
+//               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_87);
+//         if (getbyFirstThirdValue(ioDZ, "PZ", S1000_88_) &&                     //DUÆPZDUD0802
+//             !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_88, false))
+//               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_88);
 //       Â³äïîâ³äí³ñòü "Ë³í³ÿ ðîáîòè" ²Î ÑÏ_____________________________________"Ë³í³ÿ ðîáîòè" ²Î ÑÏ
          if (ioDZ.GetPropByPath("D08").StartWithAny("", S0012_0_, false))       //ÑÏD08ÑÏD0801
          {

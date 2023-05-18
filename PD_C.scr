@@ -10,6 +10,9 @@
 //"Вид документа" ІО ІД_________________________________________________________"Оперативна кваліфікація відомостей" ІО ПД
   var S0113_704 = "704";                                                          var _S0001_mn1 = "0116115,0116120,0116125"
 
+//"Лінія роботи" ІО ІД__________________________________________________________"Умови вчинення дії" ІО ПД
+  var S0012_20 = "20";                                                            var _S0005_20 = "Z"
+
   var space = " "
   var IZ = "ІД."
   var PZ = "ПД."
@@ -17,11 +20,13 @@
   var MZ = "ЗА."
   var com = "відповідає"
   var dis = "не відповідає"
+  var mes_UVD = "УМОВИ ВЧИНЕННЯ ДІЇ"
   var mes_MA = "ВИД ЗАХОДУ:"
   var mes_M7 = "КАТЕГОРІЯ ДЕРЖАВНОГО ОРГАНУ, УСТАНОВИ:"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
   var mes_PX = "ДАТА РЕЄСТРАЦІЇ ПЕРВИННОГО ДОКУМЕНТА"
+  var mes_D6 = "ЛІНІЇ РОБОТИ:"
 
 // Для всіх ІО ПД у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -65,16 +70,40 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DI;30.D83;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DI;D6;30.D83;");
          var n = 0;
          var D83 = haveRef(ioIZ, "30", "D83", "PZ", n);
          while (D83 >= 0)
          {
-            var ioPZ = SC.ReadIO("PZ", D83, -1, "CP;PO;DZ;");
+            var ioPZ = SC.ReadIO("PZ", D83, -1, "CP;PO;UVD;");
 //          Відповідність "Вид документа" ІО ІД_________________________________"Оперативна кваліфікація відомостей" ІО ПД
             if (ioIZ.GetPropByPath("DI").Contains("", S0113_704, false) &&      //IDЖDIPDЖPO01
                 !ioPZ.GetPropByPath("PO").ContainsAny("", _S0001_mn1, false))
                    Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_704+space+dis+space+PZ+ioPZ.SNRV+space+mes_PO2+space+_S0001_mn1);
+            if (ioPZ.GetPropByPath("CP").Contains("", "?", false) || ioPZ.GetPropByPath("CP").Value1(0) == "")
+            {
+//           Відповідність "Лінія роботи" ІО ІД_________________________________"Умови вчинення дії" ІО ПД
+             var D6 = ioIZ.GetPropByPath("D6");                                 //ІДЖD6ПДUVD01
+             for (var j = 0; j < D6.Count; j++)
+             {
+                if (D6.Value1(j) >= S0012_20)
+                {
+                   var D83cnt = ioIZ.GetPropByPath("30");
+                   if (D83cnt.Count == 1)
+                   {
+                      if (!ioPZ.GetPropByPath("UVD").Contains("", _S0005_20+D6.Value1(j), false))
+                           Errors.Add(PZ+ioPZ.SNRV+space+mes_UVD+space+dis+space+IZ+ioIZ.SNRV+space+mes_D6+space+D6.Value1(j))
+                   }
+                   else if (D83cnt.Count > 1)
+                   {
+                         if (!ioPZ.GetPropByPath("UVD").StartWithAny("", _S0005_20, false))
+                              Errors.Add(PZ+ioPZ.SNRV+space+"Відсутні Загрози... в"+space+mes_UVD)
+                         break;
+                   }
+                }
+             }
+             D6 = null;
+            }
             n++;
             D83 = haveRef(ioIZ, "30", "D83", "PZ", n);
          }

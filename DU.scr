@@ -9,13 +9,13 @@
   var S0019_mn2= "22,23"
   var S0019_mn4 = "10,11,12,13,20,21"
 
-//Відповідність "Вид справи" ІО СП______________________________________________"Оперативна категорія особи" ІО ОС
+//"Вид справи" ІО СП____________________________________________________________"Оперативна категорія особи" ІО ОС
   var S0019_mn5 = "12,13";                                                        var _S0002_SP54 = "СП54";
                                                                                   var _S0002_SP56 = "СП56";
   var S0019_mn6 = "20,21,22,23";                                                  var _S0002_SP00 = "СП00";
                                                                                   var _S0002_SP40 = "СП40";
 
-//Відповідність "Вид справи" ІО СП______________________________________________"Оперативна категорія організації" ІО РГ
+//"Вид справи" ІО СП____________________________________________________________"Оперативна категорія організації" ІО РГ
                                                                                   var _S0003_SP00 = "СП00";
                                                                                   var _S0003_SP32 = "СП32";
 
@@ -36,13 +36,16 @@
   var S0006_140446 = "140446";
 
 //"Пріоритетні завдання" ІО СП__________________________________________________"Лінія роботи" ІО СП
-  var S1000_1_ = "1";                                                             var _S0012_1 = "10,70"
-  var S1000_2_ = "2";                                                             var _S0012_2 = "20"
-  var S1000_3_ = "3";                                                             var _S0012_3 = "30"
-  var S1000_4_ = "4";                                                             var _S0012_4 = "40"
-  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
-  var S1000_87_ = "87";                                                           var _S0012_87 = "11"
-  var S1000_88_ = "88";                                                           var _S0012_88 = "80"
+  var S1000_1_ = "1";                                                             var _S0012_1 = "01,07"
+  var S1000_2_ = "2";                                                             var _S0012_2 = "02"
+  var S1000_3_ = "3";                                                             var _S0012_3 = "03"
+  var S1000_4_ = "4";                                                             var _S0012_4 = "04"
+  var S1000_5_ = "5";                                                             var _S0012_5 = "05"
+  var S1000_87_ = "87";                                                           var _S0012_87 = "07"
+  var S1000_88_ = "88";                                                           var _S0012_88 = "08"
+
+//"Лінія роботи" ІО СП__________________________________________________________"Лінія роботи" ІО СП
+  var S0012_0_ = "0,1";                                                           var _S0012_0 = "20"
 
 //"Стаття і кодекс" ІО СП
   var S0105_mn1_ = "0,1";
@@ -250,26 +253,39 @@
 //       Відповідність "Пріоритетні завдання" ІО СП_____________________________"Лінія роботи" ІО СП
          if (getbyThirdValue(ioDZ, "PZ", S1000_1_) &&                           //СПЖPZСПD0801
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_1, false))
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_1);
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_1);
          if (getbyThirdValue(ioDZ, "PZ", S1000_2_) &&                           //СПЖPZСПD0802
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_2, false))
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_2);
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_2);
          if (getbyThirdValue(ioDZ, "PZ", S1000_3_) &&                           //СПЖPZСПD0803
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_3, false))
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_3);
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_3);
          if (getbyThirdValue(ioDZ, "PZ", S1000_4_) &&                           //СПЖPZСПD0804
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_4, false))
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_4);
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_4);
          if (getbyThirdValue(ioDZ, "PZ", S1000_5_) &&                           //СПЖPZСПD0805
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_5, false))
-               Errors.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_5);
+               Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_5);
          if (getbyFirstThirdValue(ioDZ, "PZ", S1000_87_) &&                     //DUЖPZDUD0801
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_87, false))
                Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_87);
          if (getbyFirstThirdValue(ioDZ, "PZ", S1000_88_) &&                     //DUЖPZDUD0802
              !ioDZ.GetPropByPath("D08").ContainsAny("", _S0012_88, false))
                Warnings.Add(DZ+ioDZ.SNRV+space+mes_PZ+space+dis+space+mes_D08+space+_S0012_88);
-
+//       Відповідність "Лінія роботи" ІО СП_____________________________________"Лінія роботи" ІО СП
+         if (ioDZ.GetPropByPath("D08").StartWithAny("", S0012_0_, false))       //СПD08СПD0801
+         {
+            var D08 = ioDZ.GetPropByPath("D08");
+            var isTrue = false;
+            for (var j = 0; j < D08.Count; j++)
+            if (D08.Value1(j) >= _S0012_0)
+            {
+               isTrue = true;
+               break;
+            }
+            if (!isTrue) Errors.Add(DZ+ioDZ.SNRV+space+"Окрім Напрямів роботи... необхідно додати Загрози державній безпеці");
+            D08 = null;
+         }
 //       Перевірка "Стаття і кодекс" ІО СП на наявність статей старого ККУ
          if (ioDZ.GetPropByPath("D10").StartWithAny("", S0105_mn1_, false))
              Errors.Add(DZ+ioDZ.SNRV+space+mes_D10+space+noemp+space+S0105_mn1_);//СПD10СПD1001

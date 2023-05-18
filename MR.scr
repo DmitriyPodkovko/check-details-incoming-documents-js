@@ -18,14 +18,17 @@
   var S0018_mn6 = "505,511,512,513,514";                                          var _S0002_8018 = "8018"
 
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
-  var S1000_1_ = "1";                                                             var _S0012_1 = "10,70"
-  var S1000_2_ = "2";                                                             var _S0012_2 = "20"
-  var S1000_3_ = "3";                                                             var _S0012_3 = "30"
-  var S1000_4_ = "4";                                                             var _S0012_4 = "40"
-  var S1000_5_ = "5";                                                             var _S0012_5 = "50"
-  var S1000_87_ = "87";                                                           var _S0012_87 = "70"
-  var S1000_88_ = "88";                                                           var _S0012_88 = "80"
-  
+  var S1000_1_ = "1";                                                             var _S0012_1 = "01,07"
+  var S1000_2_ = "2";                                                             var _S0012_2 = "02"
+  var S1000_3_ = "3";                                                             var _S0012_3 = "03"
+  var S1000_4_ = "4";                                                             var _S0012_4 = "04"
+  var S1000_5_ = "5";                                                             var _S0012_5 = "05"
+  var S1000_87_ = "87";                                                           var _S0012_87 = "07"
+  var S1000_88_ = "88";                                                           var _S0012_88 = "08"
+
+//"Лінія роботи" ІО ЗА__________________________________________________________"Лінія роботи" ІО ЗА
+  var S0012_0_ = "0,1";                                                           var _S0012_0 = "20"
+
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Пріоритетні завдання" ІО ЗА
 
 //"Вид предмету" ІО ЗА__________________________________________________________"Найменування валюти" ІО ЗА
@@ -260,47 +263,61 @@
 //       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Лінія роботи" ІО ЗА
          if (getbyThirdValue(ioMZ, "PZ", S1000_1_) &&                           //ЗАЖPZЗАЖM801
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_1, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_1);
+               Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_1);
          if (getbyThirdValue(ioMZ, "PZ", S1000_2_) &&                           //ЗАЖPZЗАЖM802
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_2, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_2);
+               Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_2);
          if (getbyThirdValue(ioMZ, "PZ", S1000_3_) &&                           //ЗАЖPZЗАЖM803
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_3, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_3);
+               Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_3);
          if (getbyThirdValue(ioMZ, "PZ", S1000_4_) &&                           //ЗАЖPZЗАЖM804
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_4, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_4);
+               Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_4);
          if (getbyThirdValue(ioMZ, "PZ", S1000_5_) &&                           //ЗАЖPZЗАЖM805
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_5, false))
-               Errors.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_5);
+               Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_5);
          if (getbyFirstThirdValue(ioMZ, "PZ", S1000_87_) &&                     //MRЖPZMRЖM801
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_87, false))
                Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_87);
          if (getbyFirstThirdValue(ioMZ, "PZ", S1000_88_) &&                     //MRЖPZMRЖM802
              !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_88, false))
                Warnings.Add(MZ+ioMZ.SNRV+space+mes_PZ+space+dis+space+mes_M8+space+_S0012_88);
-//       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Пріоритетні завдання" ІО ЗА
-         if (ioMZ.GetPropByPath("PZ").StartWithAny("", "7803,7804,8", false))   //ЗАЖPZЗАЖPZ01
+//       Відповідність "Лінія роботи" ІО ЗА_____________________________________"Лінія роботи" ІО ЗА
+         if (ioMZ.GetPropByPath("M8").StartWithAny("", S0012_0_, false))        //ЗАЖM8ЗАЖM801
          {
-              var PZ = ioMZ.GetPropByPath("PZ");
-              isTrue = false;
-              CriteriyCount = 0;
-              PrioritetCount = 0;
-              for (var j = 0; j < PZ.Count; j++)
-              {
-                 if ((PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
-                      CriteriyCount = CriteriyCount + 1;
-                 if (!(PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
-                 {
-                      PrioritetCount = PrioritetCount + 1;
-                      isTrue = true;
-                 }
-              }
-              if (CriteriyCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Критерій оцінки повинен бути тільки 1");
-              if (PrioritetCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Пріоритет повинен бути тільки 1");
-              if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Критерія оцінки... необхідно додати"+space+mes_PZ);
-              PZ = null;
+            var M8 = ioMZ.GetPropByPath("M8");
+            var isTrue = false;
+            for (var j = 0; j < M8.Count; j++)
+            if (M8.Value1(j) >= _S0012_0)
+            {
+               isTrue = true;
+               break;
+            }
+            if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Напрямів роботи... необхідно додати Загрози державній безпеці");
+            M8 = null;
          }
+//       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Пріоритетні завдання" ІО ЗА
+//         if (ioMZ.GetPropByPath("PZ").StartWithAny("", "7803,7804,8", false))   //ЗАЖPZЗАЖPZ01
+//         {
+//              var PZ = ioMZ.GetPropByPath("PZ");
+//              isTrue = false;
+//              CriteriyCount = 0;
+//              PrioritetCount = 0;
+//              for (var j = 0; j < PZ.Count; j++)
+//              {
+//                 if ((PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
+//                      CriteriyCount = CriteriyCount + 1;
+//                 if (!(PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
+//                 {
+//                      PrioritetCount = PrioritetCount + 1;
+//                      isTrue = true;
+//                 }
+//              }
+//              if (CriteriyCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Критерій оцінки повинен бути тільки 1");
+//              if (PrioritetCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Пріоритет повинен бути тільки 1");
+//              if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Критерія оцінки... необхідно додати"+space+mes_PZ);
+//              PZ = null;
+//         }
 //       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Вид заходу" ІО ЗА
          if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861101, false) &&   //ЗАЖPZЗАЖMA01
              !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861101, false))

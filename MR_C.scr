@@ -17,6 +17,9 @@
   var S0018_mn5 = "295,296";                                                      var _S0002_8016 = "8016"
   var S0018_mn6 = "505,511,512,513,514";                                          var _S0002_8018 = "8018"
 
+//"Лінія роботи" ІО ЗА__________________________________________________________"Лінія роботи" ІО ЗА
+  var S0012_0_ = "0,1";                                                           var _S0012_0 = "20"
+
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Пріоритетні завдання" ІО ЗА
 
 //"Вид предмету" ІО ЗА__________________________________________________________"Найменування валюти" ІО ЗА
@@ -165,7 +168,7 @@
     if (MessageIOs.IO(io) == "MZ")
     {
        // Отримати зміст ІО ЗА
-       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M19;M4;ND;2C;SD;M20;IIO.39;IIA.II3;");
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M19;M4;ND;2C;SD;M20;IIO.39;IIA.II3;");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -246,28 +249,42 @@
             n++;
             snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n);
          }
-//       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Пріоритетні завдання" ІО ЗА
-         if (ioMZ.GetPropByPath("PZ").StartWithAny("", "7803,7804,8", false))   //ЗАЖPZЗАЖPZ01
+//       Відповідність "Лінія роботи" ІО ЗА_____________________________________"Лінія роботи" ІО ЗА
+         if (ioMZ.GetPropByPath("M8").StartWithAny("", S0012_0_, false))        //ЗАЖM8ЗАЖM801
          {
-              var PZ = ioMZ.GetPropByPath("PZ");
-              isTrue = false;
-              CriteriyCount = 0;
-              PrioritetCount = 0;
-              for (var j = 0; j < PZ.Count; j++)
-              {
-                 if ((PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
-                      CriteriyCount = CriteriyCount + 1;
-                 if (!(PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
-                 {
-                      PrioritetCount = PrioritetCount + 1;
-                      isTrue = true;
-                 }
-              }
-              if (CriteriyCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Критерій оцінки повинен бути тільки 1");
-              if (PrioritetCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Пріоритет повинен бути тільки 1");
-              if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Критерія оцінки... необхідно додати"+space+mes_PZ);
-              PZ = null;
+            var M8 = ioMZ.GetPropByPath("M8");
+            var isTrue = false;
+            for (var j = 0; j < M8.Count; j++)
+            if (M8.Value1(j) >= _S0012_0)
+            {
+               isTrue = true;
+               break;
+            }
+            if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Напрямів роботи... необхідно додати Загрози державній безпеці");
+            M8 = null;
          }
+//       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Пріоритетні завдання" ІО ЗА
+//         if (ioMZ.GetPropByPath("PZ").StartWithAny("", "7803,7804,8", false))   //ЗАЖPZЗАЖPZ01
+//         {
+//              var PZ = ioMZ.GetPropByPath("PZ");
+//              isTrue = false;
+//              CriteriyCount = 0;
+//              PrioritetCount = 0;
+//              for (var j = 0; j < PZ.Count; j++)
+//              {
+//                 if ((PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
+//                      CriteriyCount = CriteriyCount + 1;
+//                 if (!(PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
+//                 {
+//                      PrioritetCount = PrioritetCount + 1;
+//                      isTrue = true;
+//                 }
+//              }
+//              if (CriteriyCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Критерій оцінки повинен бути тільки 1");
+//              if (PrioritetCount > 1) Errors.Add(MZ+ioMZ.SNRV+space+"Пріоритет повинен бути тільки 1");
+//              if (!isTrue) Errors.Add(MZ+ioMZ.SNRV+space+"Окрім Критерія оцінки... необхідно додати"+space+mes_PZ);
+//              PZ = null;
+//         }
 //       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Вид заходу" ІО ЗА
          if (ioMZ.GetPropByPath("PZ").ContainsAny("", S1000_861101, false) &&   //ЗАЖPZЗАЖMA01
              !ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_861101, false))

@@ -7,12 +7,18 @@
                                                                                 var _S0098_2_ = "2"
                                                                                 var _S0098_3_ = "3"
 
+//"Характер зв'язку" ІО ЗВ______________________________________________________"Опис зв'язку" ІО ЗВ
+  var S0098_mn1 = "1102,1104,1106,1107,1108,1112,"+
+                  "1114,1116,1118,1206,1208,1212";
+
   var space = " "
   var comma = ","
   var ZZ = "ЗВ."
+  var dis = "не відповідає"
+  var emp = "відповідає пустому значенню"
   var mes_IOS = "ОБ'ЄКТ ЗВ'ЯЗКУ:"
   var mes_XZX = "ХАРАКТЕРУ ЗВ'ЯЗКУ:"
-  var dis = "не відповідає"
+  var mes_XZO = "ОПИС ЗВ'ЯЗКУ"
 
 // Для всіх ІО ЗВ у повідомленні
   for (var io = 0; io < MessageIOs.Count; io++)
@@ -20,7 +26,7 @@
     if (MessageIOs.IO(io) == "ZZ")
     {
        // Отримати зміст ІО ЗВ
-       var ioZZ = SC.ReadIO("ZZ", MessageIOs.SN(io), -1, "XZ.XZX;IOS.18;");
+       var ioZZ = SC.ReadIO("ZZ", MessageIOs.SN(io), -1, "XZ.XZX;XZ.XZO;IOS.18;");
          if (haveRef(ioZZ, "IOS", "18", "LZ", 2) > 0) Errors.Add(ZZ+ioZZ.SNRV+space+"містить більше 2 ОС");
          if (haveRef(ioZZ, "IOS", "18", "RZ", 2) > 0) Errors.Add(ZZ+ioZZ.SNRV+space+"містить більше 2 РГ");
          if (haveRef(ioZZ, "IOS", "18", "LZ", 1) > 0)//ЗВIOSЗВXZX01
@@ -50,6 +56,13 @@
                        Errors.Add(ZZ+ioZZ.SNRV+space+mes_IOS+space+"1 ОС 1 РГ"+space+dis+space+mes_XZX+space+_S0098_3_+comma+space+_S0098_0000);
              }
          }
+//       Відповідність "Характер зв'язку" ІО ЗВ_________________________________"Опис зв'язку" ІО ЗВ
+         var XZ = ioZZ.GetPropByPath("XZ");
+          for (var j = 0; j < XZ.Count; j++)
+          {
+              if (!XZ.GetPropByPath("XZX", j).ContainsAny("", S0098_mn1, false) && XZ.GetPropByPath("XZO", j).Value1(0) == "")
+                  Errors.Add(ZZ+ioZZ.SNRV+space+mes_XZO+space+emp);//ЗВXZXЗВXZO01
+          }
        ioZZ.Clear();
        ioZZ = null;
     }

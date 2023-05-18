@@ -73,8 +73,9 @@
   var S0027_0 = "0000000"
   var S0027_UKR = "8010000000"
   var S0027_LC = "8100000100,9000000001"
-  var S0027_RG = "8100000100,9000000002,9000000003"
+  var S0027_RG = "8100000100,9000000002,9000000003,9000000004"
   var S0027_nonat = "9000000000,9000000001"
+  var S0027_nogov = "9000000003"
   var lesLI = 19200000
   var nochar = " ,-,/,_,(,)"
   var com = "відповідає"
@@ -294,9 +295,9 @@
                  (haveEng(LC.GetPropByPath("LE", j).Value1(0)) && haveRus(LC.GetPropByPath("LF", j).Value1(0))))
                   Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LC3);//ОСЖLEОСЖLF01
              if (LC.GetPropByPath("LD", j).StartWithAny("", "0", false) && !(LC.GetPropByPath("LD", j).Value1(0) == "0000000000"))
-                 Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LD1+space+dis+space+"10");//ОСЖLDОСЖLD02 new
+                 Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LD1+space+dis+space+"10");//ОСЖLDОСЖLD02
              if (LC.GetPropByPath("LE", j).StartWithAny("", "0", false) && !(LC.GetPropByPath("LE", j).Value1(0) == "0000000000"))
-                 Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LE1+space+dis+space+"10");//ОСЖLEОСЖLE02 new
+                 Errors.Add(LZ+ioLZ.SNRV+space+(j+1)+space+mes_LE1+space+dis+space+"10");//ОСЖLEОСЖLE02
            }
            LC = null;
            LJ = null;
@@ -375,7 +376,7 @@
 //РГENPРГENP01 Перевірка "Статус адреси" ІО РГ
            var EEP = ioRZ.GetPropByPath("EEP");
            for (var j = 0; j < EEP.Count; j++)
-            if (!EEP.GetPropByPath("ENP", j).ContainsAny("", S0111_mn2, false)) Errors.Add(RZ+ioRZ.SNRV+space+mes_ENP2+space+com+space+S0111_mn2);
+            if (!EEP.GetPropByPath("ENP", j).ContainsAny("", S0111_mn2, false)) Errors.Add(RZ+ioRZ.SNRV+space+mes_ENP2+space+dis+space+S0111_mn2);
            EEP = null;
 //РГEАRРГEАR01 Перевірка "Країна, АТО" (Місце тимчасового перебування) ІО РГ
            var EET = ioRZ.GetPropByPath("EET");
@@ -385,12 +386,15 @@
 //РГEEPРГEET01 "Юридична/фактична адреса"/"Дислокація організації" ІО РГ відповідає пустому значенню
            if ((ioRZ.GetPropByPath("EEP").Count == 0) && (ioRZ.GetPropByPath("EET").Count == 0))
                 Errors.Add(RZ+ioRZ.SNRV+space+mes_EEP2+"/"+mes_EET2+space+emp);
-//РГЖYAРГЖYA01 Перевірка довжини "Ідентифікаційний код" ІО РГ
-           if (ioRZ.GetPropByPath("YA").Value1(0).length > 8) Errors.Add(RZ+ioRZ.SNRV+space+"Велика довжина"+space+mes_YA);
+//РГЖYAРГЖGD01 Відповідність "Ідентифікаційний код" ІО РГ_______________________"Держналежність" ІО РГ
+           if ((ioRZ.GetPropByPath("YA").Value1(0) != "") && (ioRZ.GetPropByPath("GD").Contains("", S0027_nogov, false))) Errors.Add(RZ+ioRZ.SNRV+space+mes_YA+space+com+space+mes_GD+space+S0027_nogov);
 //RGЖYARGEEP01 Відповідність "Ідентифікаційний код" ІО РГ_______________________"Юридична/фактична адреса" ІО РГ
            if (ioRZ.GetPropByPath("YA").Value1(0) != "" && !ioRZ.GetPropByPath("EEP").Count > 0)
                Warnings.Add(RZ+ioRZ.SNRV+space+mes_YA+space+emp+space+mes_EEP2);
         }
+//РГЖYAРГЖYA01 Перевірка довжини "Ідентифікаційний код" ІО РГ
+        if ((ioRZ.GetPropByPath("YA").Value1(0).length > 8) && (ioRZ.GetPropByPath("GD").Contains("", S0027_UKR, false)))
+             Errors.Add(RZ+ioRZ.SNRV+space+"Велика довжина"+space+mes_YA);
        ioRZ.Clear();
        ioRZ = null;
     }

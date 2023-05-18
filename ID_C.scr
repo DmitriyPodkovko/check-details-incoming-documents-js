@@ -190,12 +190,12 @@
 //ІДЖIVІДЖIV01 Порівняння "Дата реєстрації документа" з поточною датою
          var IV = ioIZ.GetPropByPath("IV").Value1(0);
          if (IV != "" && IV > DateNow) Errors.Add(IZ+ioIZ.SNRV+space+mes_IV+space+more+space+mes_Date);
-//ІДЖIVІДЖPZ01 Перевірка на коректність заповнення кодів поточного року     new
+//ІДЖIVІДЖPZ01 Перевірка на коректність заповнення кодів поточного року
          var PZ = ioIZ.GetPropByPath("PZ");
          for (var j = 0; j < PZ.Count; j++)
          {
             if (PZ.Value1(j) != "000000")
-             if (IV < 20180101 && !(PZ.Value1(j).substr(0, 1) == "8" || PZ.Value2(j).substr(0, 2) == "(л" || PZ.Value3(j).substr(0, 2) == "(л"))
+             if (IV < 20181219 && !(PZ.Value1(j).substr(0, 1) == "8" || PZ.Value2(j).substr(0, 2) == "(л" || PZ.Value3(j).substr(0, 2) == "(л"))
                  Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+com+space+"кодам поточного року")
          }
 //IDЖSAIDЖSA01 Порівняння "Дата вчинення дії" з поточною датою
@@ -347,11 +347,11 @@
              !ioIZ.GetPropByPath("DO").ContainsAny("", _S0103_805, false))
                Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_805+space+dis+space+mes_DO+space+_S0103_805);
 //       Відповідність "Вид документа" ІО ІД____________________________________"Тематичний перелік інформації" ІО ІД
-         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn13, false) &&      //ІДЖDIІДЖDJ01 new
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn13, false) &&      //ІДЖDIІДЖDJ01
              !ioIZ.GetPropByPath("DJ").ContainsAny("", _S0999_mn13, false))
                Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn13+space+dis+space+mes_DJ2+space+_S0999_mn13);
 //       Відповідність "Вид документа" ІО ІД____________________________________"Проблематика" ІО ІД
-         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn13, false) &&      //ІДЖDIІДЖDZ01 new
+         if (ioIZ.GetPropByPath("DI").ContainsAny("", S0113_mn13, false) &&      //ІДЖDIІДЖDZ01
              !ioIZ.GetPropByPath("DZ").StartWithAny("", _S0006_14_, false))
                Errors.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_mn13+space+dis+space+mes_DZ2+space+_S0006_14_);
 //       Відповідність "Проблематика" ІО ІД_____________________________________"Тематичний перелік інформації" ІО ІД
@@ -597,6 +597,19 @@
               if (getbyLast4Value(ioIZ, "PZ", S1000_2811) &&                    //ІДЖPZІДЖPZ34
                   !getbyLast4Value(ioIZ, "PZ", _S1000_2862))
                    Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+"*"+S1000_2811+space+dis+space+mes_PZ+space+"*"+_S1000_2862);
+         }
+         
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", "7803,7804,8", false))   //ІДЖPZІДЖPZ35
+         {
+              var PZ = ioIZ.GetPropByPath("PZ");
+              isTrue = false;
+              for (var j = 0; j < PZ.Count; j++)
+              {
+                 if (!(PZ.Value1(j).substr(0, 4) == "7803" || PZ.Value1(j).substr(0, 4) == "7804" || PZ.Value1(j).substr(0, 1) == "8"))
+                     isTrue = true;
+              }
+              if (!isTrue) Errors.Add(IZ+ioIZ.SNRV+space+"Окрім Критеріїв оцінки... необхідно додати"+space+mes_PZ);
+              PZ = null;
          }
 
        ioIZ.Clear();

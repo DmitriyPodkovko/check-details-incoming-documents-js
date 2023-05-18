@@ -7,6 +7,12 @@
 
   var S0006_140446 = "140446";
 
+//"Проведено захід" ІО ПД_______________________________________________________"Вид заходу" ІО ЗА
+                                                                                  var _S0018_136 = "136";
+
+//"Проведено захід" ІО ПД_______________________________________________________"Категорія державного органу, установи" ІО ЗА
+                                                                                  var _S0114_507 = "507";
+
 //"Вид справи" ІО СП____________________________________________________________"Оперативна кваліфікація відомостей" ІО ПД
   var S0019_2_ = "2";                                                             var _S0001_SP00 = "СП00";
 
@@ -78,12 +84,15 @@
   var IZ = "ІД."
   var PZ = "ПД."
   var DZ = "СП."
-  var SZ = "СІ."
+  var MZ = "ЗА."
+  var com = "відповідає"
   var dis = "не відповідає"
   var mes_PR = "ЗМІСТ ПРОТИПРАВНОЇ ДІЇ"
   var mes_DZ = "ПРОБЛЕМАТИКА ВІДОМОСТЕЙ:"
   var mes_DZ2 = "ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
   var mes_DZ3 = "відповідає ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
+  var mes_MA = "ВИД ЗАХОДУ:"
+  var mes_M7 = "КАТЕГОРІЯ ДЕРЖАВНОГО ОРГАНУ, УСТАНОВИ:"
   var mes_1E = "ВИД СПРАВИ:"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_PO = "ОПЕРАТИВНА КВАЛІФІКАЦІЯ ВІДОМОСТЕЙ:"
@@ -97,7 +106,7 @@
     if (MessageIOs.IO(io) == "PZ")
     {
        // Отримати зміст ІО ПД
-       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;PO;DZ;DU.D83;OD.O83;PX;");
+       var ioPZ = SC.ReadIO("PZ", MessageIOs.SN(io), -1, "PR;PO;DZ;MR.M83;DU.D83;OD.O83;PX;");
 //PDЖPRPDЖPR01 Перевірка на заповнення "Зміст протиправної дії"
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR2);
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR3, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR3);
@@ -109,6 +118,20 @@
          if (ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_mn1, false) &&
              ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_140446, false))
               Warnings.Add(PZ+ioPZ.SNRV+space+mes_DZ+space+S0006_mn1+space+mes_DZ3+space+S0006_140446);
+         var n = 0;
+         var M83 = haveRef(ioPZ, "MR", "M83", "MZ", n);
+         while (M83 >= 0)
+         {
+            var ioMZ = SC.ReadIO("MZ", M83, -1, "MA;M7;");
+//           Відповідність "Проведено захід" ІО ПД______________________________"Вид заходу" ІО ЗА
+             if (ioMZ.GetPropByPath("MA").ContainsAny("", _S0018_136, false))   //ПДЖMRЗАЖMA01
+                  Errors.Add(PZ+ioPZ.SNRV+space+com+space+MZ+ioMZ.SNRV+space+mes_MA+space+_S0018_136);
+//           Відповідність "Проведено захід" ІО ПД______________________________"Категорія державного органу, установи" ІО ЗА
+             if (ioMZ.GetPropByPath("M7").ContainsAny("", _S0114_507, false))   //ПДЖMRЗАЖM701
+                  Errors.Add(PZ+ioPZ.SNRV+space+com+space+MZ+ioMZ.SNRV+space+mes_M7+space+_S0114_507);
+            n++;
+            M83 = haveRef(ioPZ, "MR", "M83", "MZ", n);
+         }
 //ПДЖDUПДЖOD01 В ІО СП не задано "Дата закриття справи", а в ІО ПД відсутнє посилання на ІО ОД
          var n = 0;
          var snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n)
@@ -123,10 +146,9 @@
             n++;
             snDZ = haveRef(ioPZ, "DU", "D83", "DZ", n);
          }
-//ПДЖPXПДЖPX01
+//ПДЖPXПДЖPX01 "Дата реєстрації первинного документа" не може починатися з 00
          if (ioPZ.GetPropByPath("PX").Value1(0).substr(6,2) == "00")
              Errors.Add(PZ+ioPZ.SNRV+space+"Некоректна"+space+mes_PX+space+"(починається з 00.)");
-
        ioPZ.Clear();
        ioPZ = null;
     }

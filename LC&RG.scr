@@ -104,6 +104,7 @@
   var mes_B062 = "ÄÀÒÓ Â²ÄÊÐÈÒÒß ÐÀÕÓÍÊÓ"
   var mes_B07 = "ÄÀÒÓ ÇÀÊÐÈÒÒß ÐÀÕÓÍÊÓ"
   var mes_LJ = "ÃÐÎÌÀÄßÍÑÒÂÎ"
+  var mes_LN = "²ÄÅÍÒÈÔ²ÊÀÖ²ÉÍÈÉ ÍÎÌÅÐ"
   var mes_E1 = "Ì²ÑÖß ÍÀÐÎÄÆÅÍÍß (ÀÄÐÅÑÈ)"
   var mes_ATO = "ÊÐÀ¯ÍÀ, ÀÒÎ"
   var mes_EEP = "Ì²ÑÖß ÏÐÎÆÈÂÀÍÍß"
@@ -141,7 +142,7 @@
     {
        var cntLC = cntLC + 1;
        // Îòðèìàòè çì³ñò ²Î ÎÑ
-       var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ADP.AP3;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;FTG.FTO.FT3;");
+       var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LN;LR;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ADP.AP3;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;FTG.FTO.FT3;");
 //ÎÑFTGÎÑFT301 Ïåðåâ³ðêà êîðåêòíîãî çàïîâíåííÿ "Ôîòîãðàô³ÿ"
         if (haveRef2(ioLZ, "FTG", "FTO", "FT3") > 1)
             Errors.Add(LZ+ioLZ.SNRV+space+"Íåêîðåêòíå ôîðìóâàííÿ ÔÎÒÎÃÐÀÔ²ß ! ! !");
@@ -165,6 +166,15 @@
            {
             if (LI.Value1(j) > DateNow - 80000 || LI.Value1(j) < lesLI)
                 Warnings.Add(LZ+ioLZ.SNRV+space+"Íåêîðåêòíà"+space+mes_LI+space+"("+LI.Value2(j)+")");
+           }
+//LCÆLILCÆLI03 Ïåðåâ³ðêà "Äàòà íàðîäæåííÿ"
+           for (var j = 0; j < LI.Count; j++)
+           {
+            var LJ = ioLZ.GetPropByPath("LJ");
+            for (var i = 0; i < LJ.Count; i++)
+             if (LJ.Value1(i) == S0027_UKR && ioLZ.GetPropByPath("LN").Value1(0) != "" && LI.Value1(j).substr(6, 2) == "00")
+               Warnings.Add(LZ+ioLZ.SNRV+space+"Íåâèçíà÷åíà "+mes_LI+" ïðè â³äîìîìó "+mes_LN+" "+space+"("+LI.Value2(j)+")");
+            LJ = null;
            }
 //ÎÑÆE2ÎÑÆE201 Ïåðåâ³ðêà "Êðà¿íà, ÀÒÎ" ("Ì³ñöå íàðîäæåííÿ (àäðåñà)") ²Î ÎÑ
            var E1 = ioLZ.GetPropByPath("E1");

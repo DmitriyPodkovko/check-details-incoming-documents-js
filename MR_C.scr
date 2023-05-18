@@ -5,7 +5,7 @@
   var S0018_mn1 = "511,512,513,514";
   var S0018_mn2 = "501,502,503,504";
   var S0018_mn2_2 = "506,514";
-  var S0018_mn2_3 = "296,301,351,354";
+  var S0018_mn2_3 = "296,301,318,335,336,351,354";
   var S0018_mn2_4 = "353,356";
   var S0018_mn2_5 = "426";
 
@@ -19,6 +19,10 @@
 //"Вид заходу" ІО ЗА____________________________________________________________"Оперативна категорія особи" ІО ОС
   var S0018_mn5 = "295,296";                                                      var _S0002_8016 = "8016"
   var S0018_mn6 = "505,511,512,513,514";                                          var _S0002_8018 = "8018"
+
+//"Вид заходу" ІО ЗА____________________________________________________________"Проблематика" ІО ЗА
+  var S0018_mn8 = "145,146,147";                                                  var _S0006_14_ = "14" //14*
+  var S0018_mn9 = "318,335,336";
 
 //"Пріоритетні завдання" ІО ЗА__________________________________________________"Лінія роботи" ІО ЗА
 //  var S1000_1_ = "1";                                                             var _S0012_1 = "01,07"
@@ -243,6 +247,7 @@
   var mes_MD = "ДАТА ПРОВЕДЕННЯ ЗАХОДУ"
   var mes_IV = "ДАТА РЕЄСТРАЦІЇ ДОКУМЕНТА"
   var mes_PZ = "ПРІОРИТЕТНІ ЗАВДАННЯ"
+  var mes_U9 = "ПРОБЛЕМАТИЦІ ВІДОМОСТЕЙ:"
   var mes_M4 = "В КП відсутній"
   var mes_ND = "РЕЄСТРАЦІЙНИЙ НОМЕР ДОРУЧЕННЯ"
   var mes_2C = "РЕЄСТРАЦІЙНИЙ НОМЕР КП"
@@ -258,7 +263,7 @@
     if (MessageIOs.IO(io) == "MZ")
     {
        // Отримати зміст ІО ЗА
-       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.M11;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M19;M4;ND;2C;SD;M20;IIO.39;IIA.II3;");
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.M11;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;U9;M18;M19;M4;ND;2C;SD;M20;IIO.39;IIA.II3;");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -336,7 +341,6 @@
          if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_613, false) &&      //ЗАЖMAЗАЖM702
              !ioMZ.GetPropByPath("M7").ContainsAny("", _S0114_613, false))
               Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_613+space+dis+space+mes_M7+space+_S0114_613);
-
          var n = 0;
          var snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n)
          while (snLZ >= 0)
@@ -350,6 +354,13 @@
             n++;
             snLZ = haveRef(ioMZ, "LR", "LR3", "LZ", n);
          }
+//       Відповідність "Вид заходу" ІО ЗА_______________________________________"Проблематика" ІО ЗА
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn8, false) &&      //ЗАЖMAЗАЖU901
+             !ioMZ.GetPropByPath("U9").StartWithAny("", _S0006_14_, false))
+               Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn8+space+dis+space+mes_U9+space+_S0006_14_);
+         if (ioMZ.GetPropByPath("MA").ContainsAny("", S0018_mn9, false) &&      //MRЖMAMRЖU901
+             !ioMZ.GetPropByPath("U9").StartWithAny("", _S0006_14_, false))
+               Warnings.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn9+space+dis+space+mes_U9+space+_S0006_14_);
 //       Відповідність "Пріоритетні завдання" ІО ЗА_____________________________"Лінія роботи" ІО ЗА
 //         if (getbyThirdValue(ioMZ, "PZ", S1000_1_) &&                           //ЗАЖPZЗАЖM801  Видалено 01.2021
 //             !ioMZ.GetPropByPath("M8").ContainsAny("", _S0012_1, false))

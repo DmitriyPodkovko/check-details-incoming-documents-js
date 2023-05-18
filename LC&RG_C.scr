@@ -45,6 +45,7 @@
   var mes_B062 = "ДАТУ ВІДКРИТТЯ РАХУНКУ"
   var mes_B07 = "ДАТУ ЗАКРИТТЯ РАХУНКУ"
   var mes_LJ = "ГРОМАДЯНСТВО"
+  var mes_LN = "ІДЕНТИФІКАЦІЙНИЙ НОМЕР"
   var mes_E1 = "МІСЦЯ НАРОДЖЕННЯ (АДРЕСИ)"
   var mes_ATO = "КРАЇНА, АТО"
   var mes_EEP = "МІСЦЯ ПРОЖИВАННЯ"
@@ -81,10 +82,10 @@
     {
        var cntLC = cntLC + 1;
        // Отримати зміст ІО ОС
-       var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;CPU;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;");
-//LCЖLRLCЖLR02 Перевірка "Оперативна категорія" ІО ОС (НЕ 7007)
-        if (ioLZ.GetPropByPath("LR").Contains("", "7007", false))
-            Warnings.Add(LZ+ioLZ.SNRV+space+"УВАГА! Співробітник СБУ!");
+       var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LN;LR;CPU;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;");
+//LCЖLRLCЖLR02 Перевірка "Оперативна категорія" ІО ОС (НЕ 7007,7002)
+        if (ioLZ.GetPropByPath("LR").ContainsAny("", "7007,7002", false))
+            Warnings.Add(LZ+ioLZ.SNRV+space+"УВАГА! Співробітник СБУ/Особа за запитом!");
         var CL = ioLZ.GetPropByPath("CL");
         if (CL == null) CL = ioLZ.GetPropByPath("NN");
         if (CL.Contains("", "?", false) || CL.Value1(0) == "")
@@ -117,6 +118,15 @@
              }
            }
            TT = null;
+//LCЖLILCЖLI03 Перевірка "Дата народження"
+           for (var j = 0; j < LI.Count; j++)
+           {
+            var LJ = ioLZ.GetPropByPath("LJ");
+            for (var i = 0; i < LJ.Count; i++)
+             if (LJ.Value1(i) == S0027_UKR && ioLZ.GetPropByPath("LN").Value1(0) != "" && LI.Value1(j).substr(6, 2) == "00")
+               Warnings.Add(LZ+ioLZ.SNRV+space+"Невизначена "+mes_LI+" при відомому "+mes_LN+" "+space+"("+LI.Value2(j)+")");
+            LJ = null;
+           }
 //ОСB06ОСB0601 Порівняння "Дата відкриття рахунку" з "Дата закриття рахунку" "Банківські реквізити"
            var BR = ioLZ.GetPropByPath("BR");
            for (var j = 0; j < BR.Count; j++)

@@ -194,6 +194,7 @@
   var comma = ","
   var IZ = "ІД."
   var IIZ = "ДІ."
+  var MZ = "ЗА."
   var com = "відповідає"
   var dis = "не відповідає"
   var emp = "відповідає пустому значенню"
@@ -220,7 +221,7 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DE;DG;DJ;DI;DO;IV;DZ;SA;SC.I99;D6;IIO.I97;IIO.II3;IIO.IA3;30.D83;PZ;FTG.FTO.FT3;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DD;DE;DG;DJ;DI;DO;IV;DZ;SA;SC.I99;SF.I98;D6;IIO.I97;IIO.II3;IIO.IA3;30.D83;PZ;FTG.FTO.FT3;");
 //IDFTGIDFTG01 Перевірка наявності "Фотографія"
          if (ioIZ.GetPropByPath("FTG").Count > 0)
              Warnings.Add(IZ+ioIZ.SNRV+space+"Наявна ФОТОГРАФІЯ ! ! !");
@@ -251,6 +252,26 @@
               !ioIZ.GetPropByPath("PZ").ContainsAny("", "770101,770201", false) &&
                 haveRef(ioIZ, "30", "D83", "PZ", 0) < 0)
                  Warnings.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+"передбачає наявність ПД");
+//ІДЖPZЗАЖPZ01 Відповідність "Пріоритетні завдання" ІО ІД_______________________"Пріоритетні завдання" ІО ЗА
+         if (ioIZ.GetPropByPath("PZ").StartWithAny("", "7,87", false))
+         {
+            var n = 0;
+            var snMZ = haveRef(ioIZ, "SF", "I98", "MZ", n)
+            if (snMZ < 0) Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+"передбачає наявність ЗА");
+            var isTrue = false;
+            while (snMZ >= 0)
+            {
+               var ioMZ = SC.ReadIO("MZ", snMZ, -1, "PZ;");
+               if (ioMZ.GetPropByPath("PZ").StartWithAny("", "7,87", false))
+               {
+                  isTrue = true;
+                  break;
+               }
+               n++;
+               snMZ = haveRef(ioIZ, "SF", "I98", "MZ", n);
+            }
+            if (!isTrue) Errors.Add(IZ+ioIZ.SNRV+space+mes_PZ+space+"7*,87*"+space+dis+space+MZ+space+mes_PZ+space+"7*,87*");
+         }
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();

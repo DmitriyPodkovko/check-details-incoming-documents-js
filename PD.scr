@@ -103,6 +103,7 @@
   var mes_PO2 = "ОПЕРАТИВНІЙ КВАЛІФІКАЦІЇ ВІДОМОСТЕЙ:"
   var mes_DJ2 = "ТЕМАТИЧНОМУ ПЕРЕЛІКУ ІНФОРМАЦІЇ:"
   var mes_PX = "ДАТА РЕЄСТРАЦІЇ ПЕРВИННОГО ДОКУМЕНТА"
+  var mes_IV = "ДАТА РЕЄСТРАЦІЇ ДОКУМЕНТА"
   var mes_D6 = "ЛІНІЇ РОБОТИ:"
 
 // Для всіх ІО ПД у повідомленні
@@ -161,18 +162,21 @@
     if (MessageIOs.IO(io) == "IZ")
     {
        // Отримати зміст ІО ІД
-       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DJ;DI;D6;30.D83;");
+       var ioIZ = SC.ReadIO("IZ", MessageIOs.SN(io), -1, "DJ;IV;DI;D6;30.D83;");
          var n = 0;
          var D83 = haveRef(ioIZ, "30", "D83", "PZ", n);
          while (D83 >= 0)
          {
-            var ioPZ = SC.ReadIO("PZ", D83, -1, "CP;PO;UVD;DZ;");
+            var ioPZ = SC.ReadIO("PZ", D83, -1, "CP;PO;UVD;DZ;PX;");
 //          Відповідність "Вид документа" ІО ІД_________________________________"Оперативна кваліфікація відомостей" ІО ПД
             if (ioIZ.GetPropByPath("DI").Contains("", S0113_704, false) &&      //IDЖDIPDЖPO01
                 !ioPZ.GetPropByPath("PO").ContainsAny("", _S0001_mn1, false))
                    Warnings.Add(IZ+ioIZ.SNRV+space+mes_DI+space+S0113_704+space+dis+space+PZ+ioPZ.SNRV+space+mes_PO2+space+_S0001_mn1);
             if (ioPZ.GetPropByPath("CP").Contains("", "?", false) || ioPZ.GetPropByPath("CP").Value1(0) == "")
             {
+//ПДЖPXІДЖIV01 Порівняння "Дата реєстрації первинного документа" ІО ПД з "Дата реєстрації документа" ІО ІД
+             if (ioPZ.GetPropByPath("PX").Value1(0) != ioIZ.GetPropByPath("IV").Value1(0))
+                 Errors.Add(PZ+ioPZ.SNRV+space+mes_PX+space+"не дорівнює"+space+IZ+ioIZ.SNRV+space+mes_IV);
 //           Відповідність "Лінія роботи" ІО ІД_________________________________"Умови вчинення дії" ІО ПД
              var D6 = ioIZ.GetPropByPath("D6");                                 //ІДЖD6ПДUVD01
              for (var j = 0; j < D6.Count; j++)

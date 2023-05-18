@@ -82,6 +82,9 @@
        var cntLC = cntLC + 1;
        // Отримати зміст ІО ОС
        var ioLZ = SC.ReadIO("LZ", MessageIOs.SN(io), -1, "CL;NN;LC.LD;LC.LE;LC.LF;LH;LI;E1.E2;TT.TC;TT.TD;TT.SS;BR.B06;BR.B07;LJ;LR;CPU;JJ.JA;JJ.JB;BB.BA;BB.BC;FF.FB;EEP.ENP;EEP.DPP;EEP.DKP;EET.EAL;EET.ENT;EET.DPT;EET.DKT;");
+//LCЖLRLCЖLR02 Перевірка "Оперативна категорія" ІО ОС (НЕ 7007)
+        if (ioLZ.GetPropByPath("LR").Contains("", "7007", false))
+            Warnings.Add(LZ+ioLZ.SNRV+space+"УВАГА! Співробітник СБУ!");
         var CL = ioLZ.GetPropByPath("CL");
         if (CL == null) CL = ioLZ.GetPropByPath("NN");
         if (CL.Contains("", "?", false) || CL.Value1(0) == "")

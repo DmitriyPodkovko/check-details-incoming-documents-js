@@ -53,7 +53,7 @@
   var more = "більша за"
   var mes_DI = "ВИД ДОКУМЕНТА:"
   var mes_Date = "поточну дату"
-  var mes_DPS = "ДАТА ПОРУШЕННЯ СПРАВИ"
+  var mes_DPS = "Дата початку КП, складання АП"
   var mes_2I = "СТАТТЯ І КОДЕКС:"
   var mes_2I2 = "містить менше 2 реалізацій"
   var mes_U8 = "ЛІНІЇ РОБОТИ"
@@ -106,7 +106,7 @@
                (haveRef(ioUZ, "U18", "U97", "LZ", 0) < 0))
                 Errors.Add(UZ+ioUZ.SNRV+space+mes_2I+space+S0105_70021202+comma+S0105_mn1_+space+"передбачає наявність ОС");
 
-         if (ioUZ.GetPropByPath("2I").Count > 0)//КСЖ2IКСЖ2C01
+         if (ioUZ.GetPropByPath("2I").Count > 0 && ioUZ.GetPropByPath("DPS").Value1(0) > 20130101)//КСЖ2IКСЖ2C01
          {
            if (!ioUZ.GetPropByPath("2I").StartWithAny("", S0105_mn4_, false) && ioUZ.GetPropByPath("2C").Value1(0).length != 17)
                 Errors.Add(UZ+ioUZ.SNRV+space+mes_2C+space+dis+space+"17 символам");

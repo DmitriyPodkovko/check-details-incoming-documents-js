@@ -454,7 +454,7 @@
              Errors.Add(MZ+ioMZ.SNRV+space+mes_MA+space+S0018_mn7+space+emp+space+mes_2C);//ÇÀÆMAÇÀÆ2C02
 
          var C2 = ioMZ.GetPropByPath("2C");//ÇÀÆ2CÇÀÆ2C01
-         if (C2.Count > 0)
+         if (C2.Count > 0 && ioMZ.GetPropByPath("MD").Value1(0) > 20130101)
          {
             if (!ioMZ.GetPropByPath("M18").ContainsAny("", S0036_SP2, false))
                  for (var j = 0; j < C2.Count; j++)

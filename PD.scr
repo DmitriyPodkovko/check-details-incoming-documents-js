@@ -116,6 +116,7 @@
 //PDЖPRPDЖPR01 Перевірка на заповнення "Зміст протиправної дії"
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR2);
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR3, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR3);
+         if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPR4, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPR5);
          if (ioPZ.GetPropByPath("PR").ContainsAny("", listDGPRprv, false)) Warnings.Add(PZ+ioPZ.SNRV+space+mes_PR+space+"містить:"+space+listDGPRprv);
 //       Відповідність "Проблематика відомостей" ІО ПД__________________________"Проблематика відомостей" ІО ПД
          if (ioPZ.GetPropByPath("DZ").ContainsAny("", S0006_mn1, false) &&      //PDЖDZPDЖDZ01

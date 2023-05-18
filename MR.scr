@@ -64,7 +64,7 @@
   var S0113_603 = "603";                                                          var _S0018_603 = "512"
   var S0113_606 = "606";                                                          var _S0018_606 = "301,336,337"
   var S0113_834 = "834";                                                          var _S0018_834 = "003,296"
-  var S0113_123 = "123";                                                          var _S0018_123 = "612"
+  var S0113_123 = "123";                                                          var _S0018_123 = "612,504"
   var S0113_130 = "130";                                                          var _S0018_130 = "003"
   var S0113_210 = "210,836";                                                      var _S0018_210 = "297"
   var S0113_704 = "704,706";                                                      var _S0018_704 = "145,146,147"
@@ -237,6 +237,7 @@
   var mes_M1 = "ВИД ПРЕДМЕТУ"
   var mes_M3 = "НАЙМЕНУВАННЯ ВАЛЮТИ"
   var mes_M10 = "ЗАГАЛЬНА ВАРТІСТЬ"
+  var mes_M11 = "ЗАГАЛЬНА ВАРТІСТЬ В НАЦІОНАЛЬНІЙ ВАЛЮТІ"
   var mes_SK = "СТАТТЯ І КОДЕКС"
   var mes_QA = "ОДИНИЦІ ВИМІРЮВАННЯ"
   var mes_QB = "КІЛЬКІСТЬ"
@@ -258,7 +259,7 @@
     if (MessageIOs.IO(io) == "MZ")
     {
        // Отримати зміст ІО ЗА
-       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M19;M4;ND;2C;SD;M20;IIO.39;IIA.II3;");
+       var ioMZ = SC.ReadIO("MZ", MessageIOs.SN(io), -1, "CM;NN;MA;MB;MB1;MD;M7;M8;PD.M1;PD.M3;PD.M10;PD.M11;PD.QA;PD.QB;F1;LR.LR3;SK;PZ;M18;M19;M4;ND;2C;SD;M20;IIO.39;IIA.II3;");
 
          var dt = new Date();
          var DateNow = dt.getYear() * 10000 + (dt.getMonth() +1) * 100 + dt.getDate();
@@ -743,6 +744,10 @@
 //           Відповідність "Вид предмету" ІО ЗА_________________________________"Загальна вартість" ІО ЗА
              if (PD.GetPropByPath("M1", j).ContainsAny("", S0007_804, false) && PD.GetPropByPath("M10", j).Value1(0) != "")
                  Errors.Add(MZ+ioMZ.SNRV+space+mes_M1+space+S0007_804+space+noemp+space+mes_M10);//ЗАЖM1ЗАM1001
+             if ((PD.GetPropByPath("M1", j).Contains("", "803", false) ||
+                  (!PD.GetPropByPath("M3", j).Value1(0) == "" && !PD.GetPropByPath("M3", j).Contains("", "49", false)))
+                   && PD.GetPropByPath("M10", j).Value1(0) == PD.GetPropByPath("M11", j).Value1(0))
+                 Errors.Add(MZ+ioMZ.SNRV+space+mes_M10+space+"="+space+mes_M11);//ЗАЖM1ЗАM1002
 //           Відповідність "Одиниці вимірювання" ІО ЗА__________________________"Кількість" ІО ЗА
              if (PD.GetPropByPath("QA", j).Value1(0) != "" && PD.GetPropByPath("QB", j).Value1(0) == "")
                  Errors.Add(MZ+ioMZ.SNRV+space+mes_QA+space+emp+space+mes_QB);  //ЗАЖQAЗАЖQB01

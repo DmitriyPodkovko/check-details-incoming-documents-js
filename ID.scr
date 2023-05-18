@@ -42,7 +42,7 @@
   var S0113_mn8 = "401,404,408,412,413,414,415,416,"+
                   "421,422,431,433,434,485,486,704";                              var _S0009_mn8 = "10,11,20,21"
   var S0113_mn9 = "705,816";                                                      var _S0009_mn9 = "10,11,23"
-  var S0113_mn10 = "840,842";                                                     var _S0009_mn10 = "10,11,22,24,25"
+  var S0113_mn10 = "840,842";                                                     var _S0009_mn10 = "10,11,22,24,25,26"
 
 //"Âèä äîêóìåíòà" ²Î ²Ä_________________________________________________________"Ãðèô ñåêðåòíîñò³" ²Î ²Ä
   var S0113_mn11 = "003,004,101,102,103,104,105,106,107,108,109,110,"+
@@ -244,10 +244,11 @@
 //²ÄFTG²ÄFT301 Ïåðåâ³ðêà êîðåêòíîãî çàïîâíåííÿ "Ôîòîãðàô³ÿ"
          if (haveRef2(ioIZ, "FTG", "FTO", "FT3") > 1)
              Errors.Add(IZ+ioIZ.SNRV+space+"Íåêîðåêòíå ôîðìóâàííÿ ÔÎÒÎÃÐÀÔ²ß ! ! !");
-//IDÆDGIDÆDG01 IDÆDGIDÆDG02 IDÆDGIDÆDG03 IDÆDGIDÆDG04 Ïåðåâ³ðêà "Çì³ñò äîêóìåíòà"
+//IDÆDGIDÆDG01 IDÆDGIDÆDG02 IDÆDGIDÆDG03 IDÆDGIDÆDG04 IDÆDGIDÆDG05 Ïåðåâ³ðêà "Çì³ñò äîêóìåíòà"
          var DG = ioIZ.GetPropByPath("DG");
          if (DG.ContainsAny("", listDGPR, false)) Warnings.Add(IZ+ioIZ.SNRV+space+mes_DG+space+"ì³ñòèòü:"+space+listDGPR2);
          if (DG.ContainsAny("", listDGPR3, false)) Warnings.Add(IZ+ioIZ.SNRV+space+mes_DG+space+"ì³ñòèòü:"+space+listDGPR3);
+         if (DG.ContainsAny("", listDGPR4, false)) Warnings.Add(IZ+ioIZ.SNRV+space+mes_DG+space+"ì³ñòèòü:"+space+listDGPR5);
          if (DG.ContainsAny("", listDGPRprv, false)) Warnings.Add(IZ+ioIZ.SNRV+space+mes_DG+space+"ì³ñòèòü:"+space+listDGPRprv);
          if (DG.Count > 0)
          {
